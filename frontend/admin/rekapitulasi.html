@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekapitulasi - Admin</title>
+
+    <script src="../js/auth.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { poppins: ['Poppins', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+</head>
+
+<body class="font-poppins bg-gray-50 text-gray-800">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="fixed left-0 top-0 z-50 h-screen w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+
+        <div class="h-20 flex items-center px-6 border-b border-gray-200">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <span class="text-white font-bold">PM</span>
+            </div>
+            <div class="ml-3">
+                <h1 class="text-sm font-semibold text-gray-900">Penyakit Menular</h1>
+                <p class="text-xs text-gray-500">Panel Admin</p>
+            </div>
+        </div>
+
+        <nav class="p-4 space-y-1">
+
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-12h8V3h-8v6z"/>
+                </svg>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+
+            <a href="data-kasus.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a3 3 0 006 0M9 5h6"/>
+                </svg>
+                <span class="text-sm font-medium">Data Kasus</span>
+            </a>
+
+            <a href="validasi.html" class="flex items-center justify-between px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="text-sm font-medium">Pengajuan Validasi</span>
+                </div>
+                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">8</span>
+            </a>
+
+            <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/>
+                </svg>
+                <span class="text-sm font-medium">Rekapitulasi</span>
+            </a>
+
+            <a href="informasi-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-8a9 9 0 100 18 9 9 0 000-18zm0 5h.01"/>
+            </svg>
+            <span class="text-sm font-semibold">Informasi Penyakit</span>
+            </a>
+
+            <div class="pt-4 pb-2">
+                <p class="px-4 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">Pengaturan</p>
+            </div>
+
+            <a href="master-data.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                <span class="text-sm font-medium">Master Data</span>
+            </a>
+
+            <a href="akun.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2m6-10a4 4 0 100-8 4 4 0 000 8Zm8-3v6m3-3h-6"/>
+                </svg>
+                <span class="text-sm font-medium">Akun Pengguna</span>
+            </a>
+
+            <a href="riwayat.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="text-sm font-medium">Riwayat Aktivitas</span>
+            </a>
+
+        </nav>
+
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
+            <div class="flex items-center gap-3">
+
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span class="text-sm font-semibold text-blue-600">AD</span>
+                </div>
+
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-gray-800 truncate">Admin Petugas</p>
+                    <p class="text-xs text-gray-500">Administrator</p>
+                </div>
+
+                <button onclick="logout()" class="text-gray-400 hover:text-red-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l-4-4m0 0l4-4m-4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                </button>
+
+            </div>
+        </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"></div>
+
+    <!-- MAIN -->
+    <div class="lg:ml-64 min-h-screen">
+
+        <!-- HEADER -->
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-5 md:px-8">
+
+            <div class="flex items-center gap-4">
+
+                <button id="menuButton" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+                <div>
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-900">Rekapitulasi</h2>
+                    <p class="text-xs md:text-sm text-gray-500">Ringkasan data penyakit menular yang telah disetujui</p>
+                </div>
+
+            </div>
+
+            <button onclick="showNotification()" class="relative p-2.5 rounded-xl hover:bg-gray-100">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.5-2A2 2 0 0118 14V11a6 6 0 00-12 0v3a2 2 0 01-.5 1L4 17h5m6 0a3 3 0 01-6 0"/>
+                </svg>
+                <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+            </button>
+
+        </header>
+
+        <!-- CONTENT -->
+        <main class="p-5 md:p-8">
+
+            <section>
+                <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Rekapitulasi Data</h1>
+                        <p class="mt-1 text-sm text-gray-500">Ringkasan otomatis berdasarkan data yang telah disetujui.</p>
+                    </div>
+
+                    <button onclick="downloadExcel()" class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14"/>
+                        </svg>
+                        Unduh Excel
+                    </button>
+
+                </div>
+            </section>
+
+            <!-- FILTER -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-2">Periode</label>
+                        <select id="periodFilter" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500">
+                            <option value="all">Semua Periode</option>
+                            <option value="Januari 2026">Januari 2026</option>
+                            <option value="Februari 2026">Februari 2026</option>
+                            <option value="Maret 2026">Maret 2026</option>
+                            <option value="April 2026">April 2026</option>
+                            <option value="Mei 2026">Mei 2026</option>
+                            <option value="Juni 2026">Juni 2026</option>
+                            <option value="Juli 2026">Juli 2026</option>
+                            <option value="Agustus 2026">Agustus 2026</option>
+                            <option value="September 2026" selected>September 2026</option>
+                            <option value="Oktober 2026">Oktober 2026</option>
+                            <option value="November 2026">November 2026</option>
+                            <option value="Desember 2026">Desember 2026</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-2">Kelompok Penyakit</label>
+                        <select id="diseaseFilter" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500">
+                            <option value="all">Semua Kelompok</option>
+                            <option>TBC</option>
+                            <option>HIV</option>
+                            <option>Malaria</option>
+                            <option>ISPA</option>
+                            <option>HPISP</option>
+                            <option>Kusta & Frambusia</option>
+                            <option>Zoonosis</option>
+                            <option>Arbovirosis (DBD)</option>
+                            <option>Filariasis & Kecacingan</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-2">Wilayah</label>
+                        <select id="regionFilter" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500">
+                            <option value="all">Semua Wilayah</option>
+                            <option>Manado</option>
+                            <option>Bitung</option>
+                            <option>Tomohon</option>
+                            <option>Kotamobagu</option>
+                            <option>Minahasa</option>
+                            <option>Minahasa Utara</option>
+                            <option>Minahasa Selatan</option>
+                            <option>Minahasa Tenggara</option>
+                            <option>Bolaang Mongondow</option>
+                            <option>Bolaang Mongondow Utara</option>
+                            <option>Bolaang Mongondow Selatan</option>
+                            <option>Bolaang Mongondow Timur</option>
+                            <option>Kepulauan Sangihe</option>
+                            <option>Kepulauan Talaud</option>
+                            <option>Kepulauan Sitaro</option>
+                        </select>
+                    </div>
+
+                    <button onclick="resetFilter()" class="self-end w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-600 hover:bg-gray-50">
+                        Reset Filter
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- SUMMARY -->
+            <section class="mt-7">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Total Kasus</p>
+                                <p id="totalCases" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                                <p class="mt-2 text-xs text-blue-600">Data disetujui</p>
+                            </div>
+
+                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Kelompok Penyakit</p>
+                                <p id="diseaseCount" class="mt-2 text-2xl font-bold text-gray-900">9</p>
+                                <p class="mt-2 text-xs text-green-600">Kelompok tersedia</p>
+                            </div>
+
+                            <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Wilayah</p>
+                                <p id="regionCount" class="mt-2 text-2xl font-bold text-gray-900">15</p>
+                                <p class="mt-2 text-xs text-orange-600">Kabupaten/Kota</p>
+                            </div>
+
+                            <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21s8-6.5 8-12a8 8 0 10-16 0c0 5.5 8 12 8 12z"/>
+                                    <circle cx="12" cy="9" r="2.5"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Penyakit Tertinggi</p>
+                                <p id="highestDisease" class="mt-2 text-lg font-bold text-gray-900">-</p>
+                                <p id="highestValue" class="mt-2 text-xs text-blue-600">- kasus</p>
+                            </div>
+
+                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 20V4m0 0l-5 5m5-5 5 5"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- CHART PENYAKIT -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
+
+                <div>
+                    <h3 class="font-semibold text-gray-900">Jumlah Kasus Berdasarkan Kelompok Penyakit</h3>
+                    <p class="text-xs text-gray-500 mt-1">Distribusi kasus berdasarkan kelompok penyakit yang telah disetujui.</p>
+                </div>
+
+                <div class="h-[390px] mt-5">
+                    <canvas id="diseaseChart"></canvas>
+                </div>
+
+            </section>
+
+            <!-- CHART WILAYAH -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
+
+                <div>
+                    <h3 class="font-semibold text-gray-900">Jumlah Kasus Berdasarkan Wilayah</h3>
+                    <p class="text-xs text-gray-500 mt-1">Distribusi kasus berdasarkan 15 Kabupaten/Kota.</p>
+                </div>
+
+                <div class="h-[470px] mt-5">
+                    <canvas id="regionChart"></canvas>
+                </div>
+
+            </section>
+
+            <!-- CHART TREND -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
+
+                <div>
+                    <h3 class="font-semibold text-gray-900">Tren Jumlah Kasus Tahun 2026</h3>
+                    <p class="text-xs text-gray-500 mt-1">Perkembangan jumlah kasus dari Januari sampai Desember 2026.</p>
+                </div>
+
+                <div class="h-[350px] mt-5">
+                    <canvas id="trendChart"></canvas>
+                </div>
+
+            </section>
+
+            <!-- TABLE -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl overflow-hidden">
+
+                <div class="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
+
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Rekapitulasi Kelompok Penyakit</h3>
+                        <p class="text-xs text-gray-500 mt-1">Ringkasan data sesuai filter yang dipilih.</p>
+                    </div>
+
+                    <span class="text-xs bg-green-50 text-green-600 px-3 py-1.5 rounded-lg">
+                        Data Disetujui
+                    </span>
+
+                </div>
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full text-sm">
+
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Kelompok Penyakit</th>
+                                <th class="text-right px-6 py-4 font-medium text-gray-500">Jumlah Kasus</th>
+                                <th class="text-right px-6 py-4 font-medium text-gray-500">Persentase</th>
+                                <th class="text-right px-6 py-4 font-medium text-gray-500">Peringkat</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="diseaseTable" class="divide-y divide-gray-100"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <!-- INFO -->
+            <section class="mt-6 mb-8">
+
+                <div class="bg-blue-50 border border-blue-100 rounded-2xl p-5">
+
+                    <div class="flex gap-3">
+
+                        <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"/>
+                        </svg>
+
+                        <div>
+                            <h4 class="text-sm font-semibold text-blue-800">Informasi Rekapitulasi</h4>
+                            <p class="mt-1 text-xs text-blue-700 leading-relaxed">
+                                Rekapitulasi dihitung secara otomatis dari data yang telah disetujui oleh Validator. Data yang masih berstatus Draft, Menunggu Validasi, atau Dikembalikan tidak termasuk dalam perhitungan.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const diseases = [
+            "TBC",
+            "HIV",
+            "Malaria",
+            "ISPA",
+            "HPISP",
+            "Kusta & Frambusia",
+            "Zoonosis",
+            "Arbovirosis (DBD)",
+            "Filariasis & Kecacingan"
+        ];
+
+        const regions = [
+            "Manado",
+            "Bitung",
+            "Tomohon",
+            "Kotamobagu",
+            "Minahasa",
+            "Minahasa Utara",
+            "Minahasa Selatan",
+            "Minahasa Tenggara",
+            "Bolaang Mongondow",
+            "Bolaang Mongondow Utara",
+            "Bolaang Mongondow Selatan",
+            "Bolaang Mongondow Timur",
+            "Kepulauan Sangihe",
+            "Kepulauan Talaud",
+            "Kepulauan Sitaro"
+        ];
+
+        const periods = [
+            "Januari 2026",
+            "Februari 2026",
+            "Maret 2026",
+            "April 2026",
+            "Mei 2026",
+            "Juni 2026",
+            "Juli 2026",
+            "Agustus 2026",
+            "September 2026",
+            "Oktober 2026",
+            "November 2026",
+            "Desember 2026"
+        ];
+
+        const diseaseData = {
+            "Januari 2026": [45,18,22,41,44,8,15,49,20],
+            "Februari 2026": [47,19,24,43,46,8,16,51,21],
+            "Maret 2026": [50,20,26,44,48,9,17,53,22],
+            "April 2026": [48,21,25,46,49,9,17,50,23],
+            "Mei 2026": [51,21,27,47,51,9,18,54,24],
+            "Juni 2026": [49,20,26,45,47,8,16,52,22],
+            "Juli 2026": [55,22,29,48,53,9,18,57,24],
+            "Agustus 2026": [58,24,31,51,59,10,19,61,26],
+            "September 2026": [62,28,35,56,64,12,21,68,29],
+            "Oktober 2026": [60,27,33,54,62,11,20,65,28],
+            "November 2026": [57,25,30,52,60,10,19,62,27],
+            "Desember 2026": [54,23,28,49,57,9,18,59,25]
+        };
+
+        const regionData = {
+            "Januari 2026": [60,44,42,37,39,35,34,31,29,27,24,22,18,16,13],
+            "Februari 2026": [63,46,44,39,41,37,36,33,31,29,25,23,19,17,14],
+            "Maret 2026": [67,49,47,41,43,39,38,35,33,31,27,25,21,18,15],
+            "April 2026": [65,48,45,40,42,38,37,34,32,30,26,24,20,18,15],
+            "Mei 2026": [69,51,48,43,45,41,39,36,34,32,28,26,22,19,16],
+            "Juni 2026": [68,50,46,42,44,40,38,35,33,31,27,25,21,18,16],
+            "Juli 2026": [74,54,50,46,48,44,42,39,37,35,30,28,24,21,18],
+            "Agustus 2026": [79,58,55,50,52,48,46,43,40,38,33,30,26,23,20],
+            "September 2026": [86,63,60,56,58,53,51,48,45,42,37,34,29,26,22],
+            "Oktober 2026": [83,61,58,54,56,51,49,46,43,40,35,32,28,25,21],
+            "November 2026": [80,59,56,52,54,49,47,44,41,39,34,31,27,24,20],
+            "Desember 2026": [76,56,53,49,51,47,45,42,39,37,32,29,25,22,19]
+        };
+
+        const periodFilter = document.getElementById("periodFilter");
+        const diseaseFilter = document.getElementById("diseaseFilter");
+        const regionFilter = document.getElementById("regionFilter");
+
+        function getDiseaseTotals(period) {
+            if (period === "all") {
+                return diseases.map((_, index) =>
+                    periods.reduce((sum, month) => sum + diseaseData[month][index], 0)
+                );
+            }
+
+            return [...diseaseData[period]];
+        }
+
+        function getRegionTotals(period) {
+            if (period === "all") {
+                return regions.map((_, index) =>
+                    periods.reduce((sum, month) => sum + regionData[month][index], 0)
+                );
+            }
+
+            return [...regionData[period]];
+        }
+
+        function getTrendData(disease, region) {
+            return periods.map(month => {
+
+                let total = disease === "all"
+                    ? diseaseData[month].reduce((sum, value) => sum + value, 0)
+                    : diseaseData[month][diseases.indexOf(disease)];
+
+                if (region !== "all") {
+                    const regionIndex = regions.indexOf(region);
+                    const regionTotal = regionData[month].reduce((sum, value) => sum + value, 0);
+                    const selectedRegion = regionData[month][regionIndex];
+                    total = Math.round(total * selectedRegion / regionTotal);
+                }
+
+                return total;
+            });
+        }
+
+        const diseaseChart = new Chart(document.getElementById("diseaseChart"), {
+            type: "bar",
+            data: {
+                labels: diseases,
+                datasets: [{
+                    data: diseaseData["September 2026"],
+                    backgroundColor: "#2563eb",
+                    borderRadius: 8,
+                    barThickness: 27
+                }]
+            },
+            plugins: [ChartDataLabels],
+            options: {
+                indexAxis: "y",
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        color: "#374151",
+                        anchor: "end",
+                        align: "right",
+                        offset: 5,
+                        font: { family: "Poppins", size: 11, weight: "600" }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: { color: "#f3f4f6" },
+                        ticks: { precision: 0 }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { font: { family: "Poppins", size: 11 } }
+                    }
+                }
+            }
+        });
+
+        const regionChart = new Chart(document.getElementById("regionChart"), {
+            type: "bar",
+            data: {
+                labels: regions,
+                datasets: [{
+                    data: regionData["September 2026"],
+                    backgroundColor: "#60a5fa",
+                    borderRadius: 7,
+                    barThickness: 20
+                }]
+            },
+            plugins: [ChartDataLabels],
+            options: {
+                indexAxis: "y",
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        color: "#374151",
+                        anchor: "end",
+                        align: "right",
+                        offset: 4,
+                        font: { family: "Poppins", size: 10, weight: "600" }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: { color: "#f3f4f6" },
+                        ticks: { precision: 0 }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { font: { family: "Poppins", size: 10 } }
+                    }
+                }
+            }
+        });
+
+        const trendChart = new Chart(document.getElementById("trendChart"), {
+            type: "line",
+            data: {
+                labels: periods.map(item => item.split(" ")[0]),
+                datasets: [{
+                    data: getTrendData("all", "all"),
+                    borderColor: "#2563eb",
+                    backgroundColor: "rgba(37,99,235,.08)",
+                    fill: true,
+                    tension: .35,
+                    borderWidth: 3,
+                    pointRadius: 4
+                }]
+            },
+            plugins: [ChartDataLabels],
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    datalabels: {
+                        color: "#374151",
+                        anchor: "end",
+                        align: "top",
+                        offset: 4,
+                        font: { family: "Poppins", size: 10, weight: "600" }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: "#f3f4f6" },
+                        ticks: { precision: 0 }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        function updateDashboard() {
+
+            const period = periodFilter.value;
+            const disease = diseaseFilter.value;
+            const region = regionFilter.value;
+
+            let dTotals = getDiseaseTotals(period);
+            let rTotals = getRegionTotals(period);
+
+            if (disease !== "all") {
+                const index = diseases.indexOf(disease);
+                const selected = dTotals[index];
+                dTotals = diseases.map((_, i) => i === index ? selected : 0);
+            }
+
+            if (region !== "all") {
+                const index = regions.indexOf(region);
+                const selected = rTotals[index];
+                rTotals = regions.map((_, i) => i === index ? selected : 0);
+            }
+
+            if (disease !== "all" && region !== "all") {
+                const dIndex = diseases.indexOf(disease);
+                const rIndex = regions.indexOf(region);
+                const selectedPeriod = period === "all" ? "September 2026" : period;
+
+                const regionalTotal = regionData[selectedPeriod].reduce((sum, value) => sum + value, 0);
+
+                const filteredCase = Math.round(
+                    diseaseData[selectedPeriod][dIndex] *
+                    regionData[selectedPeriod][rIndex] /
+                    regionalTotal
+                );
+
+                dTotals = diseases.map((_, i) => i === dIndex ? filteredCase : 0);
+                rTotals = regions.map((_, i) => i === rIndex ? filteredCase : 0);
+            }
+
+            const totalCases = dTotals.reduce((sum, value) => sum + value, 0);
+            const activeDiseases = dTotals.filter(value => value > 0).length;
+            const activeRegions = rTotals.filter(value => value > 0).length;
+            const highestIndex = dTotals.indexOf(Math.max(...dTotals));
+
+            document.getElementById("totalCases").textContent = totalCases.toLocaleString("id-ID");
+            document.getElementById("diseaseCount").textContent = activeDiseases;
+            document.getElementById("regionCount").textContent = activeRegions;
+            document.getElementById("highestDisease").textContent = highestIndex >= 0 ? diseases[highestIndex] : "-";
+            document.getElementById("highestValue").textContent = highestIndex >= 0 ? `${dTotals[highestIndex]} kasus` : "- kasus";
+
+            diseaseChart.data.datasets[0].data = dTotals;
+            regionChart.data.datasets[0].data = rTotals;
+            trendChart.data.datasets[0].data = getTrendData(disease, region);
+
+            diseaseChart.update();
+            regionChart.update();
+            trendChart.update();
+
+            renderTable(dTotals);
+        }
+
+        function renderTable(values) {
+
+            const total = values.reduce((sum, value) => sum + value, 0);
+
+            const rows = diseases
+                .map((disease, index) => ({ disease, value: values[index] }))
+                .filter(item => item.value > 0)
+                .sort((a, b) => b.value - a.value);
+
+            document.getElementById("diseaseTable").innerHTML = rows.length
+                ? rows.map((item, index) => `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-semibold text-gray-900">${item.disease}</td>
+                        <td class="px-6 py-4 text-right font-semibold">${item.value}</td>
+                        <td class="px-6 py-4 text-right text-gray-600">
+                            ${total ? ((item.value / total) * 100).toFixed(1) : 0}%
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <span class="inline-flex w-8 h-8 rounded-lg bg-blue-50 text-blue-600 items-center justify-center text-xs font-semibold">
+                                ${index + 1}
+                            </span>
+                        </td>
+                    </tr>
+                `).join("")
+                : `
+                    <tr>
+                        <td colspan="4" class="px-6 py-12 text-center text-gray-500">
+                            Tidak ada data yang sesuai.
+                        </td>
+                    </tr>
+                `;
+        }
+
+        function resetFilter() {
+            periodFilter.value = "September 2026";
+            diseaseFilter.value = "all";
+            regionFilter.value = "all";
+            updateDashboard();
+        }
+
+        function downloadExcel() {
+            const period = periodFilter.value === "all" ? "Semua-Periode" : periodFilter.value.replace(/ /g, "-");
+            const disease = diseaseFilter.value === "all" ? "Semua-Penyakit" : diseaseFilter.value.replace(/ /g, "-").replace(/&/g, "dan");
+            const region = regionFilter.value === "all" ? "Semua-Wilayah" : regionFilter.value.replace(/ /g, "-");
+
+            alert(
+                "Unduhan rekapitulasi akan dibuat berdasarkan filter aktif.\n\n" +
+                `Periode: ${period}\n` +
+                `Penyakit: ${disease}\n` +
+                `Wilayah: ${region}\n\n` +
+                "Fitur Excel akan dihubungkan ke backend Laravel."
+            );
+        }
+
+        function showNotification() {
+            alert("Notifikasi:\n\n• 8 data menunggu validasi.\n• 3 data dikembalikan.");
+        }
+
+        function logout() {
+            if (confirm("Apakah Anda yakin ingin keluar?")) {
+                alert("Logout akan dihubungkan dengan autentikasi Laravel.");
+            }
+        }
+
+        periodFilter.addEventListener("change", updateDashboard);
+        diseaseFilter.addEventListener("change", updateDashboard);
+        regionFilter.addEventListener("change", updateDashboard);
+
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const menuButton = document.getElementById("menuButton");
+
+        menuButton.addEventListener("click", () => {
+            sidebar.classList.remove("-translate-x-full");
+            overlay.classList.remove("hidden");
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+
+        updateDashboard();
+    </script>
+
+</body>
+</html>

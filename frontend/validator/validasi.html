@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validasi Data - Validator</title>
+
+    <script src="../js/auth.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { poppins: ['Poppins', 'sans-serif'] } } } }
+    </script>
+</head>
+
+<body class="font-poppins bg-gray-50 text-gray-800">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="fixed left-0 top-0 z-50 h-screen w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+        <div class="h-20 flex items-center px-6 border-b border-gray-200">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <span class="text-white font-bold">PM</span>
+            </div>
+            <div class="ml-3">
+                <h1 class="text-sm font-semibold text-gray-900">Penyakit Menular</h1>
+                <p class="text-xs text-gray-500">Panel Validator</p>
+            </div>
+        </div>
+
+        <nav class="p-4 space-y-1">
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-12h8V3h-8v6z"/></svg>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            <a href="validasi.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-blue-50 text-blue-600">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="text-sm font-medium">Validasi Data</span>
+                </div>
+                <span id="badgePending" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">0</span>
+            </a>
+            <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/></svg>
+                <span class="text-sm font-medium">Rekapitulasi</span>
+            </a>
+            <a href="riwayat.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm font-medium">Riwayat Validasi</span>
+            </a>
+        </nav>
+
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span id="userInitial" class="text-sm font-semibold text-blue-600">VL</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p id="sidebarUserName" class="text-sm font-semibold text-gray-800 truncate">Memuat...</p>
+                    <p id="sidebarUserRole" class="text-xs text-gray-500">...</p>
+                </div>
+                <button onclick="logout()" class="text-gray-400 hover:text-red-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"></div>
+
+    <!-- MAIN -->
+    <div class="lg:ml-64 min-h-screen">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-5 md:px-8">
+            <div class="flex items-center gap-4">
+                <button id="menuButton" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+                <div>
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-900">Validasi Data</h2>
+                    <p class="text-xs md:text-sm text-gray-500">Pemeriksaan data penyakit menular sebelum dipublikasikan</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="p-5 md:p-8">
+            <section>
+                <h1 class="text-2xl font-bold text-gray-900">Validasi Data</h1>
+                <p class="mt-1 text-sm text-gray-500">Periksa data yang diajukan Admin sebelum disetujui atau dikembalikan.</p>
+            </section>
+
+            <!-- SUMMARY -->
+            <section class="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Menunggu Validasi</p>
+                    <p id="totalMenunggu" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Disetujui</p>
+                    <p id="totalDisetujui" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Dikembalikan</p>
+                    <p id="totalDikembalikan" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Dipublikasikan</p>
+                    <p id="totalDipublikasikan" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                </div>
+            </section>
+
+            <!-- TABLE -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                <div class="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Pengajuan Menunggu Validasi</h3>
+                        <p class="text-xs text-gray-500 mt-1">Data yang diajukan Admin dan menunggu pemeriksaan.</p>
+                    </div>
+                    <span id="pendingCount" class="text-xs bg-orange-50 text-orange-600 px-3 py-1.5 rounded-lg">0 Pengajuan</span>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-gray-50 border-t border-gray-200">
+                            <tr>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">No.</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Penyakit</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Wilayah</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Periode</th>
+                                <th class="text-right px-6 py-4 font-medium text-gray-500">Kasus</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Diajukan Oleh</th>
+                                <th class="text-right px-6 py-4 font-medium text-gray-500">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTable" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL VALIDASI -->
+    <div id="modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
+        <div id="modalOverlay" class="absolute inset-0 bg-black/50"></div>
+        <div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-xl">
+            <div class="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
+                <div>
+                    <h3 class="font-semibold text-gray-900">Periksa Data</h3>
+                    <p class="text-xs text-gray-500 mt-1">Periksa data sebelum memberikan keputusan validasi.</p>
+                </div>
+                <button onclick="closeModal()" class="w-9 h-9 rounded-lg hover:bg-gray-100 text-gray-500 text-xl">×</button>
+            </div>
+
+            <div class="p-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Kelompok Penyakit</p>
+                        <p id="modalDisease" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Wilayah</p>
+                        <p id="modalRegion" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Periode</p>
+                        <p id="modalPeriod" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Jumlah Kasus</p>
+                        <p id="modalCases" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Diajukan Oleh</p>
+                        <p id="modalUser" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Tanggal Pengajuan</p>
+                        <p id="modalDate" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+                    <!-- TAMBAHAN: CATATAN DARI ADMIN -->
+                    <div class="bg-gray-50 rounded-xl p-4 sm:col-span-2">
+                        <p class="text-xs text-gray-500">Catatan dari Admin</p>
+                        <p id="modalAdminNote" class="mt-1 text-sm text-gray-700">-</p>
+                    </div>
+                </div>
+
+                <div class="mt-7">
+                    <h4 class="text-sm font-semibold text-gray-900 mb-3">Checklist Validasi</h4>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50">
+                            <input type="checkbox" class="checkItem w-4 h-4 accent-blue-600">
+                            <span class="text-sm text-gray-700">Kelompok penyakit sudah sesuai</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50">
+                            <input type="checkbox" class="checkItem w-4 h-4 accent-blue-600">
+                            <span class="text-sm text-gray-700">Wilayah Kabupaten/Kota sudah sesuai</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50">
+                            <input type="checkbox" class="checkItem w-4 h-4 accent-blue-600">
+                            <span class="text-sm text-gray-700">Periode data sudah sesuai</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-4 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-50">
+                            <input type="checkbox" class="checkItem w-4 h-4 accent-blue-600">
+                            <span class="text-sm text-gray-700">Jumlah kasus sudah sesuai</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mt-7">
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">Catatan Validator</label>
+                    <textarea id="validationNote" rows="4" placeholder="Tambahkan catatan jika diperlukan..." class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"></textarea>
+                    <p id="noteError" class="hidden mt-2 text-xs text-red-500">Catatan wajib diisi jika data dikembalikan.</p>
+                </div>
+            </div>
+
+            <div class="px-6 py-5 border-t border-gray-200 flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+                <button onclick="returnData()" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-red-50 text-red-600 border border-red-100 text-sm font-medium hover:bg-red-100">Kembalikan</button>
+                <button onclick="approveData()" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">Setujui Data</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const menuButton = document.getElementById("menuButton");
+        let currentData = null;
+
+        menuButton.addEventListener("click", () => {
+            sidebar.classList.remove("-translate-x-full");
+            overlay.classList.remove("hidden");
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+
+        // --- 1. LOAD DATA DARI API ---
+        async function loadValidasi() {
+            try {
+                // Ambil data menunggu validasi
+                const response = await fetch("http://localhost:3000/api/kasus/menunggu", { credentials: "include" });
+                const data = await response.json();
+
+                // Update Summary
+                document.getElementById("totalMenunggu").textContent = data.length;
+                document.getElementById("pendingCount").textContent = `${data.length} Pengajuan`;
+                document.getElementById("badgePending").textContent = data.length;
+
+                // Ambil total disetujui, dikembalikan, dipublikasikan (dari data kasus keseluruhan)
+                const resAll = await fetch("http://localhost:3000/api/kasus", { credentials: "include" });
+                const allData = await resAll.json();
+                document.getElementById("totalDisetujui").textContent = allData.filter(d => d.status === 'Dipublikasikan').length;
+                document.getElementById("totalDikembalikan").textContent = allData.filter(d => d.status === 'Dikembalikan').length;
+                document.getElementById("totalDipublikasikan").textContent = allData.filter(d => d.status === 'Dipublikasikan').length;
+
+                const tbody = document.getElementById("dataTable");
+                tbody.innerHTML = "";
+
+                if (data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">Tidak ada data yang menunggu validasi.</td></tr>`;
+                    return;
+                }
+
+                data.forEach((item, index) => {
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 text-gray-500">${index + 1}</td>
+                            <td class="px-6 py-4 font-semibold text-gray-900">${item.penyakit}</td>
+                            <td class="px-6 py-4 text-gray-600">${item.wilayah}</td>
+                            <td class="px-6 py-4 text-gray-600">${item.periode}</td>
+                            <td class="px-6 py-4 text-right font-semibold">${item.jumlah}</td>
+                            <td class="px-6 py-4 text-gray-600">${item.admin}</td>
+                            <td class="px-6 py-4 text-right">
+                                <button onclick="openModal(${JSON.stringify(item).replace(/"/g, '&quot;')})" class="px-3 py-2 rounded-lg bg-blue-50 text-blue-600 text-xs font-semibold hover:bg-blue-100">
+                                    Periksa
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (error) { console.error(error); }
+        }
+
+        // --- 2. FUNGSI MODAL ---
+        function openModal(item) {
+            currentData = item;
+            document.getElementById("modalDisease").textContent = item.penyakit;
+            document.getElementById("modalRegion").textContent = item.wilayah;
+            document.getElementById("modalPeriod").textContent = item.periode;
+            document.getElementById("modalCases").textContent = item.jumlah;
+            document.getElementById("modalUser").textContent = item.admin;
+            
+            // Tampilkan Catatan Admin
+            document.getElementById("modalAdminNote").textContent = item.catatan || "Tidak ada catatan dari Admin.";
+
+            // Format tanggal
+            const date = new Date(item.created_at);
+            document.getElementById("modalDate").textContent = date.toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' });
+
+            document.querySelectorAll(".checkItem").forEach(item => item.checked = false);
+            document.getElementById("validationNote").value = "";
+            document.getElementById("noteError").classList.add("hidden");
+
+            document.getElementById("modal").classList.remove("hidden");
+            document.body.classList.add("overflow-hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("modal").classList.add("hidden");
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        // --- 3. PROSES VALIDASI ---
+        async function prosesValidasi(status) {
+            const note = document.getElementById("validationNote").value.trim();
+            const noteError = document.getElementById("noteError");
+
+            // Validasi Frontend
+            if (status === 'Dikembalikan' && !note) {
+                noteError.classList.remove("hidden");
+                return;
+            }
+
+            if (status === 'Dipublikasikan') {
+                const checked = [...document.querySelectorAll(".checkItem")].every(item => item.checked);
+                if (!checked) {
+                    alert("Silakan centang seluruh checklist validasi terlebih dahulu.");
+                    return;
+                }
+            }
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/kasus/validasi/${currentData.id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ status, catatan: note }),
+                    credentials: "include"
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    closeModal();
+                    loadValidasi(); // Refresh tabel
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) { alert("Gagal terhubung ke server."); }
+        }
+
+        function approveData() { prosesValidasi('Dipublikasikan'); }
+        function returnData() { prosesValidasi('Dikembalikan'); }
+
+        // --- 4. INIT ---
+        document.addEventListener("DOMContentLoaded", () => {
+            loadValidasi();
+            fetch("http://localhost:3000/api/auth/me", { credentials: "include" })
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (data) {
+                        document.getElementById("sidebarUserName").textContent = data.user.nama;
+                        document.getElementById("sidebarUserRole").textContent = data.user.role === 'validator' ? 'Petugas Validasi' : 'Administrator';
+                        document.getElementById("userInitial").textContent = data.user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                    }
+                });
+        });
+
+        // Logout
+        async function logout() {
+            if (confirm("Apakah Anda yakin ingin keluar?")) {
+                await fetch("http://localhost:3000/api/auth/logout", { method: "POST", credentials: "include" });
+                window.location.replace("../login/login.html");
+            }
+        }
+    </script>
+</body>
+</html>

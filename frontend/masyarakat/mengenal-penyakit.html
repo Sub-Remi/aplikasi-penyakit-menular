@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informasi Penyakit - Aplikasi Penyakit Menular</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { poppins: ['Poppins', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-poppins bg-gray-50 text-gray-800">
+
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-50 bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-5 md:px-8">
+            <div class="h-20 flex items-center justify-between">
+
+                <a href="index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                        <span class="text-white font-bold">PM</span>
+                    </div>
+
+                    <div>
+                        <h1 class="text-sm font-semibold text-gray-900">Penyakit Menular</h1>
+                        <p class="text-xs text-gray-500">Informasi Kesehatan Sulawesi Utara</p>
+                    </div>
+                </a>
+
+                <nav class="hidden md:flex items-center gap-1">
+
+                    <a href="index.html" class="px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 text-sm font-medium">
+                        Beranda
+                    </a>
+
+                    <a href="mengenal-penyakit.html" class="px-4 py-2.5 rounded-lg bg-blue-50 text-blue-600 text-sm font-medium">
+                        Mengenal Penyakit Menular
+                    </a>
+
+                    <a href="data-penyakit.html" class="px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 text-sm font-medium">
+                        Data Penyakit
+                    </a>
+
+                    <a href="rekapitulasi.html" class="px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 text-sm font-medium">
+                        Rekapitulasi
+                    </a>
+
+                    <a href="tentang-data.html" class="px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 text-sm font-medium">
+                        Tentang Data
+                    </a>
+
+                </nav>
+
+                <button id="menuButton" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- MOBILE MENU -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-gray-100 bg-white">
+            <nav class="max-w-7xl mx-auto px-5 py-3 space-y-1">
+
+                <a href="index.html" class="block px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm font-medium">
+                    Beranda
+                </a>
+
+                <a href="mengenal-penyakit.html" class="block px-4 py-3 rounded-xl bg-blue-50 text-blue-600 text-sm font-medium">
+                    Mengenal Penyakit Menular
+                </a>
+
+                <a href="data-penyakit.html" class="block px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm font-medium">
+                    Data Penyakit
+                </a>
+
+                <a href="rekapitulasi.html" class="block px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm font-medium">
+                    Rekapitulasi
+                </a>
+
+                <a href="tentang-data.html" class="block px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm font-medium">
+                    Tentang Data
+                </a>
+
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="bg-white">
+        <div class="max-w-7xl mx-auto px-5 md:px-8 py-14 md:py-20">
+
+            <div class="max-w-3xl">
+
+                <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-xs font-semibold">
+                    Edukasi Kesehatan
+                </span>
+
+                <h2 class="mt-5 text-3xl md:text-4xl font-bold leading-tight text-gray-900">
+                    Informasi Penyakit Menular
+                </h2>
+
+                <p class="mt-4 text-sm md:text-base text-gray-600 leading-7">
+                    Kenali berbagai kelompok penyakit menular melalui informasi mengenai
+                    deskripsi penyakit, gejala, cara pencegahan, dan video edukasi yang
+                    dapat membantu masyarakat memahami penyakit dengan lebih baik.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- INFORMATION CARDS -->
+    <section class="max-w-7xl mx-auto px-5 md:px-8 py-16">
+
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+
+            <div>
+                <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider">
+                    Pilih Penyakit
+                </span>
+
+                <h2 class="mt-2 text-2xl md:text-3xl font-bold text-gray-900">
+                    Kelompok Penyakit Menular
+                </h2>
+
+                <p class="mt-2 text-sm text-gray-500">
+                    Pilih kelompok penyakit untuk melihat informasi lengkap.
+                </p>
+            </div>
+
+            <div class="relative w-full md:w-64">
+
+                <input id="searchInput" type="text" placeholder="Cari penyakit..."
+                    class="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500">
+
+                <svg class="w-4 h-4 text-gray-400 absolute left-3 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.3-4.3m2.3-5.2a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z"/>
+                </svg>
+
+            </div>
+
+        </div>
+
+        <div id="diseaseGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mt-8">
+
+            <!-- TBC -->
+            <div class="disease-card bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-sm transition" data-name="TBC">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                        <span class="font-bold">01</span>
+                    </div>
+
+                    <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
+                        Tersedia
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-gray-900">TBC</h3>
+
+                <p class="mt-2 text-sm text-gray-500 leading-6">
+                    Tuberkulosis merupakan penyakit infeksi yang umumnya menyerang paru-paru dan memerlukan penanganan yang tepat.
+                </p>
+
+                <button onclick="openModal('TBC')" class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Lihat Informasi
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <!-- HIV -->
+            <div class="disease-card bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-sm transition" data-name="HIV">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                        <span class="font-bold">02</span>
+                    </div>
+
+                    <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
+                        Tersedia
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-gray-900">HIV</h3>
+
+                <p class="mt-2 text-sm text-gray-500 leading-6">
+                    HIV menyerang sistem kekebalan tubuh dan membutuhkan pemahaman serta penanganan yang tepat.
+                </p>
+
+                <button onclick="openModal('HIV')" class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Lihat Informasi
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <!-- MALARIA -->
+            <div class="disease-card bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-sm transition" data-name="Malaria">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center">
+                        <span class="font-bold">03</span>
+                    </div>
+
+                    <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
+                        Tersedia
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-gray-900">Malaria</h3>
+
+                <p class="mt-2 text-sm text-gray-500 leading-6">
+                    Malaria adalah penyakit yang ditularkan melalui gigitan nyamuk tertentu yang membawa parasit malaria.
+                </p>
+
+                <button onclick="openModal('Malaria')" class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Lihat Informasi
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <!-- ISPA -->
+            <div class="disease-card bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-sm transition" data-name="ISPA">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-500 flex items-center justify-center">
+                        <span class="font-bold">04</span>
+                    </div>
+
+                    <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
+                        Tersedia
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-gray-900">ISPA</h3>
+
+                <p class="mt-2 text-sm text-gray-500 leading-6">
+                    ISPA merupakan infeksi yang menyerang saluran pernapasan dan dapat disebabkan oleh berbagai mikroorganisme.
+                </p>
+
+                <button onclick="openModal('ISPA')" class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Lihat Informasi
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <!-- HPISP -->
+            <div class="disease-card bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-sm transition" data-name="HPISP">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center">
+                        <span class="font-bold">05</span>
+                    </div>
+
+                    <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
+                        Tersedia
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-gray-900">HPISP</h3>
+
+                <p class="mt-2 text-sm text-gray-500 leading-6">
+                    HPISP mencakup hepatitis serta infeksi saluran pencernaan termasuk diare.
+                </p>
+
+                <button onclick="openModal('HPISP')" class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Lihat Informasi
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <!-- KUSTA -->
+            <div class="disease-card bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-sm transition" data-name="Kusta Frambusia">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-yellow-50 text-yellow-600 flex items-center justify-center">
+                        <span class="font-bold">06</span>
+                    </div>
+
+                    <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
+                        Tersedia
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-gray-900">
+                    Kusta & Frambusia
+                </h3>
+
+                <p class="mt-2 text-sm text-gray-500 leading-6">
+                    Kelompok penyakit yang membutuhkan pengenalan gejala dan penanganan sejak dini.
+                </p>
+
+                <button onclick="openModal('Kusta & Frambusia')" class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Lihat Informasi
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <!-- ZOONOSIS -->
+            <div class="disease-card bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-sm transition" data-name="Zoonosis">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-red-50 text-red-500 flex items-center justify-center">
+                        <span class="font-bold">07</span>
+                    </div>
+
+                    <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
+                        Tersedia
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-gray-900">Zoonosis</h3>
+
+                <p class="mt-2 text-sm text-gray-500 leading-6">
+                    Zoonosis merupakan kelompok penyakit yang dapat ditularkan antara hewan dan manusia.
+                </p>
+
+                <button onclick="openModal('Zoonosis')" class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Lihat Informasi
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <!-- ARBOVIROSIS -->
+            <div class="disease-card bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-sm transition" data-name="Arbovirosis DBD">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-red-50 text-red-600 flex items-center justify-center">
+                        <span class="font-bold">08</span>
+                    </div>
+
+                    <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
+                        Tersedia
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-gray-900">
+                    Arbovirosis (DBD)
+                </h3>
+
+                <p class="mt-2 text-sm text-gray-500 leading-6">
+                    Arbovirosis merupakan kelompok penyakit yang ditularkan melalui arthropoda, termasuk DBD.
+                </p>
+
+                <button onclick="openModal('Arbovirosis (DBD)')" class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Lihat Informasi
+                    <span>→</span>
+                </button>
+
+            </div>
+
+            <!-- FILARIASIS -->
+            <div class="disease-card bg-white border border-gray-200 rounded-2xl p-6 hover:border-blue-300 hover:shadow-sm transition" data-name="Filariasis Kecacingan">
+
+                <div class="flex items-start justify-between gap-4">
+
+                    <div class="w-12 h-12 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                        <span class="font-bold">09</span>
+                    </div>
+
+                    <span class="px-2.5 py-1 rounded-full bg-green-50 text-green-600 text-xs font-medium">
+                        Tersedia
+                    </span>
+
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-gray-900">
+                    Filariasis & Kecacingan
+                </h3>
+
+                <p class="mt-2 text-sm text-gray-500 leading-6">
+                    Kelompok penyakit akibat parasit yang dapat memengaruhi kesehatan dan produktivitas.
+                </p>
+
+                <button onclick="openModal('Filariasis & Kecacingan')" class="mt-5 w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Lihat Informasi
+                    <span>→</span>
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- NO RESULT -->
+        <div id="noResult" class="hidden text-center py-16">
+
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
+
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-4.3-4.3m2.3-5.2a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z"/>
+                </svg>
+
+            </div>
+
+            <h3 class="mt-4 font-semibold text-gray-800">
+                Informasi tidak ditemukan
+            </h3>
+
+            <p class="mt-1 text-sm text-gray-500">
+                Coba gunakan kata pencarian lainnya.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- INFO -->
+    <section class="max-w-7xl mx-auto px-5 md:px-8 pb-16">
+
+        <div class="bg-blue-50 border border-blue-100 rounded-2xl p-6 md:p-8">
+
+            <div class="flex gap-4">
+
+                <div class="w-11 h-11 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0">
+
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"/>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <h3 class="font-semibold text-blue-800">
+                        Informasi Edukasi
+                    </h3>
+
+                    <p class="mt-2 text-sm text-blue-700 leading-6">
+                        Informasi pada halaman ini ditujukan sebagai bahan edukasi mengenai penyakit menular.
+                        Untuk diagnosis dan penanganan medis, masyarakat tetap disarankan berkonsultasi dengan
+                        tenaga kesehatan.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white">
+
+        <div class="max-w-7xl mx-auto px-5 md:px-8 py-12">
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+
+                <div>
+
+                    <div class="flex items-center gap-3">
+
+                        <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+                            <span class="font-bold">PM</span>
+                        </div>
+
+                        <div>
+                            <p class="text-sm font-semibold">Penyakit Menular</p>
+                            <p class="text-xs text-gray-400">
+                                Informasi Kesehatan Sulawesi Utara
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <p class="mt-4 text-sm text-gray-400 leading-6">
+                        Aplikasi penyajian informasi penyakit menular untuk mendukung akses informasi kesehatan publik.
+                    </p>
+
+                </div>
+
+                <div>
+
+                    <h4 class="font-semibold text-sm">
+                        Menu
+                    </h4>
+
+                    <div class="mt-4 space-y-3">
+
+                        <a href="index.html" class="block text-sm text-gray-400 hover:text-white">
+                            Beranda
+                        </a>
+
+                        <a href="data-penyakit.html" class="block text-sm text-gray-400 hover:text-white">
+                            Data Penyakit
+                        </a>
+
+                        <a href="informasi-penyakit.html" class="block text-sm text-gray-400 hover:text-white">
+                            Informasi Penyakit
+                        </a>
+
+                        <a href="rekapitulasi.html" class="block text-sm text-gray-400 hover:text-white">
+                            Rekapitulasi
+                        </a>
+
+                        <a href="tentang-data.html" class="block text-sm text-gray-400 hover:text-white">
+                            Tentang Data
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div>
+
+                    <h4 class="font-semibold text-sm">
+                        Informasi
+                    </h4>
+
+                    <p class="mt-4 text-sm text-gray-400 leading-6">
+                        Informasi edukasi penyakit merupakan konten statis yang
+                        dikelola oleh Admin dan ditampilkan kepada masyarakat.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-gray-800 text-xs text-gray-500">
+                © 2026 Aplikasi Penyakit Menular. Informasi untuk masyarakat.
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- MODAL DETAIL -->
+    <div id="infoModal" class="fixed inset-0 z-[60] hidden items-center justify-center bg-black/40 p-4">
+
+        <div class="bg-white w-full max-w-4xl rounded-2xl shadow-xl max-h-[90vh] overflow-y-auto">
+
+            <!-- MODAL HEADER -->
+            <div class="sticky top-0 z-10 bg-white border-b border-gray-200 px-6 py-5 flex items-center justify-between">
+
+                <div>
+
+                    <span class="text-xs font-semibold text-blue-600 uppercase tracking-wider">
+                        Informasi Penyakit
+                    </span>
+
+                    <h3 id="modalTitle" class="mt-1 text-xl font-bold text-gray-900">
+                        TBC
+                    </h3>
+
+                </div>
+
+                <button onclick="closeModal()" class="p-2 rounded-lg hover:bg-gray-100 text-gray-500">
+
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+
+                </button>
+
+            </div>
+
+            <!-- MODAL CONTENT -->
+            <div class="p-6">
+
+                <!-- DESCRIPTION -->
+                <div>
+
+                    <h4 class="text-base font-semibold text-gray-900">
+                        Deskripsi Penyakit
+                    </h4>
+
+                    <p id="modalDescription" class="mt-3 text-sm text-gray-600 leading-7"></p>
+
+                </div>
+
+                <!-- SYMPTOMS -->
+                <div class="mt-8">
+
+                    <h4 class="text-base font-semibold text-gray-900">
+                        Gejala
+                    </h4>
+
+                    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-2xl p-5">
+
+                        <p id="modalSymptoms" class="text-sm text-gray-600 leading-7"></p>
+
+                    </div>
+
+                </div>
+
+                <!-- PREVENTION -->
+                <div class="mt-8">
+
+                    <h4 class="text-base font-semibold text-gray-900">
+                        Cara Pencegahan
+                    </h4>
+
+                    <div class="mt-3 bg-blue-50 border border-blue-100 rounded-2xl p-5">
+
+                        <p id="modalPrevention" class="text-sm text-blue-700 leading-7"></p>
+
+                    </div>
+
+                </div>
+
+                <!-- VIDEO -->
+                <div class="mt-8">
+
+                    <div class="flex items-center justify-between gap-4">
+
+                        <h4 class="text-base font-semibold text-gray-900">
+                            Video Edukasi
+                        </h4>
+
+                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-red-50 text-red-600 text-xs font-medium">
+                            YouTube
+                        </span>
+
+                    </div>
+
+                    <div id="videoContainer" class="mt-4 aspect-video bg-gray-100 rounded-2xl overflow-hidden">
+
+                        <iframe
+                            id="youtubeFrame"
+                            class="w-full h-full"
+                            src=""
+                            title="Video Edukasi"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+
+                    </div>
+
+                    <p id="noVideo" class="hidden mt-4 text-sm text-gray-500">
+                        Video edukasi belum tersedia.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- MODAL FOOTER -->
+            <div class="px-6 py-5 border-t border-gray-200 flex justify-end">
+
+                <button onclick="closeModal()" class="px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+                    Tutup
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const diseaseData = {
+            "TBC": {
+                description: "Tuberkulosis adalah penyakit infeksi yang disebabkan oleh bakteri Mycobacterium tuberculosis dan umumnya menyerang paru-paru.",
+                symptoms: "Batuk selama dua minggu atau lebih, batuk berdahak atau berdarah, demam, berkeringat di malam hari, lemas, dan berat badan menurun.",
+                prevention: "Menjaga ventilasi udara, menerapkan etika batuk, menggunakan masker saat diperlukan, menjaga pola hidup sehat, dan mengikuti pengobatan sampai selesai.",
+                youtube: ""
+            },
+
+            "HIV": {
+                description: "HIV adalah virus yang menyerang sistem kekebalan tubuh dan dapat menurunkan kemampuan tubuh dalam melawan infeksi.",
+                symptoms: "Demam, kelelahan, pembengkakan kelenjar getah bening, penurunan berat badan, dan infeksi berulang.",
+                prevention: "Menghindari perilaku berisiko, menggunakan alat kesehatan yang steril, melakukan pemeriksaan HIV sesuai kebutuhan, dan mendapatkan informasi kesehatan yang tepat.",
+                youtube: ""
+            },
+
+            "Malaria": {
+                description: "Malaria adalah penyakit yang disebabkan oleh parasit dan ditularkan melalui gigitan nyamuk Anopheles yang terinfeksi.",
+                symptoms: "Demam, menggigil, berkeringat, sakit kepala, lemas, dan dapat disertai mual.",
+                prevention: "Menghindari gigitan nyamuk, menggunakan kelambu, memakai pakaian tertutup, serta menjaga kebersihan lingkungan.",
+                youtube: ""
+            },
+
+            "ISPA": {
+                description: "ISPA merupakan infeksi yang menyerang saluran pernapasan dan dapat disebabkan oleh berbagai virus maupun bakteri.",
+                symptoms: "Batuk, pilek, demam, sakit tenggorokan, bersin, dan kesulitan bernapas pada kondisi tertentu.",
+                prevention: "Mencuci tangan, menjaga ventilasi ruangan, menggunakan masker saat diperlukan, serta menghindari kontak dekat dengan orang yang sedang sakit.",
+                youtube: ""
+            },
+
+            "HPISP": {
+                description: "HPISP mencakup kelompok penyakit seperti hepatitis dan infeksi saluran pencernaan termasuk diare.",
+                symptoms: "Mual, muntah, diare, sakit perut, demam, atau perubahan kondisi tubuh sesuai jenis penyakit.",
+                prevention: "Menjaga kebersihan makanan dan minuman, mencuci tangan menggunakan sabun, serta menjaga sanitasi lingkungan.",
+                youtube: ""
+            },
+
+            "Kusta & Frambusia": {
+                description: "Kusta dan frambusia merupakan penyakit yang membutuhkan penanganan dini untuk mencegah komplikasi dan penularan.",
+                symptoms: "Perubahan pada kulit, bercak, gangguan rasa pada bagian tubuh tertentu, atau kelainan lain sesuai jenis penyakit.",
+                prevention: "Menjaga kebersihan, mengenali gejala sejak dini, menghindari stigma, dan mendapatkan pengobatan sesuai anjuran tenaga kesehatan.",
+                youtube: ""
+            },
+
+            "Zoonosis": {
+                description: "Zoonosis adalah kelompok penyakit yang dapat ditularkan antara hewan dan manusia, termasuk rabies, leptospirosis, antraks, dan flu burung.",
+                symptoms: "Gejala berbeda berdasarkan jenis penyakit, seperti demam, nyeri, gangguan saraf, atau gangguan pernapasan.",
+                prevention: "Menghindari kontak berisiko dengan hewan, menjaga kebersihan lingkungan, serta segera mendapatkan pertolongan medis setelah paparan berisiko.",
+                youtube: ""
+            },
+
+            "Arbovirosis (DBD)": {
+                description: "Arbovirosis merupakan kelompok penyakit yang ditularkan oleh arthropoda. Salah satunya adalah demam berdarah dengue atau DBD.",
+                symptoms: "Demam tinggi, sakit kepala, nyeri otot dan sendi, mual, serta tanda perdarahan pada kondisi tertentu.",
+                prevention: "Melakukan 3M Plus, yaitu menguras, menutup dan mendaur ulang, serta mencegah perkembangbiakan nyamuk.",
+                youtube: ""
+            },
+
+            "Filariasis & Kecacingan": {
+                description: "Filariasis dan kecacingan merupakan penyakit yang disebabkan oleh parasit yang dapat mengganggu kondisi kesehatan dan produktivitas.",
+                symptoms: "Pembengkakan anggota tubuh pada filariasis, sedangkan kecacingan dapat menyebabkan sakit perut, lemas, dan gangguan pertumbuhan.",
+                prevention: "Menjaga kebersihan diri dan lingkungan, menggunakan alas kaki, mencuci tangan, serta mengikuti program pemberian obat pencegahan.",
+                youtube: ""
+            }
+        };
+
+        const infoModal = document.getElementById("infoModal");
+
+        function openModal(disease) {
+            const data = diseaseData[disease];
+
+            if (!data) return;
+
+            document.getElementById("modalTitle").textContent = disease;
+            document.getElementById("modalDescription").textContent = data.description;
+            document.getElementById("modalSymptoms").textContent = data.symptoms;
+            document.getElementById("modalPrevention").textContent = data.prevention;
+
+            const frame = document.getElementById("youtubeFrame");
+            const videoContainer = document.getElementById("videoContainer");
+            const noVideo = document.getElementById("noVideo");
+
+            if (data.youtube) {
+                frame.src = data.youtube;
+                videoContainer.classList.remove("hidden");
+                noVideo.classList.add("hidden");
+            } else {
+                frame.src = "";
+                videoContainer.classList.add("hidden");
+                noVideo.classList.remove("hidden");
+            }
+
+            infoModal.classList.remove("hidden");
+            infoModal.classList.add("flex");
+            document.body.classList.add("overflow-hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("youtubeFrame").src = "";
+
+            infoModal.classList.add("hidden");
+            infoModal.classList.remove("flex");
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        document.getElementById("menuButton").addEventListener("click", () => {
+            document.getElementById("mobileMenu").classList.toggle("hidden");
+        });
+
+        document.getElementById("searchInput").addEventListener("input", function () {
+
+            const keyword = this.value.toLowerCase().trim();
+            const cards = document.querySelectorAll(".disease-card");
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+
+                const name = card.dataset.name.toLowerCase();
+
+                if (name.includes(keyword)) {
+                    card.classList.remove("hidden");
+                    visibleCount++;
+                } else {
+                    card.classList.add("hidden");
+                }
+
+            });
+
+            document.getElementById("noResult").classList.toggle(
+                "hidden",
+                visibleCount !== 0
+            );
+
+        });
+
+        infoModal.addEventListener("click", function(e) {
+
+            if (e.target === infoModal) {
+                closeModal();
+            }
+
+        });
+
+        document.addEventListener("keydown", function(e) {
+
+            if (e.key === "Escape") {
+                closeModal();
+            }
+
+        });
+    </script>
+
+</body>
+</html>

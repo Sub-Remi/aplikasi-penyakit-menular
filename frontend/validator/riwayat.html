@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat Validasi - Validator</title>
+
+    <script src="../js/auth.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { poppins: ['Poppins', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-poppins bg-gray-50 text-gray-800">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="fixed left-0 top-0 z-50 h-screen w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+
+        <div class="h-20 flex items-center px-6 border-b border-gray-200">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <span class="text-white font-bold">PM</span>
+            </div>
+            <div class="ml-3">
+                <h1 class="text-sm font-semibold text-gray-900">Penyakit Menular</h1>
+                <p class="text-xs text-gray-500">Panel Validator</p>
+            </div>
+        </div>
+
+        <nav class="p-4 space-y-1">
+
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-12h8V3h-8v6z"/>
+                </svg>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+
+            <a href="validasi.html" class="flex items-center justify-between px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span class="text-sm font-medium">Validasi Data</span>
+                </div>
+                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">8</span>
+            </a>
+
+            <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/>
+                </svg>
+                <span class="text-sm font-medium">Rekapitulasi</span>
+            </a>
+
+            <a href="riwayat.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span class="text-sm font-medium">Riwayat Validasi</span>
+            </a>
+
+        </nav>
+
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span class="text-sm font-semibold text-blue-600">VL</span>
+                </div>
+
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-gray-800 truncate">Validator</p>
+                    <p class="text-xs text-gray-500">Petugas Validasi</p>
+                </div>
+
+                <button onclick="logout()" class="text-gray-400 hover:text-red-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l-4-4m0 0l4-4m-4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"></div>
+
+    <!-- MAIN -->
+    <div class="lg:ml-64 min-h-screen">
+
+        <!-- HEADER -->
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-5 md:px-8">
+
+            <div class="flex items-center gap-4">
+
+                <button id="menuButton" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+                <div>
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-900">Riwayat Validasi</h2>
+                    <p class="text-xs md:text-sm text-gray-500">Riwayat pemeriksaan dan keputusan validasi data</p>
+                </div>
+
+            </div>
+
+            <button onclick="showNotification()" class="relative p-2.5 rounded-xl hover:bg-gray-100">
+                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.5-2A2 2 0 0118 14V11a6 6 0 00-12 0v3a2 2 0 01-.5 1L4 17h5m6 0a3 3 0 01-6 0"/>
+                </svg>
+                <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
+            </button>
+
+        </header>
+
+        <!-- CONTENT -->
+        <main class="p-5 md:p-8">
+
+            <section>
+                <h1 class="text-2xl font-bold text-gray-900">Riwayat Validasi</h1>
+                <p class="mt-1 text-sm text-gray-500">Lihat seluruh keputusan validasi yang telah dilakukan.</p>
+            </section>
+
+            <!-- SUMMARY -->
+            <section class="mt-7">
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Aktivitas Hari Ini</p>
+                                <p class="mt-2 text-2xl font-bold text-gray-900">14</p>
+                                <p class="mt-2 text-xs text-blue-600">Aktivitas validasi</p>
+                            </div>
+
+                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Disetujui</p>
+                                <p class="mt-2 text-2xl font-bold text-gray-900">212</p>
+                                <p class="mt-2 text-xs text-green-600">Data disetujui</p>
+                            </div>
+
+                            <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Dikembalikan</p>
+                                <p class="mt-2 text-2xl font-bold text-gray-900">3</p>
+                                <p class="mt-2 text-xs text-red-600">Perlu diperbaiki</p>
+                            </div>
+
+                            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <p class="text-sm text-gray-500">Total Validasi</p>
+                                <p class="mt-2 text-2xl font-bold text-gray-900">215</p>
+                                <p class="mt-2 text-xs text-blue-600">Seluruh keputusan</p>
+                            </div>
+
+                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5h6M7 8h10M6 3h12a1 1 0 011 1v16l-7-4-7 4V4a1 1 0 011-1z"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- FILTER -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+
+                    <div class="xl:col-span-2">
+                        <label class="block text-xs font-medium text-gray-600 mb-2">Cari Riwayat</label>
+
+                        <div class="relative">
+                            <svg class="absolute left-3 top-3 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="m21 21-4.3-4.3m2.3-5.7a8 8 0 11-16 0 8 8 0 0116 0z"/>
+                            </svg>
+
+                            <input id="searchInput" type="text" placeholder="Cari penyakit, wilayah, atau Admin..." class="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-2">Periode</label>
+
+                        <select id="periodFilter" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500">
+                            <option value="">Semua Periode</option>
+                            <option>Januari 2026</option>
+                            <option>Februari 2026</option>
+                            <option>Maret 2026</option>
+                            <option>April 2026</option>
+                            <option>Mei 2026</option>
+                            <option>Juni 2026</option>
+                            <option>Juli 2026</option>
+                            <option>Agustus 2026</option>
+                            <option>September 2026</option>
+                            <option>Oktober 2026</option>
+                            <option>November 2026</option>
+                            <option>Desember 2026</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-2">Keputusan</label>
+
+                        <select id="decisionFilter" class="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500">
+                            <option value="">Semua Keputusan</option>
+                            <option value="Disetujui">Disetujui</option>
+                            <option value="Dikembalikan">Dikembalikan</option>
+                        </select>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- TABLE -->
+            <section class="mt-6 bg-white border border-gray-200 rounded-2xl overflow-hidden">
+
+                <div class="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Riwayat Aktivitas Validasi</h3>
+                        <p class="text-xs text-gray-500 mt-1">Daftar keputusan validasi yang telah dilakukan.</p>
+                    </div>
+
+                    <span class="text-xs bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg">215 Riwayat</span>
+                </div>
+
+                <div class="overflow-x-auto">
+
+                    <table class="w-full text-sm">
+
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Penyakit</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Wilayah</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Periode</th>
+                                <th class="text-right px-6 py-4 font-medium text-gray-500">Kasus</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Keputusan</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Tanggal</th>
+                                <th class="text-right px-6 py-4 font-medium text-gray-500">Aksi</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="dataTable" class="divide-y divide-gray-100"></tbody>
+
+                    </table>
+
+                </div>
+
+                <div class="px-6 py-4 border-t border-gray-200 flex items-center justify-between">
+
+                    <p id="resultInfo" class="text-xs text-gray-500">Menampilkan 12 riwayat</p>
+
+                    <div class="flex gap-2">
+                        <button class="w-9 h-9 rounded-lg border border-gray-200 text-gray-400">‹</button>
+                        <button class="w-9 h-9 rounded-lg bg-blue-600 text-white text-sm">1</button>
+                        <button class="w-9 h-9 rounded-lg border border-gray-200 text-gray-600">2</button>
+                        <button class="w-9 h-9 rounded-lg border border-gray-200 text-gray-600">3</button>
+                        <button class="w-9 h-9 rounded-lg border border-gray-200 text-gray-600">›</button>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- INFO -->
+            <section class="mt-6 mb-8">
+
+                <div class="bg-blue-50 border border-blue-100 rounded-2xl p-5">
+
+                    <div class="flex gap-3">
+
+                        <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"/>
+                        </svg>
+
+                        <div>
+                            <h4 class="text-sm font-semibold text-blue-800">Informasi Riwayat</h4>
+                            <p class="mt-1 text-xs text-blue-700 leading-relaxed">
+                                Riwayat validasi digunakan sebagai catatan aktivitas Validator. Setiap data yang disetujui maupun dikembalikan akan tercatat beserta waktu, keputusan, dan catatan validasi.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modal" class="hidden fixed inset-0 z-[60] flex items-center justify-center p-4">
+
+        <div id="modalOverlay" class="absolute inset-0 bg-black/50"></div>
+
+        <div class="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-white rounded-2xl shadow-xl">
+
+            <div class="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
+
+                <div>
+                    <h3 class="font-semibold text-gray-900">Detail Riwayat</h3>
+                    <p class="text-xs text-gray-500 mt-1">Informasi lengkap keputusan validasi.</p>
+                </div>
+
+                <button onclick="closeModal()" class="w-9 h-9 rounded-lg hover:bg-gray-100 text-gray-500 text-xl">
+                    ×
+                </button>
+
+            </div>
+
+            <div class="p-6">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Kelompok Penyakit</p>
+                        <p id="modalDisease" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Wilayah</p>
+                        <p id="modalRegion" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Periode</p>
+                        <p id="modalPeriod" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Jumlah Kasus</p>
+                        <p id="modalCases" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Diajukan Oleh</p>
+                        <p id="modalUser" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <p class="text-xs text-gray-500">Tanggal Validasi</p>
+                        <p id="modalDate" class="mt-1 text-sm font-semibold text-gray-900">-</p>
+                    </div>
+
+                </div>
+
+                <div class="mt-6">
+                    <p class="text-sm font-semibold text-gray-900 mb-2">Keputusan</p>
+                    <div id="modalDecision"></div>
+                </div>
+
+                <div class="mt-6">
+                    <p class="text-sm font-semibold text-gray-900 mb-2">Catatan Validasi</p>
+
+                    <div id="modalNote" class="bg-gray-50 border border-gray-200 rounded-xl p-4 text-sm text-gray-600 leading-relaxed">
+                        -
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="px-6 py-5 border-t border-gray-200 flex justify-end">
+
+                <button onclick="closeModal()" class="px-5 py-3 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50">
+                    Tutup
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        const data = [
+            {id:1,disease:"TBC",region:"Manado",period:"September 2026",cases:24,decision:"Disetujui",user:"Admin Petugas",date:"13 Sep 2026, 14:25",note:"Data sesuai dengan laporan yang diterima dan siap dipublikasikan."},
+            {id:2,disease:"HIV",region:"Bitung",period:"September 2026",cases:12,decision:"Disetujui",user:"Admin Petugas",date:"13 Sep 2026, 13:40",note:"Data telah diperiksa dan dinyatakan sesuai."},
+            {id:3,disease:"Malaria",region:"Minahasa Selatan",period:"September 2026",cases:18,decision:"Dikembalikan",user:"Admin Petugas",date:"13 Sep 2026, 11:20",note:"Mohon periksa kembali jumlah kasus sebelum diajukan ulang."},
+            {id:4,disease:"ISPA",region:"Tomohon",period:"September 2026",cases:31,decision:"Disetujui",user:"Admin Data",date:"12 Sep 2026, 15:10",note:"Data telah divalidasi dan dinyatakan benar."},
+            {id:5,disease:"HPISP",region:"Minahasa Utara",period:"Agustus 2026",cases:27,decision:"Disetujui",user:"Admin Petugas",date:"12 Sep 2026, 14:05",note:"Data sesuai dengan dokumen laporan."},
+            {id:6,disease:"Zoonosis",region:"Minahasa Tenggara",period:"Agustus 2026",cases:9,decision:"Disetujui",user:"Admin Petugas",date:"12 Sep 2026, 10:45",note:"Data dapat diproses ke tahap publikasi."},
+            {id:7,disease:"Arbovirosis (DBD)",region:"Kotamobagu",period:"Agustus 2026",cases:22,decision:"Dikembalikan",user:"Admin Petugas",date:"11 Sep 2026, 16:15",note:"Mohon sesuaikan periode data dengan laporan sumber."},
+            {id:8,disease:"Kusta & Frambusia",region:"Kepulauan Sangihe",period:"Agustus 2026",cases:7,decision:"Disetujui",user:"Admin Data",date:"11 Sep 2026, 13:20",note:"Data telah diperiksa dan sesuai."},
+            {id:9,disease:"Filariasis & Kecacingan",region:"Kepulauan Talaud",period:"Juli 2026",cases:11,decision:"Disetujui",user:"Admin Petugas",date:"10 Sep 2026, 15:35",note:"Data sesuai laporan dan siap dipublikasikan."},
+            {id:10,disease:"TBC",region:"Minahasa",period:"Juli 2026",cases:21,decision:"Disetujui",user:"Admin Data",date:"10 Sep 2026, 11:10",note:"Tidak ditemukan ketidaksesuaian pada data."},
+            {id:11,disease:"HIV",region:"Bitung",period:"Juni 2026",cases:10,decision:"Disetujui",user:"Admin Petugas",date:"09 Sep 2026, 14:10",note:"Data telah divalidasi."},
+            {id:12,disease:"Arbovirosis (DBD)",region:"Manado",period:"Juni 2026",cases:28,decision:"Disetujui",user:"Admin Data",date:"09 Sep 2026, 09:50",note:"Data sesuai dengan laporan sumber."}
+        ];
+
+        const table = document.getElementById("dataTable");
+        const searchInput = document.getElementById("searchInput");
+        const periodFilter = document.getElementById("periodFilter");
+        const decisionFilter = document.getElementById("decisionFilter");
+        const modal = document.getElementById("modal");
+
+        function render() {
+            const search = searchInput.value.toLowerCase();
+
+            const filtered = data.filter(item =>
+                (!search || `${item.disease} ${item.region} ${item.user}`.toLowerCase().includes(search)) &&
+                (!periodFilter.value || item.period === periodFilter.value) &&
+                (!decisionFilter.value || item.decision === decisionFilter.value)
+            );
+
+            table.innerHTML = filtered.length
+                ? filtered.map(item => `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 font-semibold text-gray-900">${item.disease}</td>
+                        <td class="px-6 py-4 text-gray-600">${item.region}</td>
+                        <td class="px-6 py-4 text-gray-600">${item.period}</td>
+                        <td class="px-6 py-4 text-right font-semibold">${item.cases}</td>
+                        <td class="px-6 py-4">
+                            ${item.decision === "Disetujui"
+                                ? '<span class="inline-flex px-3 py-1 rounded-lg bg-green-50 text-green-600 text-xs font-semibold">Disetujui</span>'
+                                : '<span class="inline-flex px-3 py-1 rounded-lg bg-red-50 text-red-600 text-xs font-semibold">Dikembalikan</span>'}
+                        </td>
+                        <td class="px-6 py-4 text-gray-600 whitespace-nowrap">${item.date}</td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="openModal(${item.id})" class="px-3 py-2 rounded-lg bg-blue-50 text-blue-600 text-xs font-semibold hover:bg-blue-100">
+                                Detail
+                            </button>
+                        </td>
+                    </tr>
+                `).join("")
+                : `
+                    <tr>
+                        <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                            Tidak ada riwayat yang sesuai.
+                        </td>
+                    </tr>
+                `;
+
+            document.getElementById("resultInfo").textContent = `Menampilkan ${filtered.length} riwayat`;
+        }
+
+        function openModal(id) {
+            const item = data.find(item => item.id === id);
+            if (!item) return;
+
+            document.getElementById("modalDisease").textContent = item.disease;
+            document.getElementById("modalRegion").textContent = item.region;
+            document.getElementById("modalPeriod").textContent = item.period;
+            document.getElementById("modalCases").textContent = item.cases;
+            document.getElementById("modalUser").textContent = item.user;
+            document.getElementById("modalDate").textContent = item.date;
+            document.getElementById("modalNote").textContent = item.note;
+
+            document.getElementById("modalDecision").innerHTML =
+                item.decision === "Disetujui"
+                    ? '<span class="inline-flex px-3 py-1.5 rounded-lg bg-green-50 text-green-600 text-xs font-semibold">Disetujui</span>'
+                    : '<span class="inline-flex px-3 py-1.5 rounded-lg bg-red-50 text-red-600 text-xs font-semibold">Dikembalikan</span>';
+
+            modal.classList.remove("hidden");
+            document.body.classList.add("overflow-hidden");
+        }
+
+        function closeModal() {
+            modal.classList.add("hidden");
+            document.body.classList.remove("overflow-hidden");
+        }
+
+        function showNotification() {
+            alert("Notifikasi:\n\n• 8 data menunggu validasi.\n• 3 data sebelumnya dikembalikan.");
+        }
+
+        function logout() {
+            if (confirm("Apakah Anda yakin ingin keluar?")) {
+                alert("Logout akan dihubungkan dengan autentikasi Laravel.");
+            }
+        }
+
+        searchInput.addEventListener("input", render);
+        periodFilter.addEventListener("change", render);
+        decisionFilter.addEventListener("change", render);
+
+        document.getElementById("modalOverlay").addEventListener("click", closeModal);
+
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const menuButton = document.getElementById("menuButton");
+
+        menuButton.addEventListener("click", () => {
+            sidebar.classList.remove("-translate-x-full");
+            overlay.classList.remove("hidden");
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+
+        render();
+    </script>
+
+</body>
+</html>

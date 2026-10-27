@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- KUNCI 1: ANTI-CACHE BROWSER -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title>Login - Aplikasi Penyakit Menular</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { poppins: ['Poppins', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* KUNCI 2: TIRAI. Sembunyikan body sampai status login dipastikan */
+        body { visibility: hidden; }
+    </style>
+</head>
+
+<body class="font-poppins bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen flex items-center justify-center p-4">
+
+    <!-- LOGIN CARD -->
+    <div class="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-10">
+
+        <!-- LOGO -->
+        <div class="flex justify-center">
+            <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200">
+                <span class="text-white font-bold text-xl">PM</span>
+            </div>
+        </div>
+
+        <!-- TITLE -->
+        <div class="mt-6 text-center">
+            <h1 class="text-2xl font-bold text-gray-900">Masuk ke Aplikasi</h1>
+            <p class="mt-2 text-sm text-gray-500">Aplikasi Informasi Penyakit Menular</p>
+            <p class="text-xs text-gray-400">Dinas Kesehatan Provinsi Sulawesi Utara</p>
+        </div>
+
+        <!-- ALERT -->
+        <div id="alertBox" class="hidden mt-6 px-4 py-3 rounded-xl text-sm"></div>
+
+        <!-- FORM -->
+        <form id="loginForm" class="mt-8 space-y-5" onsubmit="handleLogin(event)">
+
+            <!-- USERNAME -->
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                <div class="relative">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    <input
+                        id="username"
+                        type="text"
+                        placeholder="Masukkan username"
+                        autocomplete="username"
+                        required
+                        class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+                    >
+                </div>
+            </div>
+
+            <!-- PASSWORD -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <div class="relative">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                    <input
+                        id="password"
+                        type="password"
+                        placeholder="Masukkan password"
+                        autocomplete="current-password"
+                        required
+                        class="w-full pl-10 pr-12 py-3 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500"
+                    >
+                    <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+                        <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- BUTTON LOGIN -->
+            <button
+                type="submit"
+                id="loginButton"
+                class="w-full py-3 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+                Login
+            </button>
+
+        </form>
+
+        <!-- INFO -->
+        <div class="mt-6 text-center">
+            <p class="text-xs text-gray-400">
+                Login hanya untuk Admin dan Validator.<br>
+                Masyarakat dapat mengakses informasi tanpa login.
+            </p>
+        </div>
+
+        <!-- LINK KE PUBLIK -->
+        <div class="mt-6 pt-5 border-t border-gray-100 text-center">
+            <a href="../Masyarakat/index.html" class="text-sm text-blue-600 hover:text-blue-700 font-medium">
+                Kembali ke Beranda Publik
+            </a>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        // KUNCI 3: PENGECEKAN SESSION & BUKA TIRAI
+        async function checkAuth() {
+            const btn = document.getElementById("loginButton");
+            if (btn) {
+                btn.disabled = false;
+                btn.textContent = "Login";
+            }
+
+            try {
+                const response = await fetch("http://localhost:3000/api/auth/me", {
+                    credentials: "include"
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.user.role === "admin") {
+                        window.location.replace("../admin/index.html"); 
+                    } else if (data.user.role === "validator") {
+                        window.location.replace("../validator/index.html"); 
+                    }
+                } else {
+                    // Buka tirai jika belum login
+                    document.body.style.visibility = 'visible';
+                }
+            } catch (error) {
+                // Buka tirai jika backend mati
+                document.body.style.visibility = 'visible';
+            }
+        }
+
+        checkAuth();
+
+        // Paksa cek ulang jika diakses dari tombol Back (BFCache)
+        window.addEventListener('pageshow', function (event) {
+            if (event.persisted) {
+                document.body.style.visibility = 'hidden';
+                checkAuth();
+            }
+        });
+
+        // FUNGSI TOGGLE PASSWORD (Mata)
+        function togglePassword() {
+            const password = document.getElementById("password");
+            const eyeIcon = document.getElementById("eyeIcon");
+
+            if (password.type === "password") {
+                password.type = "text";
+                eyeIcon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.477 0-8.268-2.943-9.542-7a9.97 9.97 0 012.223-3.592m3.72-2.223A9.956 9.956 0 0112 5c4.477 0 8.268 2.943 9.542 7a10.025 10.025 0 01-4.132 5.411M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3l18 18"/>
+                `;
+            } else {
+                password.type = "password";
+                eyeIcon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                `;
+            }
+        }
+
+        // FUNGSI ALERT
+        function showAlert(message, type = "error") {
+            const alertBox = document.getElementById("alertBox");
+            alertBox.classList.remove("hidden");
+
+            if (type === "error") {
+                alertBox.className = "mt-6 px-4 py-3 rounded-xl text-sm bg-red-50 text-red-600 border border-red-100";
+            } else if (type === "success") {
+                alertBox.className = "mt-6 px-4 py-3 rounded-xl text-sm bg-green-50 text-green-600 border border-green-100";
+            }
+
+            alertBox.textContent = message;
+        }
+
+        // FUNGSI LOGIN
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const loginButton = document.getElementById("loginButton");
+            const alertBox = document.getElementById("alertBox");
+
+            if (!username || !password) {
+                showAlert("Username dan password wajib diisi.");
+                return;
+            }
+
+            loginButton.disabled = true;
+            loginButton.textContent = "Memproses...";
+            alertBox.classList.add("hidden"); 
+
+            try {
+                const response = await fetch("http://localhost:3000/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ username: username, password: password }),
+                    credentials: "include"
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showAlert(data.message, "success");
+                    
+                    setTimeout(() => {
+                        if (data.user.role === "admin") {
+                            window.location.replace("../admin/index.html");
+                        } else if (data.user.role === "validator") {
+                            window.location.replace("../validator/index.html");
+                        } else {
+                            showAlert("Role tidak dikenali.");
+                            loginButton.disabled = false;
+                            loginButton.textContent = "Login";
+                        }
+                    }, 1000);
+
+                } else {
+                    showAlert(data.message || "Login gagal.");
+                    loginButton.disabled = false;
+                    loginButton.textContent = "Login";
+                }
+
+            } catch (error) {
+                console.error(error);
+                showAlert("Tidak dapat terhubung ke server. Pastikan backend menyala.");
+                loginButton.disabled = false;
+                loginButton.textContent = "Login";
+            }
+        }
+    </script>
+
+</body>
+</html>

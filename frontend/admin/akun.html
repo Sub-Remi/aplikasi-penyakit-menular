@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akun Pengguna - Admin</title>
+
+    <!-- AUTH GUARD -->
+    <script src="../js/auth.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { poppins: ['Poppins', 'sans-serif'] } } } }
+    </script>
+</head>
+
+<body class="font-poppins bg-gray-50 text-gray-800">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="fixed left-0 top-0 z-50 h-screen w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+        <div class="h-20 flex items-center px-6 border-b border-gray-200">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <span class="text-white font-bold">PM</span>
+            </div>
+            <div class="ml-3">
+                <h1 class="text-sm font-semibold text-gray-900">Penyakit Menular</h1>
+                <p class="text-xs text-gray-500">Panel Admin</p>
+            </div>
+        </div>
+
+        <nav class="p-4 space-y-1">
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-12h8V3h-8v6z"/></svg>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            <a href="data-kasus.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a3 3 0 006 0M9 5h6"/></svg>
+                <span class="text-sm font-medium">Data Kasus</span>
+            </a>
+            <a href="validasi.html" class="flex items-center justify-between px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="text-sm font-medium">Pengajuan validasi</span>
+                </div>
+                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">8</span>
+            </a>
+            <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/></svg>
+                <span class="text-sm font-medium">Rekapitulasi</span>
+            </a>
+            <a href="informasi-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-8a9 9 0 100 18 9 9 0 000-18zm0 5h.01"/></svg>
+                <span class="text-sm font-semibold">Informasi Penyakit</span>
+            </a>
+
+            <div class="pt-4">
+                <p class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Pengaturan</p>
+                <a href="master-data.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <span class="text-sm font-medium">Master Data</span>
+                </a>
+                <a href="akun.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span class="text-sm font-medium">Akun Pengguna</span>
+                </a>
+                <a href="riwayat.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="text-sm font-medium">Riwayat Aktivitas</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span id="userInitial" class="text-sm font-semibold text-blue-600">AD</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p id="sidebarUserName" class="text-sm font-semibold text-gray-800 truncate">Memuat...</p>
+                    <p id="sidebarUserRole" class="text-xs text-gray-500">...</p>
+                </div>
+                <button onclick="logout()" class="text-gray-400 hover:text-red-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"></div>
+
+    <!-- MAIN -->
+    <div class="lg:ml-64 min-h-screen">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-5 md:px-8">
+            <div class="flex items-center gap-4">
+                <button id="menuButton" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+                <div>
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-900">Akun Pengguna</h2>
+                    <p class="text-xs md:text-sm text-gray-500">Kelola akun dan hak akses pengguna aplikasi</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="p-5 md:p-8">
+            <section class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Akun Pengguna</h1>
+                    <p class="mt-1 text-sm text-gray-500">Kelola pengguna yang memiliki akses ke dalam aplikasi.</p>
+                </div>
+                <button onclick="openModal()" class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Tambah Akun
+                </button>
+            </section>
+
+            <!-- SUMMARY -->
+            <section class="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Total Akun</p>
+                    <p id="totalAkun" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                    <p class="mt-2 text-xs text-gray-500">Seluruh akun pengguna</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Admin</p>
+                    <p id="totalAdmin" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                    <p class="mt-2 text-xs text-blue-600">Pengelola data</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Validator</p>
+                    <p id="totalValidator" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                    <p class="mt-2 text-xs text-orange-600">Pemeriksa data</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Akun Aktif</p>
+                    <p id="totalAktif" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                    <p class="mt-2 text-xs text-green-600">Dapat mengakses aplikasi</p>
+                </div>
+            </section>
+
+            <!-- TABLE -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-gray-50 border-t border-gray-200">
+                            <tr>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">No.</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Pengguna</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Username</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Role</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Status</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Terakhir Aktif</th>
+                                <th class="text-center px-6 py-4 font-medium text-gray-500">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountTable" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL TAMBAH/EDIT -->
+    <div id="accountModal" class="fixed inset-0 z-[60] hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-5 border-b border-gray-200">
+                <div>
+                    <h3 id="modalTitle" class="text-lg font-semibold text-gray-900">Tambah Akun</h3>
+                    <p class="text-xs text-gray-500 mt-1">Masukkan informasi pengguna</p>
+                </div>
+                <button onclick="closeModal()" class="p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Nama Pengguna</label>
+                    <input id="modalName" type="text" placeholder="Masukkan nama pengguna" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input id="modalUsername" type="text" placeholder="Masukkan username" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Role</label>
+                    <select id="modalRole" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Pilih role</option>
+                        <option value="admin">Admin</option>
+                        <option value="validator">Validator</option>
+                    </select>
+                    <!-- Peringatan jika mengedit akun sendiri -->
+                    <p id="roleWarning" class="hidden mt-2 text-xs text-orange-600">Anda tidak dapat mengubah role akun sendiri.</p>
+                </div>
+                <div id="passwordField">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input id="modalPassword" type="password" placeholder="Masukkan password" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div id="statusField" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                    <select id="modalStatus" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="aktif">Aktif</option>
+                        <option value="nonaktif">Nonaktif</option>
+                    </select>
+                    <p id="statusWarning" class="hidden mt-2 text-xs text-orange-600">Anda tidak dapat menonaktifkan akun sendiri.</p>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 px-6 py-4 border-t border-gray-200">
+                <button onclick="closeModal()" class="px-4 py-2.5 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">Batal</button>
+                <button onclick="saveAccount()" class="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        let currentEditId = null;
+        let loggedInUserId = null; // Menyimpan ID user yang sedang login
+
+        // --- 1. FUNGSI LOAD DATA DARI API ---
+        async function loadUsers() {
+            try {
+                const response = await fetch("http://localhost:3000/api/users", {
+                    credentials: "include"
+                });
+                const users = await response.json();
+
+                const tbody = document.getElementById("accountTable");
+                tbody.innerHTML = "";
+
+                // Update summary
+                document.getElementById("totalAkun").textContent = users.length;
+                document.getElementById("totalAdmin").textContent = users.filter(u => u.role === 'admin').length;
+                document.getElementById("totalValidator").textContent = users.filter(u => u.role === 'validator').length;
+                document.getElementById("totalAktif").textContent = users.filter(u => u.status === 'aktif').length;
+
+                if (users.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">Belum ada akun.</td></tr>`;
+                    return;
+                }
+
+                users.forEach((user, index) => {
+                    const roleColor = user.role === 'admin' ? 'bg-blue-50 text-blue-600' : 'bg-orange-50 text-orange-600';
+                    const roleName = user.role === 'admin' ? 'Admin' : 'Validator';
+                    const statusColor = user.status === 'aktif' ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-600';
+                    const initials = user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                    const lastLogin = user.last_login ? new Date(user.last_login).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : '-';
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 text-gray-500">${index + 1}</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-semibold text-xs">${initials}</div>
+                                    <div>
+                                        <p class="font-semibold text-gray-900">${user.nama}</p>
+                                        <p class="text-xs text-gray-400">${roleName}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-gray-600">${user.username}</td>
+                            <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-medium ${roleColor}">${roleName}</span></td>
+                            <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-medium ${statusColor}">${user.status}</span></td>
+                            <td class="px-6 py-4 text-gray-500">${lastLogin}</td>
+                            <td class="px-6 py-4">
+                                <div class="flex justify-center gap-1">
+                                    <button onclick="editAccount(${user.id}, '${user.nama}', '${user.username}', '${user.role}', '${user.status}')" class="p-2 rounded-lg text-gray-500 hover:text-blue-600 hover:bg-blue-50" title="Edit">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                    </button>
+                                    <button onclick="resetPassword(${user.id})" class="p-2 rounded-lg text-gray-500 hover:text-orange-600 hover:bg-orange-50" title="Reset Password">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a3 3 0 10-6 0c0 1.306.835 2.416 2 2.829V11h2V9.829A3.001 3.001 0 0015 7zM5 12a7 7 0 0114 0v2H5v-2z"/></svg>
+                                    </button>
+                                    <button onclick="deleteAccount(${user.id}, '${user.nama}')" class="p-2 rounded-lg text-gray-500 hover:text-red-600 hover:bg-red-50" title="Hapus Akun">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (error) {
+                console.error("Gagal load users", error);
+            }
+        }
+
+        // --- 2. FUNGSI MODAL ---
+        function openModal() {
+            currentEditId = null;
+            document.getElementById("modalTitle").textContent = "Tambah Akun";
+            document.getElementById("modalName").value = "";
+            document.getElementById("modalUsername").value = "";
+            document.getElementById("modalRole").value = "";
+            document.getElementById("modalPassword").value = "";
+            document.getElementById("passwordField").classList.remove("hidden");
+            document.getElementById("statusField").classList.add("hidden");
+            
+            // Aktifkan kembali semua form
+            document.getElementById("modalRole").disabled = false;
+            document.getElementById("modalStatus").disabled = false;
+            document.getElementById("roleWarning").classList.add("hidden");
+            document.getElementById("statusWarning").classList.add("hidden");
+
+            document.getElementById("accountModal").classList.remove("hidden");
+        }
+
+        function editAccount(id, nama, username, role, status) {
+            currentEditId = id;
+            document.getElementById("modalTitle").textContent = "Edit Akun";
+            document.getElementById("modalName").value = nama;
+            document.getElementById("modalUsername").value = username;
+            document.getElementById("modalRole").value = role;
+            document.getElementById("modalStatus").value = status;
+            document.getElementById("passwordField").classList.add("hidden");
+            document.getElementById("statusField").classList.remove("hidden");
+
+            // Cek apakah yang diedit adalah akun sendiri
+            const isSelf = (loggedInUserId === id);
+            document.getElementById("modalRole").disabled = isSelf;
+            document.getElementById("modalStatus").disabled = isSelf;
+            
+            // Tampilkan atau sembunyikan teks peringatan
+            document.getElementById("roleWarning").classList.toggle("hidden", !isSelf);
+            document.getElementById("statusWarning").classList.toggle("hidden", !isSelf);
+
+            document.getElementById("accountModal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("accountModal").classList.add("hidden");
+        }
+
+        // --- 3. FUNGSI SIMPAN (TAMBAH/EDIT) ---
+        async function saveAccount() {
+            const nama = document.getElementById("modalName").value.trim();
+            const username = document.getElementById("modalUsername").value.trim();
+            const role = document.getElementById("modalRole").value;
+            const password = document.getElementById("modalPassword").value;
+            const status = document.getElementById("modalStatus").value;
+
+            if (!nama || !username || !role) {
+                alert("Nama, username, dan role wajib diisi.");
+                return;
+            }
+
+            try {
+                let response;
+                if (currentEditId) {
+                    response = await fetch(`http://localhost:3000/api/users/${currentEditId}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ nama, username, role, status }),
+                        credentials: "include"
+                    });
+                } else {
+                    if (!password) { alert("Password wajib diisi untuk akun baru."); return; }
+                    response = await fetch("http://localhost:3000/api/users", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ nama, username, password, role }),
+                        credentials: "include"
+                    });
+                }
+
+                const data = await response.json();
+                if (response.ok) {
+                    alert(data.message);
+                    closeModal();
+                    loadUsers(); // Refresh tabel
+                } else {
+                    alert(data.message || "Terjadi kesalahan.");
+                }
+            } catch (error) {
+                alert("Gagal terhubung ke server.");
+            }
+        }
+
+        // --- 4. FUNGSI RESET PASSWORD ---
+        async function resetPassword(id) {
+            const newPassword = prompt("Masukkan password baru untuk akun ini:");
+            if (!newPassword) return;
+
+            try {
+                const response = await fetch(`http://localhost:3000/api/users/${id}/reset-password`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ newPassword }),
+                    credentials: "include"
+                });
+                const data = await response.json();
+                alert(data.message);
+            } catch (error) {
+                alert("Gagal mereset password.");
+            }
+        }
+
+        // --- 5. FUNGSI HAPUS AKUN ---
+        async function deleteAccount(id, nama) {
+            if (confirm(`Apakah Anda yakin ingin menghapus akun "${nama}"? Tindakan ini tidak dapat dibatalkan.`)) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/users/${id}`, {
+                        method: "DELETE",
+                        credentials: "include"
+                    });
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        alert(data.message);
+                        loadUsers(); // Refresh tabel setelah dihapus
+                    } else {
+                        alert(data.message || "Gagal menghapus akun.");
+                    }
+                } catch (error) {
+                    alert("Gagal terhubung ke server.");
+                }
+            }
+        }
+
+        // --- INIT ---
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Ambil data user yang sedang login
+            fetch("http://localhost:3000/api/auth/me", { credentials: "include" })
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (data) {
+                        loggedInUserId = data.user.id; // Simpan ID untuk cek role
+                        document.getElementById("sidebarUserName").textContent = data.user.nama;
+                        const roleText = data.user.role === 'admin' ? 'Administrator' : 'Petugas Validasi';
+                        document.getElementById("sidebarUserRole").textContent = roleText;
+                        document.getElementById("userInitial").textContent = data.user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                    }
+                })
+                .catch(err => console.error(err))
+                .finally(() => {
+                    // 2. Setelah dapat ID user, baru load tabel
+                    loadUsers();
+                });
+        });
+
+        // Logout
+        async function logout() {
+            if (confirm("Apakah Anda yakin ingin keluar?")) {
+                await fetch("http://localhost:3000/api/auth/logout", { method: "POST", credentials: "include" });
+                window.location.replace("../login/login.html");
+            }
+        }
+    </script>
+</body>
+</html>

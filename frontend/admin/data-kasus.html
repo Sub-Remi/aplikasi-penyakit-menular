@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Kasus - Admin</title>
+
+    <script src="../js/auth.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { poppins: ['Poppins', 'sans-serif'] } } } }
+    </script>
+</head>
+
+<body class="font-poppins bg-gray-50 text-gray-800">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="fixed left-0 top-0 z-50 h-screen w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+        <div class="h-20 flex items-center px-6 border-b border-gray-200">
+            <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <span class="text-white font-bold">PM</span>
+            </div>
+            <div class="ml-3">
+                <h1 class="text-sm font-semibold text-gray-900">Penyakit Menular</h1>
+                <p class="text-xs text-gray-500">Panel Admin</p>
+            </div>
+        </div>
+
+        <nav class="p-4 space-y-1">
+            <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-12h8V3h-8v6z"/></svg>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            <a href="data-kasus.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a3 3 0 006 0M9 5h6"/></svg>
+                <span class="text-sm font-medium">Data Kasus</span>
+            </a>
+            <a href="validasi.html" class="flex items-center justify-between px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="text-sm font-medium">Pengajuan validasi</span>
+                </div>
+                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">8</span>
+            </a>
+            <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/></svg>
+                <span class="text-sm font-medium">Rekapitulasi</span>
+            </a>
+            <a href="informasi-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-8a9 9 0 100 18 9 9 0 000-18zm0 5h.01"/></svg>
+                <span class="text-sm font-semibold">Informasi Penyakit</span>
+            </a>
+
+            <div class="pt-4">
+                <p class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Pengaturan</p>
+                <a href="master-data.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    <span class="text-sm font-medium">Master Data</span>
+                </a>
+                <a href="akun.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <span class="text-sm font-medium">Akun Pengguna</span>
+                </a>
+                <a href="riwayat.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="text-sm font-medium">Riwayat Aktivitas</span>
+                </a>
+            </div>
+        </nav>
+
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                    <span id="userInitial" class="text-sm font-semibold text-blue-600">AD</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p id="sidebarUserName" class="text-sm font-semibold text-gray-800 truncate">Memuat...</p>
+                    <p id="sidebarUserRole" class="text-xs text-gray-500">...</p>
+                </div>
+                <button onclick="logout()" class="text-gray-400 hover:text-red-500">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <div id="overlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden"></div>
+
+    <!-- MAIN -->
+    <div class="lg:ml-64 min-h-screen">
+        <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-5 md:px-8">
+            <div class="flex items-center gap-4">
+                <button id="menuButton" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+                <div>
+                    <h2 class="text-lg md:text-xl font-semibold text-gray-900">Data Kasus</h2>
+                    <p class="text-xs md:text-sm text-gray-500">Kelola data kasus penyakit menular</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="p-5 md:p-8">
+            <section class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">Data Kasus Penyakit Menular</h1>
+                    <p class="mt-1 text-sm text-gray-500">Kelola data kasus sebelum diajukan untuk proses validasi.</p>
+                </div>
+                <button onclick="openModal()" class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Tambah Data
+                </button>
+            </section>
+
+            <!-- SUMMARY -->
+            <section class="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Total Data</p>
+                    <p id="totalData" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Draft</p>
+                    <p id="totalDraft" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Menunggu Validasi</p>
+                    <p id="totalMenunggu" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <p class="text-sm text-gray-500">Dikembalikan</p>
+                    <p id="totalDikembalikan" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                </div>
+            </section>
+
+            <!-- TABLE -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-gray-50 border-t border-gray-200">
+                            <tr>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">No.</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Penyakit</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Wilayah</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Periode</th>
+                                <th class="text-right px-6 py-4 font-medium text-gray-500">Kasus</th>
+                                <th class="text-left px-6 py-4 font-medium text-gray-500">Status</th>
+                                <th class="text-center px-6 py-4 font-medium text-gray-500">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTable" class="divide-y divide-gray-100"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODAL FORM DATA -->
+    <div id="dataModal" class="fixed inset-0 z-[60] hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-5 border-b border-gray-200">
+                <div>
+                    <h3 id="modalTitle" class="text-lg font-semibold text-gray-900">Tambah Data Kasus</h3>
+                    <p class="text-xs text-gray-500 mt-1">Masukkan data kasus penyakit menular</p>
+                </div>
+                <button onclick="closeModal()" class="p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-5">
+                <input type="hidden" id="modalId">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Penyakit</label>
+                    <select id="modalDisease" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Pilih penyakit</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Kabupaten/Kota</label>
+                    <select id="modalRegion" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Pilih wilayah</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Periode Data</label>
+                    <input id="modalPeriod" type="month" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Jumlah Kasus</label>
+                    <input id="modalCases" type="number" min="0" placeholder="Masukkan jumlah kasus" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Catatan Admin <span class="text-gray-400 font-normal">(opsional)</span></label>
+                    <textarea id="modalNote" rows="3" placeholder="Catatan untuk validator..." class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 px-6 py-4 border-t border-gray-200">
+                <button onclick="closeModal()" class="px-4 py-2.5 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">Batal</button>
+                <button onclick="saveData('Draft')" class="px-4 py-2.5 bg-gray-900 text-white rounded-xl text-sm font-medium hover:bg-gray-800">Simpan Draft</button>
+                <button onclick="openConfirmModal()" class="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700">Ajukan validasi</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL KONFIRMASI AJUKAN -->
+    <div id="confirmModal" class="fixed inset-0 z-[80] hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-2xl shadow-xl overflow-hidden text-center p-6">
+            <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900">Ajukan Validasi?</h3>
+            <p class="text-sm text-gray-500 mt-2 mb-6">Data yang sudah diajukan tidak dapat diedit kembali sampai proses validasi selesai.</p>
+            <div class="flex justify-center gap-3">
+                <button onclick="closeConfirmModal()" class="px-5 py-2.5 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">Batal</button>
+                <button onclick="confirmSubmit()" class="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700">Ya, Ajukan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL LIHAT CATATAN VALIDATOR -->
+    <div id="noteModal" class="fixed inset-0 z-[70] hidden bg-black/50 flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-2xl shadow-xl overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-red-50">
+                <div class="flex items-center gap-2 text-red-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                    <h3 class="font-semibold">Catatan dari Validator</h3>
+                </div>
+                <button onclick="closeNoteModal()" class="text-red-400 hover:text-red-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            <div class="p-6">
+                <p id="noteContent" class="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">-</p>
+            </div>
+            <div class="px-6 py-4 border-t border-gray-200 flex justify-end">
+                <button onclick="closeNoteModal()" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-xl text-sm font-medium hover:bg-gray-200">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const menuButton = document.getElementById("menuButton");
+        let masterPenyakit = [];
+        let masterWilayah = [];
+        let pendingStatus = '';
+
+        menuButton.addEventListener("click", () => {
+            sidebar.classList.remove("-translate-x-full");
+            overlay.classList.remove("hidden");
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+
+        // --- 1. LOAD DATA MASTER UNTUK DROPDOWN ---
+        async function loadMasterData() {
+            try {
+                const [resPenyakit, resWilayah] = await Promise.all([
+                    fetch("http://localhost:3000/api/master/penyakit", { credentials: "include" }),
+                    fetch("http://localhost:3000/api/master/wilayah", { credentials: "include" })
+                ]);
+                
+                masterPenyakit = await resPenyakit.json();
+                masterWilayah = await resWilayah.json();
+
+                const selectPenyakit = document.getElementById("modalDisease");
+                selectPenyakit.innerHTML = '<option value="">Pilih penyakit</option>';
+                masterPenyakit.filter(p => p.status === 'Aktif').forEach(p => {
+                    selectPenyakit.innerHTML += `<option value="${p.id}">${p.nama}</option>`;
+                });
+
+                const selectWilayah = document.getElementById("modalRegion");
+                selectWilayah.innerHTML = '<option value="">Pilih wilayah</option>';
+                masterWilayah.filter(w => w.status === 'Aktif').forEach(w => {
+                    selectWilayah.innerHTML += `<option value="${w.id}">${w.nama}</option>`;
+                });
+            } catch (error) { console.error("Gagal load master data", error); }
+        }
+
+        // --- 2. LOAD DATA KASUS ---
+        async function loadKasus() {
+            try {
+                const response = await fetch("http://localhost:3000/api/kasus", { credentials: "include" });
+                const data = await response.json();
+
+                // Summary
+                document.getElementById("totalData").textContent = data.length;
+                document.getElementById("totalDraft").textContent = data.filter(d => d.status === 'Draft').length;
+                document.getElementById("totalMenunggu").textContent = data.filter(d => d.status === 'Menunggu validasi').length;
+                document.getElementById("totalDikembalikan").textContent = data.filter(d => d.status === 'Dikembalikan').length;
+
+                const tbody = document.getElementById("dataTable");
+                tbody.innerHTML = "";
+
+                if (data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-gray-500">Belum ada data kasus.</td></tr>`;
+                    return;
+                }
+
+                data.forEach((item, index) => {
+                    const statusColor = 
+                        item.status === 'Draft' ? 'bg-gray-100 text-gray-600' :
+                        item.status === 'Menunggu validasi' ? 'bg-orange-50 text-orange-600' :
+                        item.status === 'Dikembalikan' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600';
+
+                    const isEditable = item.status === 'Draft' || item.status === 'Dikembalikan';
+                    const actionButtons = isEditable ? `
+                        <button onclick="editData(${item.id}, ${item.penyakit_id || 0}, ${item.wilayah_id || 0}, '${item.periode}', ${item.jumlah}, '${item.catatan || ''}')" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg" title="Edit">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        </button>
+                        <button onclick="deleteData(${item.id})" class="p-2 text-red-600 hover:bg-red-50 rounded-lg" title="Hapus">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                        </button>
+                    ` : `<span class="text-xs text-gray-400">Terkunci</span>`;
+
+                    // Logika Notifikasi Cerdas
+                    const lastReadNote = localStorage.getItem(`read_note_${item.id}`);
+                    const isNewNote = item.catatan_validator && (item.catatan_validator !== lastReadNote);
+
+                    const noteButton = item.catatan_validator 
+                        ? `<button onclick="showNote(${item.id}, '${item.catatan_validator.replace(/'/g, "\\'")}')" class="p-2 text-red-600 hover:bg-red-100 rounded-lg relative" title="Lihat Catatan Validator">
+                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+                             ${isNewNote ? '<span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>' : ''}
+                           </button>` 
+                        : '';
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-6 py-4 text-gray-500">${index + 1}</td>
+                            <td class="px-6 py-4 font-semibold text-gray-900">${item.penyakit}</td>
+                            <td class="px-6 py-4 text-gray-600">${item.wilayah}</td>
+                            <td class="px-6 py-4 text-gray-600">${item.periode}</td>
+                            <td class="px-6 py-4 text-right font-semibold">${item.jumlah}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-3 py-1 rounded-full text-xs font-medium ${statusColor}">${item.status}</span>
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <div class="flex justify-center items-center gap-1">
+                                    ${noteButton}
+                                    ${actionButtons}
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (error) { console.error(error); }
+        }
+
+        // --- 3. FUNGSI MODAL CATATAN ---
+        function showNote(id, note) {
+            document.getElementById("noteContent").textContent = note;
+            document.getElementById("noteModal").classList.remove("hidden");
+            // Simpan teks catatan yang sudah dibaca
+            localStorage.setItem(`read_note_${id}`, note);
+            loadKasus(); 
+        }
+
+        function closeNoteModal() {
+            document.getElementById("noteModal").classList.add("hidden");
+        }
+
+        // --- 4. FUNGSI MODAL FORM ---
+        function openModal() {
+            document.getElementById("modalId").value = "";
+            document.getElementById("modalDisease").value = "";
+            document.getElementById("modalRegion").value = "";
+            document.getElementById("modalPeriod").value = "";
+            document.getElementById("modalCases").value = "";
+            document.getElementById("modalNote").value = "";
+            document.getElementById("modalTitle").textContent = "Tambah Data Kasus";
+            document.getElementById("dataModal").classList.remove("hidden");
+        }
+
+        function editData(id, penyakit_id, wilayah_id, periode, jumlah, catatan) {
+            document.getElementById("modalId").value = id;
+            document.getElementById("modalDisease").value = penyakit_id;
+            document.getElementById("modalRegion").value = wilayah_id;
+            document.getElementById("modalPeriod").value = periode;
+            document.getElementById("modalCases").value = jumlah;
+            document.getElementById("modalNote").value = catatan;
+            document.getElementById("modalTitle").textContent = "Edit Data Kasus";
+            document.getElementById("dataModal").classList.remove("hidden");
+        }
+
+        function closeModal() {
+            document.getElementById("dataModal").classList.add("hidden");
+        }
+
+        // --- 5. FUNGSI KONFIRMASI AJUKAN ---
+        function openConfirmModal() {
+            const penyakit_id = document.getElementById("modalDisease").value;
+            const wilayah_id = document.getElementById("modalRegion").value;
+            const periode = document.getElementById("modalPeriod").value;
+            const jumlah = document.getElementById("modalCases").value;
+
+            if (!penyakit_id || !wilayah_id || !periode || !jumlah) {
+                alert("Penyakit, wilayah, periode, dan jumlah wajib diisi.");
+                return;
+            }
+            document.getElementById("confirmModal").classList.remove("hidden");
+        }
+
+        function closeConfirmModal() {
+            document.getElementById("confirmModal").classList.add("hidden");
+        }
+
+        function confirmSubmit() {
+            closeConfirmModal();
+            saveData('Menunggu validasi');
+        }
+
+        // --- 6. FUNGSI SIMPAN ---
+        async function saveData(status) {
+            const id = document.getElementById("modalId").value;
+            const penyakit_id = document.getElementById("modalDisease").value;
+            const wilayah_id = document.getElementById("modalRegion").value;
+            const periode = document.getElementById("modalPeriod").value;
+            const jumlah = document.getElementById("modalCases").value;
+            const catatan = document.getElementById("modalNote").value;
+
+            const method = id ? "PUT" : "POST";
+            const url = id ? `http://localhost:3000/api/kasus/${id}` : "http://localhost:3000/api/kasus";
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ penyakit_id, wilayah_id, periode, jumlah, status, catatan }),
+                    credentials: "include"
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    closeModal();
+                    loadKasus();
+                } else {
+                    alert(data.message);
+                }
+            } catch (error) { alert("Gagal terhubung ke server."); }
+        }
+
+        // --- 7. FUNGSI HAPUS ---
+        async function deleteData(id) {
+            if (confirm("Hapus data draft ini?")) {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/kasus/${id}`, { method: "DELETE", credentials: "include" });
+                    const data = await response.json();
+                    alert(data.message);
+                    loadKasus();
+                } catch (error) { alert("Gagal menghapus data."); }
+            }
+        }
+
+        // --- 8. INIT ---
+        document.addEventListener("DOMContentLoaded", () => {
+            loadMasterData();
+            loadKasus();
+            fetch("http://localhost:3000/api/auth/me", { credentials: "include" })
+                .then(res => res.ok ? res.json() : null)
+                .then(data => {
+                    if (data) {
+                        document.getElementById("sidebarUserName").textContent = data.user.nama;
+                        document.getElementById("sidebarUserRole").textContent = data.user.role === 'admin' ? 'Administrator' : 'Petugas Validasi';
+                        document.getElementById("userInitial").textContent = data.user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                    }
+                });
+        });
+
+        // Logout
+        async function logout() {
+            if (confirm("Apakah Anda yakin ingin keluar?")) {
+                await fetch("http://localhost:3000/api/auth/logout", { method: "POST", credentials: "include" });
+                window.location.replace("../login/login.html");
+            }
+        }
+    </script>
+</body>
+</html>
