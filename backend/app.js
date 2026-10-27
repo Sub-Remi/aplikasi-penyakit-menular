@@ -8,6 +8,9 @@ const userRoutes = require('./routes/user');
 const masterRoutes = require('./routes/master');
 const kasusRoutes = require('./routes/kasus');
 const publikRoutes = require('./routes/publik');
+const dashboardRoutes = require('./routes/dashboard');
+const artikelRoutes = require('./routes/artikel');
+const logRoutes = require('./routes/log');
 
 
 const app = express();
@@ -18,6 +21,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
@@ -36,6 +40,9 @@ app.use('/api/users', userRoutes);
 app.use('/api/master', masterRoutes);
 app.use('/api/kasus', kasusRoutes);
 app.use('/api/publik', publikRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/artikel', artikelRoutes);
+app.use('/api/log', logRoutes);
 
 app.get('/', (req, res) => {
     res.json({ message: "Backend Aplikasi Penyakit Menular berjalan." });

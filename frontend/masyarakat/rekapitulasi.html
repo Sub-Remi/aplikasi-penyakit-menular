@@ -9,10 +9,31 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     
+    <!-- LIBRARY EXCEL (SHEETJS) -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { poppins: ['Poppins', 'sans-serif'] } } } }
     </script>
+    
+    <style>
+        .map-label {
+            background: rgba(255, 255, 255, 0.85);
+            border: none;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-weight: bold;
+            font-size: 11px;
+            color: #1f2937;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .map-label span { display: block; font-size: 13px; color: #2563eb; }
+    </style>
 </head>
 
 <body class="font-poppins bg-gray-50 text-gray-800">
@@ -33,7 +54,7 @@
 
                 <nav class="hidden md:flex items-center gap-1">
                     <a href="index.html" class="px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 text-sm font-medium">Beranda</a>
-                    <a href="informasi-penyakit.html" class="px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 text-sm font-medium">Informasi Penyakit</a>
+                    <a href="mengenal-penyakit.html" class="px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 text-sm font-medium">Mengenal Penyakit</a>
                     <a href="data-penyakit.html" class="px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 text-sm font-medium">Data Penyakit</a>
                     <a href="rekapitulasi.html" class="px-4 py-2.5 rounded-lg bg-blue-50 text-blue-600 text-sm font-medium">Rekapitulasi</a>
                     <a href="tentang-data.html" class="px-4 py-2.5 rounded-lg text-gray-600 hover:bg-gray-50 hover:text-blue-600 text-sm font-medium">Tentang Data</a>
@@ -43,16 +64,6 @@
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
             </div>
-        </div>
-        
-        <div id="mobileMenu" class="hidden md:hidden border-t border-gray-100 bg-white">
-            <nav class="max-w-7xl mx-auto px-5 py-3 space-y-1">
-                <a href="index.html" class="block px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm font-medium">Beranda</a>
-                <a href="informasi-penyakit.html" class="block px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm font-medium">Informasi Penyakit</a>
-                <a href="data-penyakit.html" class="block px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm font-medium">Data Penyakit</a>
-                <a href="rekapitulasi.html" class="block px-4 py-3 rounded-xl bg-blue-50 text-blue-600 text-sm font-medium">Rekapitulasi</a>
-                <a href="tentang-data.html" class="block px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 text-sm font-medium">Tentang Data</a>
-            </nav>
         </div>
     </header>
 
@@ -127,57 +138,40 @@
         <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
             <div>
                 <h3 class="font-semibold text-gray-900">Jumlah Kasus Berdasarkan Kelompok Penyakit</h3>
-                <p class="mt-1 text-xs text-gray-500">Menunjukkan kelompok penyakit dengan jumlah kasus paling tinggi.</p>
             </div>
             <div class="h-[400px] mt-6">
                 <canvas id="diseaseChart"></canvas>
             </div>
         </section>
 
-        <!-- CHART REGION -->
+        <!-- PETA WILAYAH -->
         <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
-            <div>
-                <h3 class="font-semibold text-gray-900">Jumlah Kasus Berdasarkan Wilayah</h3>
-                <p class="mt-1 text-xs text-gray-500">Menunjukkan perbandingan jumlah kasus antar Kabupaten/Kota.</p>
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+                <div>
+                    <h3 class="font-semibold text-gray-900">Sebaran Kasus Berdasarkan Wilayah</h3>
+                    <p class="mt-1 text-xs text-gray-500">Warna menunjukkan status kasus, angka menunjukkan total kasus.</p>
+                </div>
+                <div class="flex items-center gap-3 text-xs">
+                    <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#2ECC71]"></span> Terkendali</div>
+                    <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#F1C40F]"></span> Waspada</div>
+                    <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#E67E22]"></span> Siaga</div>
+                    <div class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-[#E74C3C]"></span> KLB</div>
+                </div>
             </div>
-            <div class="h-[500px] mt-6">
-                <canvas id="regionChart"></canvas>
-            </div>
+            <div id="map" class="h-[550px] w-full rounded-xl z-0"></div>
         </section>
 
         <!-- CHART TREND -->
         <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
             <div>
                 <h3 class="font-semibold text-gray-900">Tren Jumlah Kasus Tahunan</h3>
-                <p class="mt-1 text-xs text-gray-500">Perubahan jumlah kasus dari waktu ke waktu.</p>
             </div>
             <div class="h-[380px] mt-6">
                 <canvas id="trendChart"></canvas>
             </div>
         </section>
-
-        <!-- TABLE -->
-        <section class="mt-7 bg-white border border-gray-200 rounded-2xl overflow-hidden">
-            <div class="px-6 py-5 border-b border-gray-200">
-                <h3 class="font-semibold text-gray-900">Ringkasan Kelompok Penyakit</h3>
-                <p class="text-xs text-gray-500 mt-1">Informasi ringkas berdasarkan kelompok penyakit.</p>
-            </div>
-            <div class="overflow-x-auto">
-                <table class="w-full text-sm">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="text-left px-6 py-4 font-medium text-gray-500">Kelompok Penyakit</th>
-                            <th class="text-right px-6 py-4 font-medium text-gray-500">Jumlah Kasus</th>
-                            <th class="text-right px-6 py-4 font-medium text-gray-500">Persentase</th>
-                        </tr>
-                    </thead>
-                    <tbody id="diseaseTable" class="divide-y divide-gray-100"></tbody>
-                </table>
-            </div>
-        </section>
     </main>
 
-    <!-- FOOTER -->
     <footer class="mt-16 bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-5 md:px-8 py-12">
             <div class="text-xs text-gray-500 text-center">© 2026 Aplikasi Penyakit Menular. Informasi untuk masyarakat.</div>
@@ -187,19 +181,26 @@
     <script>
         Chart.register(ChartDataLabels);
         let allData = [];
-        let diseaseChart, regionChart, trendChart;
+        let masterPenyakit = [];
+        let diseaseChart, trendChart;
+        let map, geojsonLayer;
 
         document.getElementById("menuButton").addEventListener("click", () => {
             document.getElementById("mobileMenu").classList.toggle("hidden");
         });
 
-        // --- 1. LOAD DATA ---
         async function loadData() {
             try {
-                const response = await fetch("http://localhost:3000/api/publik/kasus");
-                allData = await response.json();
+                const [resKasus, resPenyakit] = await Promise.all([
+                    fetch("http://localhost:3000/api/publik/kasus"),
+                    fetch("http://localhost:3000/api/master/penyakit")
+                ]);
+                
+                allData = await resKasus.json();
+                masterPenyakit = await resPenyakit.json();
 
-                // Isi Dropdown Filter
+                await initMap();
+
                 const diseases = [...new Set(allData.map(d => d.penyakit))];
                 const regions = [...new Set(allData.map(d => d.wilayah))];
                 const years = [...new Set(allData.map(d => d.periode.split('-')[0]))].sort();
@@ -210,151 +211,66 @@
 
                 initCharts();
                 updateDashboard();
-            } catch (error) { console.error(error); }
+            } catch (error) { console.error("Gagal load data:", error); }
         }
 
-        // --- 2. INIT CHART DENGAN LABEL PERMANEN & ANTI-TERPOTONG ---
         function initCharts() {
-            // Chart Penyakit
             diseaseChart = new Chart(document.getElementById("diseaseChart"), {
                 type: "bar",
                 data: { labels: [], datasets: [{ data: [], backgroundColor: "#2563eb", borderRadius: 6, barThickness: 28 }] },
                 plugins: [ChartDataLabels],
                 options: { 
-                    indexAxis: 'y', 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    layout: { padding: { right: 100 } }, // Ruang ekstra di kanan
+                    indexAxis: 'y', responsive: true, maintainAspectRatio: false, layout: { padding: { right: 80 } },
                     plugins: { 
                         legend: { display: false }, 
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.raw.toLocaleString('id-ID')} kasus`;
-                                }
-                            }
-                        },
-                        datalabels: { 
-                            display: true,
-                            anchor: 'end', 
-                            align: 'right', 
-                            offset: 10, 
-                            color: '#374151',
-                            font: { weight: 'bold', size: 12 },
-                            formatter: function(value) {
-                                return value.toLocaleString('id-ID');
-                            }
-                        } 
+                        datalabels: { display: true, anchor: 'end', align: 'right', offset: 8, color: '#374151', font: { weight: 'bold', size: 12 }, formatter: v => v.toLocaleString('id-ID') } 
                     },
-                    scales: {
-                        x: { 
-                            grace: '20%', // Jarak 20% dari nilai tertinggi
-                            grid: { display: false },
-                            ticks: {
-                                callback: function(value) {
-                                    return value.toLocaleString('id-ID');
-                                }
-                            }
-                        },
-                        y: { grid: { display: false } }
-                    }
+                    scales: { x: { grace: '20%', grid: { display: false }, ticks: { callback: v => v.toLocaleString('id-ID') } }, y: { grid: { display: false } } }
                 }
             });
 
-            // Chart Wilayah
-            regionChart = new Chart(document.getElementById("regionChart"), {
-                type: "bar",
-                data: { labels: [], datasets: [{ data: [], backgroundColor: "#60a5fa", borderRadius: 6, barThickness: 22 }] },
-                plugins: [ChartDataLabels],
-                options: { 
-                    indexAxis: 'y', 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    layout: { padding: { right: 100 } },
-                    plugins: { 
-                        legend: { display: false }, 
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.raw.toLocaleString('id-ID')} kasus`;
-                                }
-                            }
-                        },
-                        datalabels: { 
-                            display: true,
-                            anchor: 'end', 
-                            align: 'right', 
-                            offset: 10, 
-                            color: '#374151',
-                            font: { weight: 'bold', size: 12 },
-                            formatter: function(value) {
-                                return value.toLocaleString('id-ID');
-                            }
-                        } 
-                    },
-                    scales: {
-                        x: { 
-                            grace: '20%', 
-                            grid: { display: false },
-                            ticks: {
-                                callback: function(value) {
-                                    return value.toLocaleString('id-ID');
-                                }
-                            }
-                        },
-                        y: { grid: { display: false } }
-                    }
-                }
-            });
-
-            // Chart Tren
             trendChart = new Chart(document.getElementById("trendChart"), {
                 type: "line",
                 data: { labels: [], datasets: [{ data: [], borderColor: "#2563eb", backgroundColor: "rgba(37,99,235,0.1)", fill: true, tension: 0.4, borderWidth: 3, pointRadius: 5 }] },
                 plugins: [ChartDataLabels],
                 options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    layout: { padding: { top: 40 } }, // Ruang ekstra di atas
+                    responsive: true, maintainAspectRatio: false, layout: { padding: { top: 40 } }, 
                     plugins: { 
                         legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ` ${context.raw.toLocaleString('id-ID')} kasus`;
-                                }
-                            }
-                        },
-                        datalabels: { 
-                            display: true,
-                            anchor: 'end', 
-                            align: 'top', 
-                            offset: 8, 
-                            color: '#374151',
-                            font: { weight: 'bold', size: 11 },
-                            formatter: function(value) {
-                                return value.toLocaleString('id-ID');
-                            }
-                        }
+                        datalabels: { display: true, anchor: 'end', align: 'top', offset: 8, color: '#374151', font: { weight: 'bold', size: 11 }, formatter: v => v.toLocaleString('id-ID') }
                     },
-                    scales: {
-                        y: { 
-                            grace: '20%', 
-                            grid: { display: true, color: '#f3f4f6' },
-                            ticks: {
-                                callback: function(value) {
-                                    return value.toLocaleString('id-ID');
-                                }
-                            }
-                        },
-                        x: { grid: { display: false } }
-                    }
+                    scales: { y: { grace: '20%', grid: { display: true, color: '#f3f4f6' }, ticks: { callback: v => v.toLocaleString('id-ID') } }, x: { grid: { display: false } } }
                 }
             });
         }
 
-        // --- 3. UPDATE DASHBOARD ---
+        async function initMap() {
+            map = L.map('map', { zoomControl: false }).setView([1.2, 124.5], 8);
+            L.control.zoom({ position: 'topright' }).addTo(map);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
+
+            try {
+                const geoResponse = await fetch('../peta_sulut_kabkota.geojson'); 
+                if (!geoResponse.ok) throw new Error("File GeoJSON tidak ditemukan");
+                const geojsonData = await geoResponse.json();
+
+                geojsonLayer = L.geoJSON(geojsonData, {
+                    style: function () { return { fillColor: "#d1d5db", weight: 1, color: 'white', fillOpacity: 0.7 }; },
+                    onEachFeature: function (feature, layer) {
+                        let wilayahName = feature.properties.NAME_2;
+                        layer.wilayahName = wilayahName;
+                        layer.on('mouseover', function () { this.setStyle({ weight: 3, fillOpacity: 0.9 }); });
+                        layer.on('mouseout', function () { this.setStyle({ weight: 1, fillOpacity: 0.7 }); });
+                    }
+                }).addTo(map);
+
+                map.fitBounds(geojsonLayer.getBounds());
+            } catch (e) { console.error("Gagal memuat peta:", e); alert("Pastikan file peta_sulut_kabkota.geojson ada di folder frontend/"); }
+        }
+
         function updateDashboard() {
+            if (!geojsonLayer) return;
+
             const selectedDisease = document.getElementById("diseaseFilter").value;
             const selectedRegion = document.getElementById("regionFilter").value;
             const selectedYear = document.getElementById("yearFilter").value;
@@ -366,61 +282,63 @@
                 return matchDisease && matchRegion && matchYear;
             });
 
-            // 1. Hitung Summary
             const totalCases = filtered.reduce((sum, item) => sum + item.jumlah, 0);
             document.getElementById("totalCases").textContent = totalCases.toLocaleString("id-ID");
 
-            // 2. Agregasi Data per Penyakit
             const diseaseTotals = {};
-            filtered.forEach(item => {
-                diseaseTotals[item.penyakit] = (diseaseTotals[item.penyakit] || 0) + item.jumlah;
-            });
+            filtered.forEach(item => { diseaseTotals[item.penyakit] = (diseaseTotals[item.penyakit] || 0) + item.jumlah; });
             const sortedDiseases = Object.entries(diseaseTotals).sort((a, b) => b[1] - a[1]);
-            
             diseaseChart.data.labels = sortedDiseases.map(d => d[0]);
             diseaseChart.data.datasets[0].data = sortedDiseases.map(d => d[1]);
             diseaseChart.update();
 
-            // 3. Agregasi Data per Wilayah
             const regionTotals = {};
-            filtered.forEach(item => {
-                regionTotals[item.wilayah] = (regionTotals[item.wilayah] || 0) + item.jumlah;
+            filtered.forEach(item => { regionTotals[item.wilayah] = (regionTotals[item.wilayah] || 0) + item.jumlah; });
+
+            // Indikator Dinamis
+            let bHijau = 50, bKuning = 100, bOranye = 200;
+            if (selectedDisease !== "all") {
+                const dataPenyakit = masterPenyakit.find(p => p.nama === selectedDisease);
+                if (dataPenyakit) {
+                    bHijau = dataPenyakit.batas_hijau || 50;
+                    bKuning = dataPenyakit.batas_kuning || 100;
+                    bOranye = dataPenyakit.batas_oranye || 200;
+                }
+            }
+
+            geojsonLayer.eachLayer(function (layer) {
+                const namaPeta = layer.wilayahName;
+                let total = 0;
+                for (const [key, value] of Object.entries(regionTotals)) {
+                    if (key.includes(namaPeta) || namaPeta.includes(key)) total += value;
+                }
+
+                let color = "#2ECC71"; // Hijau
+                if (total > bOranye) color = "#E74C3C"; // Merah
+                else if (total > bKuning) color = "#E67E22"; // Oranye
+                else if (total > bHijau) color = "#F1C40F"; // Kuning
+
+                layer.setStyle({ fillColor: color });
+                layer.unbindTooltip();
+                layer.bindTooltip(`<div class="map-label">${namaPeta}<span>${total.toLocaleString('id-ID')}</span></div>`, { permanent: true, direction: "center", className: "bg-transparent border-none shadow-none" });
             });
-            const sortedRegions = Object.entries(regionTotals).sort((a, b) => b[1] - a[1]);
 
-            regionChart.data.labels = sortedRegions.map(r => r[0]);
-            regionChart.data.datasets[0].data = sortedRegions.map(r => r[1]);
-            regionChart.update();
-
-            // 4. Data Tren (Berdasarkan Bulan)
             const monthlyTotals = {};
             filtered.forEach(item => {
                 const [year, month] = item.periode.split('-');
-                const key = `${year}-${month}`;
-                monthlyTotals[key] = (monthlyTotals[key] || 0) + item.jumlah;
+                monthlyTotals[`${year}-${month}`] = (monthlyTotals[`${year}-${month}`] || 0) + item.jumlah;
             });
             const sortedMonths = Object.entries(monthlyTotals).sort((a, b) => a[0].localeCompare(b[0]));
-
             trendChart.data.labels = sortedMonths.map(m => m[0]);
             trendChart.data.datasets[0].data = sortedMonths.map(m => m[1]);
             trendChart.update();
 
-            // 5. Update Tabel
-            const total = sortedDiseases.reduce((sum, d) => sum + d[1], 0);
-            const tbody = document.getElementById("diseaseTable");
-            tbody.innerHTML = sortedDiseases.map(item => `
-                <tr class="hover:bg-gray-50">
-                    <td class="px-6 py-4 font-semibold text-gray-900">${item[0]}</td>
-                    <td class="px-6 py-4 text-right">${item[1].toLocaleString('id-ID')}</td>
-                    <td class="px-6 py-4 text-right text-gray-600">${total ? ((item[1]/total)*100).toFixed(1) : 0}%</td>
-                </tr>
-            `).join("");
-
-            // 6. Update Kartu Tertinggi
-            document.getElementById("highestDisease").textContent = sortedDiseases[0]?.[0] || "-";
-            document.getElementById("highestValue").textContent = sortedDiseases[0] ? `${sortedDiseases[0][1].toLocaleString('id-ID')} kasus` : "- kasus";
-            document.getElementById("highestRegion").textContent = sortedRegions[0]?.[0] || "-";
-            document.getElementById("highestRegionValue").textContent = sortedRegions[0] ? `${sortedRegions[0][1].toLocaleString('id-ID')} kasus` : "- kasus";
+            const highestDisease = sortedDiseases[0];
+            const highestRegion = Object.entries(regionTotals).sort((a, b) => b[1] - a[1])[0];
+            document.getElementById("highestDisease").textContent = highestDisease ? highestDisease[0] : "-";
+            document.getElementById("highestValue").textContent = highestDisease ? `${highestDisease[1].toLocaleString('id-ID')} kasus` : "- kasus";
+            document.getElementById("highestRegion").textContent = highestRegion ? highestRegion[0] : "-";
+            document.getElementById("highestRegionValue").textContent = highestRegion ? `${highestRegion[1].toLocaleString('id-ID')} kasus` : "- kasus";
         }
 
         function resetFilter() {
@@ -430,16 +348,130 @@
             updateDashboard();
         }
 
+        // --- FUNGSI EXCEL LENGKAP 5 SHEET ---
         function downloadExcel() {
-            alert("Fitur unduh Excel akan diimplementasikan pada tahap selanjutnya.");
+            const selectedDisease = document.getElementById("diseaseFilter").value;
+            const selectedRegion = document.getElementById("regionFilter").value;
+            const selectedYear = document.getElementById("yearFilter").value;
+
+            const filtered = allData.filter(item => {
+                const matchDisease = (selectedDisease === "all" || item.penyakit === selectedDisease);
+                const matchRegion = (selectedRegion === "all" || item.wilayah === selectedRegion);
+                const matchYear = (selectedYear === "all" || item.periode.startsWith(selectedYear));
+                return matchDisease && matchRegion && matchYear;
+            });
+
+            if (filtered.length === 0) {
+                alert("Tidak ada data untuk diunduh berdasarkan filter yang dipilih.");
+                return;
+            }
+
+            const wb = XLSX.utils.book_new();
+            const totalKasus = filtered.reduce((sum, item) => sum + item.jumlah, 0);
+
+            // 1. Sheet Ringkasan
+            const diseaseTotals = {};
+            filtered.forEach(item => { diseaseTotals[item.penyakit] = (diseaseTotals[item.penyakit] || 0) + item.jumlah; });
+            const sortedDiseases = Object.entries(diseaseTotals).sort((a, b) => b[1] - a[1]);
+
+            const regionTotals = {};
+            filtered.forEach(item => { regionTotals[item.wilayah] = (regionTotals[item.wilayah] || 0) + item.jumlah; });
+            const sortedRegions = Object.entries(regionTotals).sort((a, b) => b[1] - a[1]);
+
+            const summaryData = [
+                ["LAPORAN REKAPITULASI PENYAKIT MENULAR"],
+                ["Provinsi Sulawesi Utara"],
+                ["Tanggal Unduh:", new Date().toLocaleDateString('id-ID')],
+                [""],
+                ["FILTER YANG DIGUNAKAN"],
+                ["Kelompok Penyakit", selectedDisease === "all" ? "Semua Kelompok" : selectedDisease],
+                ["Wilayah", selectedRegion === "all" ? "Semua Wilayah" : selectedRegion],
+                ["Tahun", selectedYear === "all" ? "Semua Tahun" : selectedYear],
+                [""],
+                ["RINGKASAN UTAMA"],
+                ["Total Kasus Keseluruhan", totalKasus],
+                ["Penyakit Tertinggi", sortedDiseases[0]?.[0] || "-"],
+                ["Jumlah Kasus Penyakit Tertinggi", sortedDiseases[0]?.[1] || 0],
+                ["Wilayah Tertinggi", sortedRegions[0]?.[0] || "-"],
+                ["Jumlah Kasus Wilayah Tertinggi", sortedRegions[0]?.[1] || 0]
+            ];
+            const wsSummary = XLSX.utils.aoa_to_sheet(summaryData);
+            wsSummary['!cols'] = [{ wch: 35 }, { wch: 25 }];
+            XLSX.utils.book_append_sheet(wb, wsSummary, "1. Ringkasan");
+
+            // 2. Sheet Matriks Penyakit-Wilayah
+            const uniqueDiseases = [...new Set(filtered.map(d => d.penyakit))];
+            const uniqueRegions = [...new Set(filtered.map(d => d.wilayah))];
+            const matrixHeader = ["Kelompok Penyakit", ...uniqueRegions, "TOTAL"];
+            const matrixRows = [];
+
+            uniqueDiseases.forEach(disease => {
+                const row = [disease];
+                let rowTotal = 0;
+                uniqueRegions.forEach(region => {
+                    const match = filtered.find(d => d.penyakit === disease && d.wilayah === region);
+                    const count = match ? match.jumlah : 0;
+                    row.push(count);
+                    rowTotal += count;
+                });
+                row.push(rowTotal);
+                matrixRows.push(row);
+            });
+
+            const totalRow = ["TOTAL"];
+            uniqueRegions.forEach(region => {
+                const match = filtered.filter(d => d.wilayah === region).reduce((sum, item) => sum + item.jumlah, 0);
+                totalRow.push(match);
+            });
+            totalRow.push(totalKasus);
+            matrixRows.push(totalRow);
+
+            const wsMatrix = XLSX.utils.aoa_to_sheet([matrixHeader, ...matrixRows]);
+            XLSX.utils.book_append_sheet(wb, wsMatrix, "2. Matriks Penyakit-Wilayah");
+
+            // 3. Sheet Rekap Penyakit
+            const diseaseSheetData = sortedDiseases.map((item, index) => ({
+                "Peringkat": index + 1,
+                "Kelompok Penyakit": item[0],
+                "Jumlah Kasus": item[1],
+                "Persentase": totalKasus ? ((item[1] / totalKasus) * 100).toFixed(1) + "%" : "0%"
+            }));
+            const wsDisease = XLSX.utils.json_to_sheet(diseaseSheetData);
+            wsDisease['!cols'] = [{ wch: 10 }, { wch: 30 }, { wch: 15 }, { wch: 15 }];
+            XLSX.utils.book_append_sheet(wb, wsDisease, "3. Rekap Penyakit");
+
+            // 4. Sheet Rekap Wilayah
+            const regionSheetData = sortedRegions.map((item, index) => ({
+                "Peringkat": index + 1,
+                "Kabupaten/Kota": item[0],
+                "Jumlah Kasus": item[1],
+                "Persentase": totalKasus ? ((item[1] / totalKasus) * 100).toFixed(1) + "%" : "0%"
+            }));
+            const wsRegion = XLSX.utils.json_to_sheet(regionSheetData);
+            wsRegion['!cols'] = [{ wch: 10 }, { wch: 30 }, { wch: 15 }, { wch: 15 }];
+            XLSX.utils.book_append_sheet(wb, wsRegion, "4. Rekap Wilayah");
+
+            // 5. Sheet Data Detail
+            const detailData = filtered.map((item, index) => ({
+                "No": index + 1,
+                "Kelompok Penyakit": item.penyakit,
+                "Kabupaten/Kota": item.wilayah,
+                "Periode": item.periode,
+                "Jumlah Kasus": item.jumlah
+            }));
+            const wsDetail = XLSX.utils.json_to_sheet(detailData);
+            wsDetail['!cols'] = [{ wch: 5 }, { wch: 30 }, { wch: 25 }, { wch: 15 }, { wch: 15 }];
+            XLSX.utils.book_append_sheet(wb, wsDetail, "5. Data Detail");
+
+            // Unduh
+            const timestamp = new Date().toISOString().slice(0, 10);
+            XLSX.writeFile(wb, `Rekap_Masyarakat_${timestamp}.xlsx`);
         }
 
-        // Event Listener
         document.getElementById("diseaseFilter").addEventListener("change", updateDashboard);
         document.getElementById("regionFilter").addEventListener("change", updateDashboard);
         document.getElementById("yearFilter").addEventListener("change", updateDashboard);
 
-        // Init
         loadData();
     </script>
 </body>

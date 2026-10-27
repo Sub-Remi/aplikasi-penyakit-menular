@@ -41,15 +41,17 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span class="text-sm font-medium">Pengajuan validasi</span>
                 </div>
-                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">8</span>
+                <!-- ID badgeSidebar untuk JS -->
+                <span id="badgeSidebar" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">0</span>
             </a>
             <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/></svg>
                 <span class="text-sm font-medium">Rekapitulasi</span>
             </a>
-            <a href="informasi-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+            <!-- MENU ARTIKEL PENYAKIT (Diperbarui) -->
+            <a href="artikel-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-8a9 9 0 100 18 9 9 0 000-18zm0 5h.01"/></svg>
-                <span class="text-sm font-semibold">Informasi Penyakit</span>
+                <span class="text-sm font-semibold">Artikel Penyakit</span>
             </a>
 
             <div class="pt-4">
@@ -290,10 +292,14 @@
                 const data = await response.json();
 
                 // Summary
+                const menungguCount = data.filter(d => d.status === 'Menunggu validasi').length;
                 document.getElementById("totalData").textContent = data.length;
                 document.getElementById("totalDraft").textContent = data.filter(d => d.status === 'Draft').length;
-                document.getElementById("totalMenunggu").textContent = data.filter(d => d.status === 'Menunggu validasi').length;
+                document.getElementById("totalMenunggu").textContent = menungguCount;
                 document.getElementById("totalDikembalikan").textContent = data.filter(d => d.status === 'Dikembalikan').length;
+                
+                // Update Badge Sidebar Dinamis
+                document.getElementById("badgeSidebar").textContent = menungguCount;
 
                 const tbody = document.getElementById("dataTable");
                 tbody.innerHTML = "";

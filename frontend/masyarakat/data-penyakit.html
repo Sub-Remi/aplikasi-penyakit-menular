@@ -10,6 +10,7 @@
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { poppins: ['Poppins', 'sans-serif'] } } } }
     </script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 </head>
 
 <body class="font-poppins bg-gray-50 text-gray-800">
@@ -287,9 +288,64 @@
             renderTable();
         }
 
-        function downloadData() {
-            alert("Fitur unduh Excel akan diimplementasikan pada tahap selanjutnya.");
-        }
+function downloadData() {
+    // 1. Ambil filter yang aktif
+    const selectedDisease = document.getElementById("diseaseFilter").value;
+    const selectedRegion = document.getElementById("regionFilter").value;
+    const selectedYear = document.getElementById("yearFilter").value;
+    const selectedMonth = document.getElementById("monthFilter").value;
+
+    // 2. Lakukan filter data (sama seperti fungsi renderTable)
+    const filtered = allData.filter(item => {
+        const matchDisease = (selectedDisease === "all" || item.penyakit === selectedDisease);
+        const matchRegion = (selectedRegion === "all" || item.wilayah === selectedRegion);
+        
+        const [itemYear, itemMonth] = item.periode.split('-');
+        const matchYear = (selectedYear === "all" || itemYear === selectedYear);
+        const matchMonth = (selectedMonth === "all" || itemMonth === selectedMonth);
+
+        return matchDisease && matchRegion && matchYear && matchMonth;
+    });
+
+    if (filtered.length === 0) {
+        alert("Tidak ada data untuk diunduh berdasarkan filter yang dipilih.");
+        return;
+    }
+
+    // 3. Format data agar rapi di Excel
+    const dataToExport = filtered.map((item, index) => ({
+        "No": index + 1,
+        "Kelompok Penyakit": item.penyakit,
+        "Kabupaten/Kota": item.wilayah,
+        "Periode": item.periode,
+        "Jumlah Kasus": item.jumlah
+    }));
+
+    // 4. Buat worksheet dan workbook
+    const ws = XLSX.utils.json_to_sheet(dataToExport);
+    
+    // Atur lebar kolom agar tidak berantakan
+    ws['!cols'] = [
+        { wch: 5 },  // No
+        { wch: 30 }, // Kelompok Penyakit
+        { wch: 25 }, // Kabupaten/Kota
+        { wch: 15 }, // Periode
+        { wch: 15 }  // Jumlah Kasus
+    ];
+
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Data Penyakit Menular");
+
+    // 5. Tentukan nama file berdasarkan filter yang aktif
+    const infoPenyakit = selectedDisease === "all" ? "SemuaPenyakit" : selectedDisease.replace(/\s+/g, '_');
+    const infoWilayah = selectedRegion === "all" ? "SemuaWilayah" : selectedRegion.replace(/\s+/g, '_');
+    const infoWaktu = selectedYear === "all" ? "SemuaTahun" : `${selectedYear}-${selectedMonth === "all" ? "SemuaBulan" : selectedMonth}`;
+    
+    const namaFile = `Data_Penyakit_${infoPenyakit}_${infoWilayah}_${infoWaktu}.xlsx`;
+
+    // 6. Proses unduh
+    XLSX.writeFile(wb, namaFile);
+}
 
         // Event Listener Filter
         document.getElementById("diseaseFilter").addEventListener("change", renderTable);

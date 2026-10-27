@@ -6,7 +6,6 @@
     <title>Master Data - Admin</title>
 
     <script src="../js/auth.js"></script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -42,15 +41,15 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span class="text-sm font-medium">Pengajuan validasi</span>
                 </div>
-                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">8</span>
+                <span id="badgeSidebar" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">0</span>
             </a>
             <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/></svg>
                 <span class="text-sm font-medium">Rekapitulasi</span>
             </a>
-            <a href="informasi-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+            <a href="artikel-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-8a9 9 0 100 18 9 9 0 000-18zm0 5h.01"/></svg>
-                <span class="text-sm font-semibold">Informasi Penyakit</span>
+                <span class="text-sm font-semibold">Artikel Penyakit</span>
             </a>
 
             <div class="pt-4">
@@ -77,7 +76,7 @@
                 </div>
                 <div class="flex-1 min-w-0">
                     <p id="sidebarUserName" class="text-sm font-semibold text-gray-800 truncate">Memuat...</p>
-                    <p id="sidebarUserRole" class="text-xs text-gray-500">...</p>
+                    <p class="text-xs text-gray-500">Administrator</p>
                 </div>
                 <button onclick="logout()" class="text-gray-400 hover:text-red-500">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
@@ -114,30 +113,6 @@
                 </button>
             </section>
 
-            <!-- SUMMARY -->
-            <section class="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-                <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                    <p class="text-sm text-gray-500">Total Penyakit</p>
-                    <p id="totalPenyakit" class="mt-2 text-2xl font-bold text-gray-900">0</p>
-                    <p class="mt-2 text-xs text-green-600">Data referensi</p>
-                </div>
-                <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                    <p class="text-sm text-gray-500">Total Wilayah</p>
-                    <p id="totalWilayah" class="mt-2 text-2xl font-bold text-gray-900">0</p>
-                    <p class="mt-2 text-xs text-green-600">Data referensi</p>
-                </div>
-                <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                    <p class="text-sm text-gray-500">Penyakit Aktif</p>
-                    <p id="totalPenyakitAktif" class="mt-2 text-2xl font-bold text-gray-900">0</p>
-                    <p class="mt-2 text-xs text-gray-500">Digunakan untuk input data</p>
-                </div>
-                <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                    <p class="text-sm text-gray-500">Wilayah Aktif</p>
-                    <p id="totalWilayahAktif" class="mt-2 text-2xl font-bold text-gray-900">0</p>
-                    <p class="mt-2 text-xs text-gray-500">Kabupaten/Kota</p>
-                </div>
-            </section>
-
             <!-- TABS -->
             <section class="mt-7 bg-white border border-gray-200 rounded-2xl overflow-hidden">
                 <div class="px-5 md:px-6 border-b border-gray-200">
@@ -160,6 +135,7 @@
                                     <th class="text-left px-6 py-4 font-medium text-gray-500">No.</th>
                                     <th class="text-left px-6 py-4 font-medium text-gray-500">Kode</th>
                                     <th class="text-left px-6 py-4 font-medium text-gray-500">Nama Penyakit</th>
+                                    <th class="text-left px-6 py-4 font-medium text-gray-500">Indikator Status</th>
                                     <th class="text-left px-6 py-4 font-medium text-gray-500">Status</th>
                                     <th class="text-center px-6 py-4 font-medium text-gray-500">Aksi</th>
                                 </tr>
@@ -193,123 +169,136 @@
 
     <!-- MODAL -->
     <div id="dataModal" class="fixed inset-0 z-[60] hidden bg-black/50 flex items-center justify-center p-4">
-        <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl overflow-hidden">
-            <div class="flex items-center justify-between px-6 py-5 border-b border-gray-200">
-                <div>
-                    <h3 id="modalTitle" class="text-lg font-semibold text-gray-900">Tambah Penyakit</h3>
-                    <p class="text-xs text-gray-500 mt-1">Tambahkan data referensi baru</p>
-                </div>
+        <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="flex items-center justify-between px-6 py-5 border-b border-gray-200 bg-white sticky top-0 z-10">
+                <h3 id="modalTitle" class="text-lg font-semibold text-gray-900">Tambah Penyakit</h3>
                 <button onclick="closeModal()" class="p-2 rounded-lg hover:bg-gray-100">
                     <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
-            <div class="p-6 space-y-5">
-                <input type="hidden" id="dataId">
+            <div class="p-6 space-y-5 overflow-y-auto">
                 <input type="hidden" id="dataType">
-
+                
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Kode</label>
-                    <input id="dataCode" type="text" placeholder="Contoh: PM006" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input id="dataCode" type="text" placeholder="Contoh: PM006" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
                 <div>
                     <label id="nameLabel" class="block text-sm font-medium text-gray-700 mb-2">Nama Penyakit</label>
-                    <input id="dataName" type="text" placeholder="Masukkan nama" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input id="dataName" type="text" placeholder="Masukkan nama" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 </div>
+                
+                <!-- INPUT INDIKATOR STATUS (Khusus Penyakit) -->
+                <div id="indikatorWrapper" class="bg-gray-50 p-4 rounded-xl border border-gray-200">
+                    <h4 class="text-sm font-semibold text-gray-800 mb-3 border-b border-gray-200 pb-2">Indikator Peta (Status Kasus)</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-emerald-700 mb-1">Terkendali (Hijau)</label>
+                            <input id="dataHijau" type="number" placeholder="50" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+                            <p class="text-[10px] text-gray-500 mt-1">Kasus < nilai ini.</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-yellow-700 mb-1">Waspada (Kuning)</label>
+                            <input id="dataKuning" type="number" placeholder="100" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+                            <p class="text-[10px] text-gray-500 mt-1">Kasus di antara Terkendali & Siaga.</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-red-700 mb-1">Siaga (Oranye)</label>
+                            <input id="dataOranye" type="number" placeholder="200" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-red-500 focus:outline-none">
+                            <p class="text-[10px] text-gray-500 mt-1">Kasus > nilai ini menjadi KLB (Merah).</p>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="regionTypeWrapper" class="hidden">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Jenis Wilayah</label>
-                    <select id="regionType" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <select id="regionType" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         <option value="Kabupaten">Kabupaten</option>
                         <option value="Kota">Kota</option>
                     </select>
                 </div>
+
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Status</label>
-                    <select id="dataStatus" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Status Data</label>
+                    <select id="dataStatus" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none">
                         <option value="Aktif">Aktif</option>
                         <option value="Nonaktif">Nonaktif</option>
                     </select>
                 </div>
             </div>
 
-            <div class="flex justify-end gap-3 px-6 py-4 border-t border-gray-200">
-                <button onclick="closeModal()" class="px-4 py-2.5 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">Batal</button>
+            <div class="flex justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">
+                <button onclick="closeModal()" class="px-4 py-2.5 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 hover:bg-white">Batal</button>
                 <button onclick="saveData()" class="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700">Simpan</button>
             </div>
         </div>
     </div>
 
     <script>
-        let currentTab = 'disease';
-        let editId = null;
-
         const sidebar = document.getElementById("sidebar");
         const overlay = document.getElementById("overlay");
         const menuButton = document.getElementById("menuButton");
+        let currentTab = 'disease';
+        let editId = null;
 
-        menuButton.addEventListener("click", () => {
-            sidebar.classList.remove("-translate-x-full");
-            overlay.classList.remove("hidden");
-        });
+        menuButton.addEventListener("click", () => { sidebar.classList.remove("-translate-x-full"); overlay.classList.remove("hidden"); });
+        overlay.addEventListener("click", () => { sidebar.classList.add("-translate-x-full"); overlay.classList.add("hidden"); });
 
-        overlay.addEventListener("click", () => {
-            sidebar.classList.add("-translate-x-full");
-            overlay.classList.add("hidden");
-        });
-
-        // --- 1. LOAD DATA PENYAKIT ---
+        // --- LOAD DATA PENYAKIT ---
         async function loadPenyakit() {
             try {
                 const response = await fetch("http://localhost:3000/api/master/penyakit", { credentials: "include" });
                 const data = await response.json();
-
-                document.getElementById("totalPenyakit").textContent = data.length;
-                document.getElementById("totalPenyakitAktif").textContent = data.filter(d => d.status === 'Aktif').length;
                 document.getElementById("countPenyakitTab").textContent = `(${data.length})`;
 
                 const tbody = document.getElementById("diseaseTable");
-                tbody.innerHTML = "";
-
-                data.forEach((item, index) => {
+                tbody.innerHTML = data.map((item, index) => {
                     const statusColor = item.status === 'Aktif' ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-600';
-                    tbody.innerHTML += `
+                    const h = item.batas_hijau || 50;
+                    const k = item.batas_kuning || 100;
+                    const o = item.batas_oranye || 200;
+
+                    // Tampilan Indikator di Tabel
+                    const indicatorBadge = `
+                        <div class="text-[11px] leading-tight bg-white border border-gray-200 p-2 rounded-lg shadow-sm w-max">
+                            <div class="text-emerald-600"><b>Terkendali:</b> ≤ ${h}</div>
+                            <div class="text-yellow-600"><b>Waspada:</b> ${h+1} - ${k}</div>
+                            <div class="text-orange-600"><b>Siaga:</b> ${k+1} - ${o}</div>
+                            <div class="text-red-600"><b>KLB:</b> > ${o}</div>
+                        </div>
+                    `;
+
+                    return `
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 text-gray-500">${index + 1}</td>
                             <td class="px-6 py-4 font-medium">${item.kode}</td>
                             <td class="px-6 py-4 font-semibold text-gray-900">${item.nama}</td>
+                            <td class="px-6 py-4">${indicatorBadge}</td>
                             <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-medium ${statusColor}">${item.status}</span></td>
                             <td class="px-6 py-4">
                                 <div class="flex justify-center gap-1">
-                                    <button onclick="editData('penyakit', ${item.id}, '${item.kode}', '${item.nama}', '${item.status}')" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg" title="Edit">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                                    </button>
-                                    <button onclick="deleteData('penyakit', ${item.id}, '${item.nama}')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg" title="Hapus">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                    </button>
+                                    <button onclick="editItem('Penyakit', ${item.id}, '${item.kode}', '${item.nama}', '${item.status}', ${h}, ${k}, ${o})" class="px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 text-xs font-semibold">Edit</button>
+                                    <button onclick="deleteData('penyakit', ${item.id}, '${item.nama}')" class="px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 text-xs font-semibold">Hapus</button>
                                 </div>
                             </td>
                         </tr>
                     `;
-                });
+                }).join("");
             } catch (error) { console.error(error); }
         }
 
-        // --- 2. LOAD DATA WILAYAH ---
+        // --- LOAD DATA WILAYAH ---
         async function loadWilayah() {
             try {
                 const response = await fetch("http://localhost:3000/api/master/wilayah", { credentials: "include" });
                 const data = await response.json();
-
-                document.getElementById("totalWilayah").textContent = data.length;
-                document.getElementById("totalWilayahAktif").textContent = data.filter(d => d.status === 'Aktif').length;
                 document.getElementById("countWilayahTab").textContent = `(${data.length})`;
 
                 const tbody = document.getElementById("regionTable");
-                tbody.innerHTML = "";
-
-                data.forEach((item, index) => {
+                tbody.innerHTML = data.map((item, index) => {
                     const statusColor = item.status === 'Aktif' ? 'bg-green-50 text-green-600' : 'bg-gray-100 text-gray-600';
-                    tbody.innerHTML += `
+                    return `
                         <tr class="hover:bg-gray-50">
                             <td class="px-6 py-4 text-gray-500">${index + 1}</td>
                             <td class="px-6 py-4 font-medium">${item.kode}</td>
@@ -318,21 +307,17 @@
                             <td class="px-6 py-4"><span class="px-3 py-1 rounded-full text-xs font-medium ${statusColor}">${item.status}</span></td>
                             <td class="px-6 py-4">
                                 <div class="flex justify-center gap-1">
-                                    <button onclick="editData('wilayah', ${item.id}, '${item.kode}', '${item.nama}', '${item.status}', '${item.jenis}')" class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                                    </button>
-                                    <button onclick="deleteData('wilayah', ${item.id}, '${item.nama}')" class="p-2 text-red-600 hover:bg-red-50 rounded-lg">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                                    </button>
+                                    <button onclick="editItem('Wilayah', ${item.id}, '${item.kode}', '${item.nama}', '${item.status}', '${item.jenis}')" class="px-3 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 text-xs font-semibold">Edit</button>
+                                    <button onclick="deleteData('wilayah', ${item.id}, '${item.nama}')" class="px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 text-xs font-semibold">Hapus</button>
                                 </div>
                             </td>
                         </tr>
                     `;
-                });
+                }).join("");
             } catch (error) { console.error(error); }
         }
 
-        // --- 3. FUNGSI TAB ---
+        // --- FUNGSI TAB ---
         function switchTab(tab) {
             currentTab = tab;
             if (tab === 'disease') {
@@ -350,53 +335,68 @@
             }
         }
 
-        // --- 4. FUNGSI MODAL ---
+        // --- MODAL ---
         function openAddModal() {
             editId = null;
-            document.getElementById("dataId").value = "";
+            document.getElementById("dataType").value = currentTab === 'disease' ? 'Penyakit' : 'Wilayah';
+            document.getElementById("modalTitle").textContent = `Tambah ${currentTab === 'disease' ? 'Penyakit' : 'Wilayah'}`;
+            document.getElementById("nameLabel").textContent = currentTab === 'disease' ? "Nama Penyakit" : "Nama Wilayah";
             document.getElementById("dataCode").value = "";
             document.getElementById("dataName").value = "";
             document.getElementById("dataStatus").value = "Aktif";
-            document.getElementById("modalTitle").textContent = currentTab === 'disease' ? "Tambah Penyakit" : "Tambah Wilayah";
-            document.getElementById("nameLabel").textContent = currentTab === 'disease' ? "Nama Penyakit" : "Nama Wilayah";
+            
             document.getElementById("regionTypeWrapper").classList.toggle("hidden", currentTab === 'disease');
+            document.getElementById("indikatorWrapper").classList.toggle("hidden", currentTab === 'wilayah');
+            
+            document.getElementById("dataHijau").value = "50";
+            document.getElementById("dataKuning").value = "100";
+            document.getElementById("dataOranye").value = "200";
+
             document.getElementById("dataModal").classList.remove("hidden");
         }
 
-        function editData(type, id, kode, nama, status, jenis = "Kabupaten") {
+        function editItem(type, id, kode, nama, status, jenis, hijau = 50, kuning = 100, oranye = 200) {
             editId = id;
-            document.getElementById("dataId").value = id;
+            document.getElementById("dataType").value = type;
+            document.getElementById("modalTitle").textContent = `Edit ${type}`;
+            document.getElementById("nameLabel").textContent = type === "Penyakit" ? "Nama Penyakit" : "Nama Wilayah";
             document.getElementById("dataCode").value = kode;
             document.getElementById("dataName").value = nama;
             document.getElementById("dataStatus").value = status;
-            document.getElementById("regionType").value = jenis;
-            document.getElementById("modalTitle").textContent = type === 'penyakit' ? "Edit Penyakit" : "Edit Wilayah";
-            document.getElementById("nameLabel").textContent = type === 'penyakit' ? "Nama Penyakit" : "Nama Wilayah";
-            document.getElementById("regionTypeWrapper").classList.toggle("hidden", type === 'penyakit');
+            document.getElementById("regionType").value = jenis || "Kabupaten";
+            
+            document.getElementById("regionTypeWrapper").classList.toggle("hidden", type === "Penyakit");
+            document.getElementById("indikatorWrapper").classList.toggle("hidden", type === "Wilayah");
+            
+            document.getElementById("dataHijau").value = hijau;
+            document.getElementById("dataKuning").value = kuning;
+            document.getElementById("dataOranye").value = oranye;
+
             document.getElementById("dataModal").classList.remove("hidden");
         }
 
-        function closeModal() {
-            document.getElementById("dataModal").classList.add("hidden");
-        }
+        function closeModal() { document.getElementById("dataModal").classList.add("hidden"); }
 
-        // --- 5. FUNGSI SIMPAN ---
         async function saveData() {
+            const type = document.getElementById("dataType").value;
             const kode = document.getElementById("dataCode").value.trim();
             const nama = document.getElementById("dataName").value.trim();
             const status = document.getElementById("dataStatus").value;
             const jenis = document.getElementById("regionType").value;
+            const batas_hijau = document.getElementById("dataHijau").value;
+            const batas_kuning = document.getElementById("dataKuning").value;
+            const batas_oranye = document.getElementById("dataOranye").value;
 
-            if (!kode || !nama) {
-                alert("Kode dan Nama wajib diisi.");
-                return;
-            }
+            if (!kode || !nama) { alert("Kode dan Nama wajib diisi."); return; }
 
-            const isPenyakit = currentTab === 'disease';
+            const isPenyakit = type === 'Penyakit';
             const url = isPenyakit ? "http://localhost:3000/api/master/penyakit" : "http://localhost:3000/api/master/wilayah";
-            const body = isPenyakit ? { kode, nama, status } : { kode, nama, jenis, status };
             const method = editId ? "PUT" : "POST";
             const finalUrl = editId ? `${url}/${editId}` : url;
+            
+            const body = isPenyakit 
+                ? { kode, nama, status, batas_hijau, batas_kuning, batas_oranye } 
+                : { kode, nama, jenis, status };
 
             try {
                 const response = await fetch(finalUrl, {
@@ -406,18 +406,14 @@
                     credentials: "include"
                 });
                 const data = await response.json();
-
                 if (response.ok) {
                     alert(data.message);
                     closeModal();
                     if (isPenyakit) loadPenyakit(); else loadWilayah();
-                } else {
-                    alert(data.message); // Menampilkan pesan duplikasi dari backend
-                }
+                } else { alert(data.message); }
             } catch (error) { alert("Gagal terhubung ke server."); }
         }
 
-        // --- 6. FUNGSI HAPUS ---
         async function deleteData(type, id, nama) {
             if (confirm(`Hapus data "${nama}"?`)) {
                 try {
@@ -430,7 +426,6 @@
             }
         }
 
-        // --- 7. INIT & SIDEBAR ---
         document.addEventListener("DOMContentLoaded", () => {
             loadPenyakit();
             loadWilayah();
@@ -439,13 +434,11 @@
                 .then(data => {
                     if (data) {
                         document.getElementById("sidebarUserName").textContent = data.user.nama;
-                        document.getElementById("sidebarUserRole").textContent = data.user.role === 'admin' ? 'Administrator' : 'Petugas Validasi';
                         document.getElementById("userInitial").textContent = data.user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
                     }
                 });
         });
-
-        // Logout
+        
         async function logout() {
             if (confirm("Apakah Anda yakin ingin keluar?")) {
                 await fetch("http://localhost:3000/api/auth/logout", { method: "POST", credentials: "include" });

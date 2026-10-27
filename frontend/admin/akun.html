@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akun Pengguna - Admin</title>
 
-    <!-- AUTH GUARD -->
     <script src="../js/auth.js"></script>
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -43,15 +41,16 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span class="text-sm font-medium">Pengajuan validasi</span>
                 </div>
-                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">8</span>
+                <!-- Badge Dinamis -->
+                <span id="badgeSidebar" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">0</span>
             </a>
             <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/></svg>
                 <span class="text-sm font-medium">Rekapitulasi</span>
             </a>
-            <a href="informasi-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+            <a href="artikel-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-8a9 9 0 100 18 9 9 0 000-18zm0 5h.01"/></svg>
-                <span class="text-sm font-semibold">Informasi Penyakit</span>
+                <span class="text-sm font-semibold">Artikel Penyakit</span>
             </a>
 
             <div class="pt-4">
@@ -214,10 +213,16 @@
         </div>
     </div>
 
-    <!-- SCRIPT -->
     <script>
         let currentEditId = null;
         let loggedInUserId = null; // Menyimpan ID user yang sedang login
+
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("overlay");
+        const menuButton = document.getElementById("menuButton");
+
+        menuButton.addEventListener("click", () => { sidebar.classList.remove("-translate-x-full"); overlay.classList.remove("hidden"); });
+        overlay.addEventListener("click", () => { sidebar.classList.add("-translate-x-full"); overlay.classList.add("hidden"); });
 
         // --- 1. FUNGSI LOAD DATA DARI API ---
         async function loadUsers() {
@@ -424,7 +429,7 @@
                 .then(res => res.ok ? res.json() : null)
                 .then(data => {
                     if (data) {
-                        loggedInUserId = data.user.id; // Simpan ID untuk cek role
+                        loggedInUserId = data.user.id;
                         document.getElementById("sidebarUserName").textContent = data.user.nama;
                         const roleText = data.user.role === 'admin' ? 'Administrator' : 'Petugas Validasi';
                         document.getElementById("sidebarUserRole").textContent = roleText;
@@ -435,8 +440,20 @@
                 .finally(() => {
                     // 2. Setelah dapat ID user, baru load tabel
                     loadUsers();
+                    loadBadge(); // Ambil jumlah pengajuan validasi untuk badge sidebar
                 });
         });
+
+        // Ambil jumlah menunggu validasi untuk badge sidebar
+        async function loadBadge() {
+            try {
+                const response = await fetch("http://localhost:3000/api/dashboard/statistik", { credentials: "include" });
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById("badgeSidebar").textContent = data.menunggu;
+                }
+            } catch (error) { console.error("Gagal load badge", error); }
+        }
 
         // Logout
         async function logout() {

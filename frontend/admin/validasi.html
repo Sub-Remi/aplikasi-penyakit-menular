@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -7,20 +6,10 @@
     <title>Pengajuan validasi - Admin</title>
 
     <script src="../js/auth.js"></script>
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { poppins: ['Poppins', 'sans-serif'] }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { fontFamily: { poppins: ['Poppins', 'sans-serif'] } } } }
     </script>
 </head>
 
@@ -28,7 +17,6 @@
 
     <!-- SIDEBAR -->
     <aside id="sidebar" class="fixed left-0 top-0 z-50 h-screen w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-
         <div class="h-20 flex items-center px-6 border-b border-gray-200">
             <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
                 <span class="text-white font-bold">PM</span>
@@ -41,64 +29,41 @@
 
         <nav class="p-4 space-y-1">
             <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-12h8V3h-8v6z"/>
-                </svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-12h8V3h-8v6z"/></svg>
                 <span class="text-sm font-medium">Dashboard</span>
             </a>
-
             <a href="data-kasus.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a3 3 0 006 0M9 5h6"/>
-                </svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a3 3 0 006 0M9 5h6"/></svg>
                 <span class="text-sm font-medium">Data Kasus</span>
             </a>
-
             <a href="validasi.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-blue-50 text-blue-600">
                 <div class="flex items-center gap-3">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span class="text-sm font-medium">Pengajuan validasi</span>
                 </div>
-                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">8</span>
+                <span id="badgeSidebar" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">0</span>
             </a>
-
             <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/>
-                </svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/></svg>
                 <span class="text-sm font-medium">Rekapitulasi</span>
             </a>
-
-            <a href="informasi-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-8a9 9 0 100 18 9 9 0 000-18zm0 5h.01"/>
-            </svg>
-            <span class="text-sm font-semibold">Informasi Penyakit</span>
+            <a href="artikel-penyakit.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-8a9 9 0 100 18 9 9 0 000-18zm0 5h.01"/></svg>
+                <span class="text-sm font-semibold">Artikel Penyakit</span>
             </a>
 
             <div class="pt-4">
                 <p class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Pengaturan</p>
-
                 <a href="master-data.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                     <span class="text-sm font-medium">Master Data</span>
                 </a>
-
                 <a href="akun.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                    </svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     <span class="text-sm font-medium">Akun Pengguna</span>
                 </a>
-
                 <a href="riwayat.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span class="text-sm font-medium">Riwayat Aktivitas</span>
                 </a>
             </div>
@@ -107,16 +72,14 @@
         <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span class="text-sm font-semibold text-blue-600">AD</span>
+                    <span id="userInitial" class="text-sm font-semibold text-blue-600">AD</span>
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold text-gray-800 truncate">Admin Petugas</p>
+                    <p id="sidebarUserName" class="text-sm font-semibold text-gray-800 truncate">Memuat...</p>
                     <p class="text-xs text-gray-500">Administrator</p>
                 </div>
                 <button onclick="logout()" class="text-gray-400 hover:text-red-500">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                    </svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                 </button>
             </div>
         </div>
@@ -126,155 +89,113 @@
 
     <!-- MAIN -->
     <div class="lg:ml-64 min-h-screen">
-
-        <!-- HEADER -->
         <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-5 md:px-8">
             <div class="flex items-center gap-4">
                 <button id="menuButton" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
-
                 <div>
                     <h2 class="text-lg md:text-xl font-semibold text-gray-900">Pengajuan validasi</h2>
-                    <p class="text-xs md:text-sm text-gray-500">Kelola data kasus yang diajukan untuk divalidasi</p>
+                    <p class="text-xs md:text-sm text-gray-500">Pantau data kasus yang telah diajukan dan status proses validasinya</p>
                 </div>
             </div>
-
-            <button onclick="showNotification()" class="relative p-2.5 rounded-xl hover:bg-gray-100">
-                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.5-2A2 2 0 0118 14V11a6 6 0 00-12 0v3a2 2 0 01-.5 1L4 17h5m6 0a3 3 0 01-6 0"/>
-                </svg>
-                <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
         </header>
 
-        <!-- CONTENT -->
         <main class="p-5 md:p-8">
-
             <section>
                 <h1 class="text-2xl font-bold text-gray-900">Pengajuan validasi</h1>
                 <p class="mt-1 text-sm text-gray-500">Pantau data kasus yang telah diajukan dan status proses validasinya.</p>
             </section>
 
             <!-- SUMMARY -->
-            <section class="mt-7">
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Menunggu validasi</p>
-                                <p class="mt-2 text-2xl font-bold text-gray-900">8</p>
-                                <p class="mt-2 text-xs text-orange-600">Perlu ditinjau validator</p>
-                            </div>
-                            <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                            </div>
+            <section class="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Menunggu validasi</p>
+                            <p id="statMenunggu" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                            <p class="mt-2 text-xs text-orange-600">Perlu ditinjau validator</p>
+                        </div>
+                        <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                     </div>
-
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Disetujui</p>
-                                <p class="mt-2 text-2xl font-bold text-gray-900">212</p>
-                                <p class="mt-2 text-xs text-green-600">Data berhasil divalidasi</p>
-                            </div>
-                            <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Disetujui</p>
+                            <p id="statDisetujui" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                            <p class="mt-2 text-xs text-green-600">Data berhasil divalidasi</p>
+                        </div>
+                        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                         </div>
                     </div>
-
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Dikembalikan</p>
-                                <p class="mt-2 text-2xl font-bold text-gray-900">3</p>
-                                <p class="mt-2 text-xs text-red-600">Perlu diperbaiki Admin</p>
-                            </div>
-                            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
-                            </div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Dikembalikan</p>
+                            <p id="statDikembalikan" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                            <p class="mt-2 text-xs text-red-600">Perlu diperbaiki Admin</p>
+                        </div>
+                        <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                         </div>
                     </div>
-
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Dipublikasikan</p>
-                                <p class="mt-2 text-2xl font-bold text-gray-900">212</p>
-                                <p class="mt-2 text-xs text-blue-600">Tersedia untuk masyarakat</p>
-                            </div>
-                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l5 5L20 7"/>
-                                </svg>
-                            </div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Dipublikasikan</p>
+                            <p id="statDipublikasikan" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                            <p class="mt-2 text-xs text-blue-600">Tersedia untuk masyarakat</p>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12l5 5L20 7"/></svg>
                         </div>
                     </div>
-
                 </div>
             </section>
 
             <!-- TABS + TABLE -->
             <section class="mt-7 bg-white border border-gray-200 rounded-2xl overflow-hidden">
-
                 <div class="px-5 md:px-6 border-b border-gray-200">
                     <div class="flex items-center gap-6 overflow-x-auto">
-
-                        <button id="tabWaiting" onclick="changeTab('waiting')" class="tab-button py-4 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 whitespace-nowrap">
-                            Menunggu validasi <span class="ml-1 text-xs">(8)</span>
+                        <button id="tabWaiting" onclick="changeTab('Menunggu validasi')" class="tab-button py-4 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 whitespace-nowrap">
+                            Menunggu validasi <span id="countWaiting" class="ml-1 text-xs">(0)</span>
                         </button>
-
-                        <button id="tabReturned" onclick="changeTab('returned')" class="tab-button py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-800 whitespace-nowrap">
-                            Dikembalikan <span class="ml-1 text-xs">(3)</span>
+                        <button id="tabReturned" onclick="changeTab('Dikembalikan')" class="tab-button py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-800 whitespace-nowrap">
+                            Dikembalikan <span id="countReturned" class="ml-1 text-xs">(0)</span>
                         </button>
-
-                        <button id="tabApproved" onclick="changeTab('approved')" class="tab-button py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-800 whitespace-nowrap">
-                            Disetujui <span class="ml-1 text-xs">(212)</span>
+                        <button id="tabApproved" onclick="changeTab('Dipublikasikan')" class="tab-button py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-800 whitespace-nowrap">
+                            Disetujui <span id="countApproved" class="ml-1 text-xs">(0)</span>
                         </button>
-
                     </div>
                 </div>
 
                 <div class="p-5 md:p-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Cari Data</label>
                             <div class="relative">
-                                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m2.1-5.4a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z"/>
-                                </svg>
-                                <input id="searchInput" oninput="filterTable()" type="text" placeholder="Cari penyakit atau wilayah..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m2.1-5.4a7.5 7.5 0 11-15 0 7.5 7.5 0 0115 0z"/></svg>
+                                <input id="searchInput" oninput="renderTable()" type="text" placeholder="Cari penyakit atau wilayah..." class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                             </div>
                         </div>
-
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Periode</label>
-                            <select id="periodFilter" onchange="filterTable()" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <select id="periodFilter" onchange="renderTable()" class="w-full px-4 py-2.5 border border-gray-300 rounded-xl text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
                                 <option value="all">Semua Periode</option>
-                                <option value="September 2026">September 2026</option>
-                                <option value="Agustus 2026">Agustus 2026</option>
-                                <option value="Juli 2026">Juli 2026</option>
+                                <!-- Diisi JS -->
                             </select>
                         </div>
-
                     </div>
                 </div>
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm">
-
                         <thead class="bg-gray-50 border-t border-gray-200">
                             <tr>
                                 <th class="text-left px-6 py-4 font-medium text-gray-500">No.</th>
@@ -286,177 +207,33 @@
                                 <th class="text-center px-6 py-4 font-medium text-gray-500">Aksi</th>
                             </tr>
                         </thead>
-
                         <tbody id="verificationTable" class="divide-y divide-gray-100">
-
-                            <tr class="data-row hover:bg-gray-50" data-status="waiting" data-search="dbd manado" data-period="September 2026">
-                                <td class="px-6 py-4 text-gray-500">1</td>
-                                <td class="px-6 py-4 font-semibold text-gray-900">DBD</td>
-                                <td class="px-6 py-4 text-gray-600">Kota Manado</td>
-                                <td class="px-6 py-4 text-gray-600">September 2026</td>
-                                <td class="px-6 py-4 text-right font-semibold">35</td>
-                                <td class="px-6 py-4 text-gray-500">10 Sep 2026</td>
-                                <td class="px-6 py-4 text-center">
-                                    <button onclick="showDetail('DBD','Kota Manado','September 2026','35','10 September 2026','Admin Petugas','waiting')" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542-7z"/>
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr class="data-row hover:bg-gray-50" data-status="waiting" data-search="tuberkulosis bitung" data-period="September 2026">
-                                <td class="px-6 py-4 text-gray-500">2</td>
-                                <td class="px-6 py-4 font-semibold text-gray-900">Tuberkulosis</td>
-                                <td class="px-6 py-4 text-gray-600">Kota Bitung</td>
-                                <td class="px-6 py-4 text-gray-600">September 2026</td>
-                                <td class="px-6 py-4 text-right font-semibold">27</td>
-                                <td class="px-6 py-4 text-gray-500">10 Sep 2026</td>
-                                <td class="px-6 py-4 text-center">
-                                    <button onclick="showDetail('Tuberkulosis','Kota Bitung','September 2026','27','10 September 2026','Admin Petugas','waiting')" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7z"/>
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr class="data-row hover:bg-gray-50" data-status="waiting" data-search="diare minahasa" data-period="September 2026">
-                                <td class="px-6 py-4 text-gray-500">3</td>
-                                <td class="px-6 py-4 font-semibold text-gray-900">Diare</td>
-                                <td class="px-6 py-4 text-gray-600">Kabupaten Minahasa</td>
-                                <td class="px-6 py-4 text-gray-600">September 2026</td>
-                                <td class="px-6 py-4 text-right font-semibold">42</td>
-                                <td class="px-6 py-4 text-gray-500">09 Sep 2026</td>
-                                <td class="px-6 py-4 text-center">
-                                    <button onclick="showDetail('Diare','Kabupaten Minahasa','September 2026','42','9 September 2026','Admin Petugas','waiting')" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7z"/>
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr class="data-row hover:bg-gray-50" data-status="waiting" data-search="ispa tomohon" data-period="September 2026">
-                                <td class="px-6 py-4 text-gray-500">4</td>
-                                <td class="px-6 py-4 font-semibold text-gray-900">ISPA</td>
-                                <td class="px-6 py-4 text-gray-600">Kota Tomohon</td>
-                                <td class="px-6 py-4 text-gray-600">September 2026</td>
-                                <td class="px-6 py-4 text-right font-semibold">56</td>
-                                <td class="px-6 py-4 text-gray-500">09 Sep 2026</td>
-                                <td class="px-6 py-4 text-center">
-                                    <button onclick="showDetail('ISPA','Kota Tomohon','September 2026','56','9 September 2026','Admin Petugas','waiting')" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7z"/>
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr class="data-row hover:bg-gray-50" data-status="waiting" data-search="dbd minahasa utara" data-period="September 2026">
-                                <td class="px-6 py-4 text-gray-500">5</td>
-                                <td class="px-6 py-4 font-semibold text-gray-900">DBD</td>
-                                <td class="px-6 py-4 text-gray-600">Kabupaten Minahasa Utara</td>
-                                <td class="px-6 py-4 text-gray-600">September 2026</td>
-                                <td class="px-6 py-4 text-right font-semibold">21</td>
-                                <td class="px-6 py-4 text-gray-500">08 Sep 2026</td>
-                                <td class="px-6 py-4 text-center">
-                                    <button onclick="showDetail('DBD','Kabupaten Minahasa Utara','September 2026','21','8 September 2026','Admin Petugas','waiting')" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7z"/>
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr class="data-row hidden hover:bg-gray-50" data-status="returned" data-search="ispa tomohon" data-period="Agustus 2026">
-                                <td class="px-6 py-4 text-gray-500">1</td>
-                                <td class="px-6 py-4 font-semibold text-gray-900">ISPA</td>
-                                <td class="px-6 py-4 text-gray-600">Kota Tomohon</td>
-                                <td class="px-6 py-4 text-gray-600">Agustus 2026</td>
-                                <td class="px-6 py-4 text-right font-semibold">56</td>
-                                <td class="px-6 py-4 text-gray-500">05 Sep 2026</td>
-                                <td class="px-6 py-4 text-center">
-                                    <button onclick="showDetail('ISPA','Kota Tomohon','Agustus 2026','56','5 September 2026','Admin Petugas','returned')" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7z"/>
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
-                            <tr class="data-row hidden hover:bg-gray-50" data-status="approved" data-search="dbd manado" data-period="Agustus 2026">
-                                <td class="px-6 py-4 text-gray-500">1</td>
-                                <td class="px-6 py-4 font-semibold text-gray-900">DBD</td>
-                                <td class="px-6 py-4 text-gray-600">Kota Manado</td>
-                                <td class="px-6 py-4 text-gray-600">Agustus 2026</td>
-                                <td class="px-6 py-4 text-right font-semibold">31</td>
-                                <td class="px-6 py-4 text-gray-500">03 Sep 2026</td>
-                                <td class="px-6 py-4 text-center">
-                                    <button onclick="showDetail('DBD','Kota Manado','Agustus 2026','31','3 September 2026','Admin Petugas','approved')" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7z"/>
-                                        </svg>
-                                    </button>
-                                </td>
-                            </tr>
-
+                            <!-- Diisi JS -->
                         </tbody>
                     </table>
                 </div>
 
                 <div id="emptyState" class="hidden px-6 py-14 text-center">
                     <div class="w-14 h-14 mx-auto rounded-full bg-gray-100 flex items-center justify-center">
-                        <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 4H7a2 2 0 01-2-2V6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v10a2 2 0 01-2 2z"/>
-                        </svg>
+                        <svg class="w-7 h-7 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 4H7a2 2 0 01-2-2V6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v10a2 2 0 01-2 2z"/></svg>
                     </div>
                     <h3 class="mt-4 font-semibold text-gray-900">Tidak ada data</h3>
                     <p class="mt-1 text-sm text-gray-500">Belum ada data pada kategori atau filter yang dipilih.</p>
                 </div>
-
             </section>
-
-            <!-- INFO -->
-            <section class="mt-6 mb-8">
-                <div class="bg-blue-50 border border-blue-100 rounded-2xl p-5">
-                    <div class="flex gap-3">
-                        <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"/>
-                        </svg>
-                        <div>
-                            <h4 class="text-sm font-semibold text-blue-800">Alur Pengajuan validasi</h4>
-                            <p class="mt-1 text-xs text-blue-700 leading-relaxed">
-                                Admin menginput data kasus berdasarkan laporan yang diterima dari Dinas Kesehatan Kabupaten/Kota. Data yang telah selesai diinput dapat diajukan untuk divalidasi oleh validator. Data yang disetujui dapat dipublikasikan, sedangkan data yang dikembalikan harus diperbaiki oleh Admin sesuai catatan validator.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
         </main>
     </div>
 
     <!-- DETAIL MODAL -->
     <div id="detailModal" class="fixed inset-0 z-[60] hidden bg-black/50 flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-2xl rounded-2xl shadow-xl overflow-hidden">
-
             <div class="flex items-center justify-between px-6 py-5 border-b border-gray-200">
                 <div>
                     <h3 class="text-lg font-semibold text-gray-900">Detail Pengajuan</h3>
                     <p class="text-xs text-gray-500 mt-1">Informasi data yang diajukan</p>
                 </div>
                 <button onclick="closeDetail()" class="p-2 rounded-lg hover:bg-gray-100">
-                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    </svg>
+                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
 
@@ -475,10 +252,11 @@
                     <div id="detailStatus" class="mt-2"></div>
                 </div>
 
+                <!-- Catatan Validator (Muncul jika dikembalikan) -->
                 <div id="returnNote" class="mt-5 hidden">
                     <div class="bg-red-50 border border-red-100 rounded-xl p-4">
-                        <p class="text-xs font-semibold text-red-700">Catatan validator</p>
-                        <p class="mt-1 text-sm text-red-600">Jumlah kasus perlu disesuaikan dengan laporan yang diterima.</p>
+                        <p class="text-xs font-semibold text-red-700">Catatan dari Validator</p>
+                        <p id="returnNoteText" class="mt-1 text-sm text-red-600"></p>
                     </div>
                 </div>
             </div>
@@ -486,7 +264,6 @@
             <div class="flex justify-end px-6 py-4 border-t border-gray-200">
                 <button onclick="closeDetail()" class="px-4 py-2.5 border border-gray-300 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-50">Tutup</button>
             </div>
-
         </div>
     </div>
 
@@ -494,76 +271,149 @@
         const sidebar = document.getElementById("sidebar");
         const overlay = document.getElementById("overlay");
         const menuButton = document.getElementById("menuButton");
-        let currentTab = "waiting";
+        let allKasus = [];
+        let currentTab = "Menunggu validasi"; // Default tab
 
-        menuButton.addEventListener("click", () => {
-            sidebar.classList.remove("-translate-x-full");
-            overlay.classList.remove("hidden");
-        });
+        menuButton.addEventListener("click", () => { sidebar.classList.remove("-translate-x-full"); overlay.classList.remove("hidden"); });
+        overlay.addEventListener("click", () => { sidebar.classList.add("-translate-x-full"); overlay.classList.add("hidden"); });
 
-        overlay.addEventListener("click", () => {
-            sidebar.classList.add("-translate-x-full");
-            overlay.classList.add("hidden");
-        });
+        // --- 1. LOAD DATA ---
+        async function loadData() {
+            try {
+                const response = await fetch("http://localhost:3000/api/kasus", { credentials: "include" });
+                allKasus = await response.json();
 
+                updateSummary();
+                populatePeriodFilter();
+                renderTable();
+            } catch (error) { console.error("Gagal load data:", error); }
+        }
+
+        // --- 2. UPDATE SUMMARY & BADGE ---
+        function updateSummary() {
+            const waiting = allKasus.filter(d => d.status === 'Menunggu validasi').length;
+            const approved = allKasus.filter(d => d.status === 'Dipublikasikan').length;
+            const returned = allKasus.filter(d => d.status === 'Dikembalikan').length;
+
+            document.getElementById("statMenunggu").textContent = waiting;
+            document.getElementById("statDisetujui").textContent = approved;
+            document.getElementById("statDikembalikan").textContent = returned;
+            document.getElementById("statDipublikasikan").textContent = approved;
+            
+            // Sidebar Badge
+            document.getElementById("badgeSidebar").textContent = waiting;
+
+            // Tab Counts
+            document.getElementById("countWaiting").textContent = `(${waiting})`;
+            document.getElementById("countReturned").textContent = `(${returned})`;
+            document.getElementById("countApproved").textContent = `(${approved})`;
+        }
+
+        // --- 3. ISI DROPDOWN PERIODE ---
+        function populatePeriodFilter() {
+            const periods = [...new Set(allKasus.map(d => d.periode))].sort().reverse();
+            const select = document.getElementById("periodFilter");
+            select.innerHTML = `<option value="all">Semua Periode</option>`;
+            periods.forEach(p => { select.innerHTML += `<option value="${p}">${p}</option>`; });
+        }
+
+        // --- 4. CHANGE TAB ---
         function changeTab(tab) {
             currentTab = tab;
 
+            // Reset Styles
             document.querySelectorAll(".tab-button").forEach(btn => {
                 btn.className = "tab-button py-4 text-sm font-medium text-gray-500 border-b-2 border-transparent hover:text-gray-800 whitespace-nowrap";
             });
 
+            // Set Active Style
             const active = document.getElementById({
-                waiting: "tabWaiting",
-                returned: "tabReturned",
-                approved: "tabApproved"
+                "Menunggu validasi": "tabWaiting",
+                "Dikembalikan": "tabReturned",
+                "Dipublikasikan": "tabApproved"
             }[tab]);
 
             active.className = "tab-button py-4 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 whitespace-nowrap";
-            filterTable();
+            renderTable();
         }
 
-        function filterTable() {
+        // --- 5. RENDER TABLE ---
+        function renderTable() {
             const search = document.getElementById("searchInput").value.toLowerCase().trim();
             const period = document.getElementById("periodFilter").value;
-            let visible = 0;
+            
+            const tbody = document.getElementById("verificationTable");
+            const emptyState = document.getElementById("emptyState");
+            tbody.innerHTML = "";
 
-            document.querySelectorAll(".data-row").forEach(row => {
-                const matchStatus = row.dataset.status === currentTab;
-                const matchSearch = !search || row.dataset.search.includes(search);
-                const matchPeriod = period === "all" || row.dataset.period === period;
-
-                if (matchStatus && matchSearch && matchPeriod) {
-                    row.classList.remove("hidden");
-                    visible++;
-                } else {
-                    row.classList.add("hidden");
-                }
+            const filtered = allKasus.filter(item => {
+                const matchStatus = item.status === currentTab;
+                const matchSearch = !search || item.penyakit.toLowerCase().includes(search) || item.wilayah.toLowerCase().includes(search);
+                const matchPeriod = period === "all" || item.periode === period;
+                return matchStatus && matchSearch && matchPeriod;
             });
 
-            document.getElementById("emptyState").classList.toggle("hidden", visible !== 0);
+            if (filtered.length === 0) {
+                emptyState.classList.remove("hidden");
+                return;
+            }
+            emptyState.classList.add("hidden");
+
+            filtered.forEach((item, index) => {
+                const date = new Date(item.created_at).toLocaleString('id-ID', { dateStyle: 'medium' });
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-gray-500">${index + 1}</td>
+                        <td class="px-6 py-4 font-semibold text-gray-900">${item.penyakit}</td>
+                        <td class="px-6 py-4 text-gray-600">${item.wilayah}</td>
+                        <td class="px-6 py-4 text-gray-600">${item.periode}</td>
+                        <td class="px-6 py-4 text-right font-semibold">${item.jumlah}</td>
+                        <td class="px-6 py-4 text-gray-500 whitespace-nowrap">${date}</td>
+                        <td class="px-6 py-4 text-center">
+                            <button onclick="showDetail(${item.id})" class="p-2 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7z"/></svg>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
         }
 
-        function showDetail(disease, region, period, cases, submittedAt, submittedBy, status) {
-            document.getElementById("detailDisease").textContent = disease;
-            document.getElementById("detailRegion").textContent = region;
-            document.getElementById("detailPeriod").textContent = period;
-            document.getElementById("detailCases").textContent = cases;
-            document.getElementById("detailSubmittedAt").textContent = submittedAt;
-            document.getElementById("detailSubmittedBy").textContent = submittedBy;
+        // --- 6. DETAIL MODAL ---
+        function showDetail(id) {
+            const item = allKasus.find(d => d.id === id);
+            if (!item) return;
 
-            const statusData = {
-                waiting: ["Menunggu validasi", "bg-orange-50 text-orange-600"],
-                returned: ["Dikembalikan", "bg-red-50 text-red-600"],
-                approved: ["Disetujui", "bg-green-50 text-green-600"]
-            };
+            document.getElementById("detailDisease").textContent = item.penyakit;
+            document.getElementById("detailRegion").textContent = item.wilayah;
+            document.getElementById("detailPeriod").textContent = item.periode;
+            document.getElementById("detailCases").textContent = item.jumlah;
+            document.getElementById("detailSubmittedBy").textContent = item.admin;
+            
+            const date = new Date(item.created_at).toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' });
+            document.getElementById("detailSubmittedAt").textContent = date;
 
-            const [label, color] = statusData[status];
+            // Status Badge
+            let statusColor = "bg-gray-100 text-gray-600";
+            if (item.status === "Menunggu validasi") statusColor = "bg-orange-50 text-orange-600";
+            else if (item.status === "Dipublikasikan") statusColor = "bg-green-50 text-green-600";
+            else if (item.status === "Dikembalikan") statusColor = "bg-red-50 text-red-600";
 
-            document.getElementById("detailStatus").innerHTML =
-                `<span class="inline-flex px-3 py-1.5 rounded-full text-xs font-medium ${color}">${label}</span>`;
+            document.getElementById("detailStatus").innerHTML = 
+                `<span class="inline-flex px-3 py-1.5 rounded-full text-xs font-medium ${statusColor}">${item.status}</span>`;
 
-            document.getElementById("returnNote").classList.toggle("hidden", status !== "returned");
+            // Catatan Validator (Hanya muncul jika Dikembalikan)
+            const returnNote = document.getElementById("returnNote");
+            const returnNoteText = document.getElementById("returnNoteText");
+            
+            if (item.status === "Dikembalikan" && item.catatan_validator) {
+                returnNote.classList.remove("hidden");
+                returnNoteText.textContent = item.catatan_validator;
+            } else {
+                returnNote.classList.add("hidden");
+            }
+
             document.getElementById("detailModal").classList.remove("hidden");
         }
 
@@ -571,13 +421,22 @@
             document.getElementById("detailModal").classList.add("hidden");
         }
 
-        function showNotification() {
-            alert("Notifikasi:\n\n• 8 data menunggu validasi.\n• 3 data dikembalikan oleh validator.");
+        // --- PROFILE & LOGOUT ---
+        async function loadUserProfile() {
+            try {
+                const response = await fetch("http://localhost:3000/api/auth/me", { credentials: "include" });
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById("sidebarUserName").textContent = data.user.nama;
+                    document.getElementById("userInitial").textContent = data.user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                }
+            } catch (error) { console.error(error); }
         }
 
-        function logout() {
+        async function logout() {
             if (confirm("Apakah Anda yakin ingin keluar?")) {
-                alert("Logout akan dihubungkan dengan autentikasi Laravel.");
+                await fetch("http://localhost:3000/api/auth/logout", { method: "POST", credentials: "include" });
+                window.location.replace("../login/login.html");
             }
         }
 
@@ -585,9 +444,11 @@
             if (e.target === e.currentTarget) closeDetail();
         });
 
-        filterTable();
+        // Init
+        document.addEventListener("DOMContentLoaded", () => {
+            loadData();
+            loadUserProfile();
+        });
     </script>
-
 </body>
 </html>
-```

@@ -6,32 +6,20 @@
     <title>Dashboard Validator</title>
 
     <script src="../js/auth.js"></script>
-
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { poppins: ['Poppins', 'sans-serif'] }
-                }
-            }
-        }
-    </script>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = { theme: { extend: { fontFamily: { poppins: ['Poppins', 'sans-serif'] } } } }
+    </script>
 </head>
 
 <body class="font-poppins bg-gray-50 text-gray-800">
 
     <!-- SIDEBAR -->
     <aside id="sidebar" class="fixed left-0 top-0 z-50 h-screen w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
-
         <div class="h-20 flex items-center px-6 border-b border-gray-200">
             <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
                 <span class="text-white font-bold">PM</span>
@@ -43,55 +31,38 @@
         </div>
 
         <nav class="p-4 space-y-1">
-
             <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-50 text-blue-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-12h8V3h-8v6z"/>
-                </svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 13h8V3H3v10zm10 8h8V11h-8v10zM3 21h8v-6H3v6zm10-12h8V3h-8v6z"/></svg>
                 <span class="text-sm font-medium">Dashboard</span>
             </a>
-
             <a href="validasi.html" class="flex items-center justify-between px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
                 <div class="flex items-center gap-3">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span class="text-sm font-medium">Validasi Data</span>
                 </div>
-                <span class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">8</span>
+                <span id="badgeSidebar" class="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full">0</span>
             </a>
-
             <a href="rekapitulasi.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/>
-                </svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/></svg>
                 <span class="text-sm font-medium">Rekapitulasi</span>
             </a>
-
             <a href="riwayat.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-600 hover:bg-gray-50 hover:text-blue-600">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span class="text-sm font-medium">Riwayat Validasi</span>
             </a>
-
         </nav>
 
         <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <span class="text-sm font-semibold text-blue-600">VL</span>
+                    <span id="userInitial" class="text-sm font-semibold text-blue-600">VL</span>
                 </div>
-
                 <div class="flex-1 min-w-0">
-                    <p class="text-sm font-semibold text-gray-800 truncate">Validator</p>
+                    <p id="sidebarUserName" class="text-sm font-semibold text-gray-800 truncate">Memuat...</p>
                     <p class="text-xs text-gray-500">Petugas Validasi</p>
                 </div>
-
                 <button onclick="logout()" class="text-gray-400 hover:text-red-500">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l-4-4m0 0l4-4m-4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
-                    </svg>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
                 </button>
             </div>
         </div>
@@ -101,486 +72,246 @@
 
     <!-- MAIN -->
     <div class="lg:ml-64 min-h-screen">
-
-        <!-- HEADER -->
         <header class="h-20 bg-white border-b border-gray-200 flex items-center justify-between px-5 md:px-8">
-
             <div class="flex items-center gap-4">
-
                 <button id="menuButton" class="lg:hidden p-2 rounded-lg hover:bg-gray-100">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </button>
-
                 <div>
                     <h2 class="text-lg md:text-xl font-semibold text-gray-900">Dashboard Validator</h2>
                     <p class="text-xs md:text-sm text-gray-500">Pemantauan proses validasi data penyakit menular</p>
                 </div>
-
             </div>
-
-            <button onclick="showNotification()" class="relative p-2.5 rounded-xl hover:bg-gray-100">
-                <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.5-2A2 2 0 0118 14V11a6 6 0 00-12 0v3a2 2 0 01-.5 1L4 17h5m6 0a3 3 0 01-6 0"/>
-                </svg>
-                <span class="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
-
         </header>
 
-        <!-- CONTENT -->
         <main class="p-5 md:p-8">
-
             <section>
-                <h1 class="text-2xl font-bold text-gray-900">Dashboard Validator</h1>
+                <h1 id="welcomeText" class="text-2xl font-bold text-gray-900">Dashboard Validator</h1>
                 <p class="mt-1 text-sm text-gray-500">Ringkasan proses validasi data penyakit menular.</p>
             </section>
 
             <!-- SUMMARY -->
-            <section class="mt-7">
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Menunggu Validasi</p>
-                                <p class="mt-2 text-2xl font-bold text-gray-900">8</p>
-                                <p class="mt-2 text-xs text-orange-600">Perlu ditinjau</p>
-                            </div>
-                            <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                            </div>
+            <section class="mt-7 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Menunggu Validasi</p>
+                            <p id="statMenunggu" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                            <p class="mt-2 text-xs text-orange-600">Perlu ditinjau</p>
+                        </div>
+                        <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                     </div>
-
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Disetujui</p>
-                                <p class="mt-2 text-2xl font-bold text-gray-900">212</p>
-                                <p class="mt-2 text-xs text-green-600">Data disetujui</p>
-                            </div>
-                            <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Disetujui</p>
+                            <p id="statDisetujui" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                            <p class="mt-2 text-xs text-green-600">Data disetujui</p>
+                        </div>
+                        <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
                         </div>
                     </div>
-
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Dikembalikan</p>
-                                <p class="mt-2 text-2xl font-bold text-gray-900">3</p>
-                                <p class="mt-2 text-xs text-red-600">Perlu diperbaiki</p>
-                            </div>
-                            <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
-                            </div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Dikembalikan</p>
+                            <p id="statDikembalikan" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                            <p class="mt-2 text-xs text-red-600">Perlu diperbaiki</p>
+                        </div>
+                        <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                         </div>
                     </div>
-
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5">
-                        <div class="flex items-start justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Dipublikasikan</p>
-                                <p class="mt-2 text-2xl font-bold text-gray-900">212</p>
-                                <p class="mt-2 text-xs text-blue-600">Tersedia untuk publik</p>
-                            </div>
-                            <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
-                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                            </div>
+                </div>
+                <div class="bg-white border border-gray-200 rounded-2xl p-5">
+                    <div class="flex items-start justify-between">
+                        <div>
+                            <p class="text-sm text-gray-500">Dipublikasikan</p>
+                            <p id="statDipublikasikan" class="mt-2 text-2xl font-bold text-gray-900">0</p>
+                            <p class="mt-2 text-xs text-blue-600">Tersedia untuk publik</p>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                     </div>
-
                 </div>
             </section>
 
             <!-- CHART -->
             <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
-
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
-
-                    <div>
-                        <h3 class="font-semibold text-gray-900">Status Validasi Data</h3>
-                        <p class="text-xs text-gray-500 mt-1">Jumlah data berdasarkan status validasi.</p>
-                    </div>
-
-                    <select id="periodSelect" class="px-4 py-2.5 rounded-xl border border-gray-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500">
-                        <option value="all">Semua Periode</option>
-                        <option value="Jan">Januari 2026</option>
-                        <option value="Feb">Februari 2026</option>
-                        <option value="Mar">Maret 2026</option>
-                        <option value="Apr">April 2026</option>
-                        <option value="May">Mei 2026</option>
-                        <option value="Jun">Juni 2026</option>
-                        <option value="Jul">Juli 2026</option>
-                        <option value="Aug">Agustus 2026</option>
-                        <option value="Sep" selected>September 2026</option>
-                        <option value="Oct">Oktober 2026</option>
-                        <option value="Nov">November 2026</option>
-                        <option value="Dec">Desember 2026</option>
-                    </select>
-
+                <div>
+                    <h3 class="font-semibold text-gray-900">Status Validasi Data</h3>
+                    <p class="text-xs text-gray-500 mt-1">Jumlah data berdasarkan status validasi.</p>
                 </div>
-
-                <div class="h-[330px]">
+                <div class="h-[330px] mt-5">
                     <canvas id="statusChart"></canvas>
                 </div>
-
             </section>
 
-            <!-- CONTENT GRID -->
-            <section class="mt-7 grid grid-cols-1 xl:grid-cols-2 gap-6">
-
-                <!-- PENGAJUAN TERBARU -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-
-                    <div class="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
-                        <div>
-                            <h3 class="font-semibold text-gray-900">Pengajuan Terbaru</h3>
-                            <p class="text-xs text-gray-500 mt-1">Data terbaru yang menunggu validasi.</p>
-                        </div>
-
-                        <a href="validasi.html" class="text-xs font-semibold text-blue-600 hover:text-blue-700">
-                            Lihat Semua
-                        </a>
+            <!-- PENGAJUAN TERBARU -->
+            <section class="mt-7 bg-white border border-gray-200 rounded-2xl overflow-hidden">
+                <div class="px-6 py-5 border-b border-gray-200 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-semibold text-gray-900">Pengajuan Terbaru</h3>
+                        <p class="text-xs text-gray-500 mt-1">Data terbaru yang menunggu validasi.</p>
                     </div>
-
-                    <div class="divide-y divide-gray-100">
-
-                        <div class="px-6 py-4 flex items-center justify-between gap-4">
-                            <div>
-                                <p class="text-sm font-semibold text-gray-800">Arbovirosis (DBD)</p>
-                                <p class="text-xs text-gray-500 mt-1">Manado • September 2026</p>
-                            </div>
-                            <span class="text-xs bg-orange-50 text-orange-600 px-3 py-1 rounded-lg">Menunggu</span>
-                        </div>
-
-                        <div class="px-6 py-4 flex items-center justify-between gap-4">
-                            <div>
-                                <p class="text-sm font-semibold text-gray-800">TBC</p>
-                                <p class="text-xs text-gray-500 mt-1">Bitung • September 2026</p>
-                            </div>
-                            <span class="text-xs bg-orange-50 text-orange-600 px-3 py-1 rounded-lg">Menunggu</span>
-                        </div>
-
-                        <div class="px-6 py-4 flex items-center justify-between gap-4">
-                            <div>
-                                <p class="text-sm font-semibold text-gray-800">HPISP</p>
-                                <p class="text-xs text-gray-500 mt-1">Minahasa • September 2026</p>
-                            </div>
-                            <span class="text-xs bg-orange-50 text-orange-600 px-3 py-1 rounded-lg">Menunggu</span>
-                        </div>
-
-                        <div class="px-6 py-4 flex items-center justify-between gap-4">
-                            <div>
-                                <p class="text-sm font-semibold text-gray-800">ISPA</p>
-                                <p class="text-xs text-gray-500 mt-1">Tomohon • Agustus 2026</p>
-                            </div>
-                            <span class="text-xs bg-orange-50 text-orange-600 px-3 py-1 rounded-lg">Menunggu</span>
-                        </div>
-
-                    </div>
+                    <a href="validasi.html" class="text-xs font-semibold text-blue-600 hover:text-blue-700">Lihat Semua</a>
                 </div>
-
-                <!-- AKTIVITAS -->
-                <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden">
-
-                    <div class="px-6 py-5 border-b border-gray-200">
-                        <h3 class="font-semibold text-gray-900">Aktivitas Terbaru</h3>
-                        <p class="text-xs text-gray-500 mt-1">Aktivitas validasi terakhir.</p>
-                    </div>
-
-                    <div class="divide-y divide-gray-100">
-
-                        <div class="px-6 py-4 flex gap-4">
-                            <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-700"><span class="font-semibold">TBC</span> di <span class="font-semibold">Manado</span> disetujui.</p>
-                                <p class="text-xs text-gray-400 mt-1">13 Sep 2026 • 14:25</p>
-                            </div>
-                        </div>
-
-                        <div class="px-6 py-4 flex gap-4">
-                            <div class="w-9 h-9 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-700"><span class="font-semibold">Malaria</span> di <span class="font-semibold">Minahasa Selatan</span> dikembalikan.</p>
-                                <p class="text-xs text-gray-400 mt-1">13 Sep 2026 • 11:20</p>
-                            </div>
-                        </div>
-
-                        <div class="px-6 py-4 flex gap-4">
-                            <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-700"><span class="font-semibold">ISPA</span> di <span class="font-semibold">Tomohon</span> disetujui.</p>
-                                <p class="text-xs text-gray-400 mt-1">12 Sep 2026 • 15:10</p>
-                            </div>
-                        </div>
-
-                        <div class="px-6 py-4 flex gap-4">
-                            <div class="w-9 h-9 rounded-full bg-green-50 flex items-center justify-center flex-shrink-0">
-                                <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm text-gray-700"><span class="font-semibold">HPISP</span> di <span class="font-semibold">Minahasa Utara</span> disetujui.</p>
-                                <p class="text-xs text-gray-400 mt-1">12 Sep 2026 • 14:05</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
+                <div id="pengajuanTerbaruList" class="divide-y divide-gray-100"></div>
             </section>
 
             <!-- RINGKASAN -->
             <section class="mt-7 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
-
                 <div>
                     <h3 class="font-semibold text-gray-900">Ringkasan Validasi</h3>
                     <p class="text-xs text-gray-500 mt-1">Perbandingan status seluruh data.</p>
                 </div>
-
                 <div class="mt-6 space-y-5">
-
                     <div>
                         <div class="flex items-center justify-between text-sm mb-2">
                             <span class="text-gray-600">Disetujui</span>
-                            <span class="font-semibold text-gray-800">212 / 223</span>
+                            <span id="valDisetujui" class="font-semibold text-gray-800">0 / 0</span>
                         </div>
                         <div class="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                            <div class="h-full bg-green-500 rounded-full" style="width:95%"></div>
+                            <div id="pbDisetujui" class="h-full bg-green-500 rounded-full" style="width:0%"></div>
                         </div>
                     </div>
-
                     <div>
                         <div class="flex items-center justify-between text-sm mb-2">
                             <span class="text-gray-600">Menunggu Validasi</span>
-                            <span class="font-semibold text-gray-800">8 / 223</span>
+                            <span id="valMenunggu" class="font-semibold text-gray-800">0 / 0</span>
                         </div>
                         <div class="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                            <div class="h-full bg-orange-400 rounded-full" style="width:4%"></div>
+                            <div id="pbMenunggu" class="h-full bg-orange-400 rounded-full" style="width:0%"></div>
                         </div>
                     </div>
-
                     <div>
                         <div class="flex items-center justify-between text-sm mb-2">
                             <span class="text-gray-600">Dikembalikan</span>
-                            <span class="font-semibold text-gray-800">3 / 223</span>
+                            <span id="valDikembalikan" class="font-semibold text-gray-800">0 / 0</span>
                         </div>
                         <div class="w-full h-2.5 bg-gray-100 rounded-full overflow-hidden">
-                            <div class="h-full bg-red-500 rounded-full" style="width:1.5%"></div>
+                            <div id="pbDikembalikan" class="h-full bg-red-500 rounded-full" style="width:0%"></div>
                         </div>
                     </div>
-
                 </div>
-
             </section>
-
-            <!-- AKSES CEPAT -->
-            <section class="mt-7">
-
-                <h3 class="font-semibold text-gray-900">Akses Cepat</h3>
-                <p class="text-xs text-gray-500 mt-1">Menu yang sering digunakan Validator.</p>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 mt-4">
-
-                    <a href="validasi.html" class="bg-white border border-gray-200 rounded-2xl p-5 hover:border-blue-300 hover:shadow-sm transition">
-                        <div class="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center">
-                            <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <h4 class="mt-4 font-semibold text-gray-900">Validasi Data</h4>
-                        <p class="mt-1 text-xs text-gray-500">Periksa pengajuan data dari Admin.</p>
-                    </a>
-
-                    <a href="rekapitulasi.html" class="bg-white border border-gray-200 rounded-2xl p-5 hover:border-blue-300 hover:shadow-sm transition">
-                        <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
-                            <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-8"/>
-                            </svg>
-                        </div>
-                        <h4 class="mt-4 font-semibold text-gray-900">Rekapitulasi</h4>
-                        <p class="mt-1 text-xs text-gray-500">Lihat rekap data yang telah disetujui.</p>
-                    </a>
-
-                    <a href="riwayat.html" class="bg-white border border-gray-200 rounded-2xl p-5 hover:border-blue-300 hover:shadow-sm transition">
-                        <div class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
-                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 2m6-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <h4 class="mt-4 font-semibold text-gray-900">Riwayat Validasi</h4>
-                        <p class="mt-1 text-xs text-gray-500">Lihat seluruh keputusan validasi.</p>
-                    </a>
-
-                </div>
-
-            </section>
-
-            <!-- INFO -->
-            <section class="mt-7 mb-8">
-
-                <div class="bg-blue-50 border border-blue-100 rounded-2xl p-5">
-
-                    <div class="flex gap-3">
-
-                        <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 20a8 8 0 100-16 8 8 0 000 16z"/>
-                        </svg>
-
-                        <div>
-                            <h4 class="text-sm font-semibold text-blue-800">Informasi Validator</h4>
-                            <p class="mt-1 text-xs text-blue-700 leading-relaxed">
-                                Validator bertugas memeriksa kesesuaian kelompok penyakit, wilayah, periode, dan jumlah kasus sebelum data dapat dipublikasikan. Data yang tidak sesuai dapat dikembalikan kepada Admin untuk diperbaiki.
-                            </p>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
         </main>
     </div>
 
     <script>
-        const chartData = {
-            Jan: [18,34,4],
-            Feb: [16,39,3],
-            Mar: [15,42,4],
-            Apr: [13,46,3],
-            May: [12,48,3],
-            Jun: [11,51,2],
-            Jul: [10,54,3],
-            Aug: [9,58,3],
-            Sep: [8,62,3],
-            Oct: [7,59,2],
-            Nov: [6,64,2],
-            Dec: [5,68,2]
-        };
-
-        const allData = Object.values(chartData).reduce(
-            (total, item) => total.map((value, index) => value + item[index]),
-            [0,0,0]
-        );
-
-        const chart = new Chart(document.getElementById("statusChart"), {
-            type: "bar",
-            data: {
-                labels: ["Menunggu Validasi", "Disetujui", "Dikembalikan"],
-                datasets: [{
-                    data: chartData.Sep,
-                    backgroundColor: ["#fb923c","#22c55e","#ef4444"],
-                    borderRadius: 8,
-                    barThickness: 48
-                }]
-            },
-            plugins: [ChartDataLabels],
-            options: {
-                indexAxis: "y",
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    datalabels: {
-                        color: "#374151",
-                        anchor: "end",
-                        align: "right",
-                        offset: 6,
-                        font: {
-                            family: "Poppins",
-                            size: 12,
-                            weight: "600"
-                        },
-                        formatter: value => value
-                    }
-                },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0,
-                            font: { family: "Poppins", size: 11 }
-                        },
-                        grid: { color: "#f3f4f6" }
-                    },
-                    y: {
-                        ticks: {
-                            font: { family: "Poppins", size: 12 }
-                        },
-                        grid: { display: false }
-                    }
-                }
-            }
-        });
-
-        document.getElementById("periodSelect").addEventListener("change", function() {
-            chart.data.datasets[0].data = this.value === "all" ? allData : chartData[this.value];
-            chart.update();
-        });
-
-        function showNotification() {
-            alert("Notifikasi:\n\n• 8 data menunggu validasi.\n• 3 data sebelumnya dikembalikan.");
-        }
-
-async function logout() {
-    if (confirm("Apakah Anda yakin ingin keluar?")) {
-        try {
-            // Hapus session di backend
-            await fetch("http://localhost:3000/api/auth/logout", {
-                method: "POST",
-                credentials: "include"
-            });
-            
-            // Arahkan kembali ke halaman login
-            window.location.replace("../login/login.html");
-            
-        } catch (error) {
-            console.error("Gagal logout:", error);
-            alert("Gagal terhubung ke server saat logout.");
-        }
-    }
-}
-
+        Chart.register(ChartDataLabels);
+        let statusChart;
         const sidebar = document.getElementById("sidebar");
         const overlay = document.getElementById("overlay");
         const menuButton = document.getElementById("menuButton");
 
-        menuButton.addEventListener("click", () => {
-            sidebar.classList.remove("-translate-x-full");
-            overlay.classList.remove("hidden");
-        });
+        menuButton.addEventListener("click", () => { sidebar.classList.remove("-translate-x-full"); overlay.classList.remove("hidden"); });
+        overlay.addEventListener("click", () => { sidebar.classList.add("-translate-x-full"); overlay.classList.add("hidden"); });
 
-        overlay.addEventListener("click", () => {
-            sidebar.classList.add("-translate-x-full");
-            overlay.classList.add("hidden");
+        // --- LOAD DATA DASHBOARD ---
+        async function loadDashboardData() {
+            try {
+                // 1. Ambil Statistik
+                const resStat = await fetch("http://localhost:3000/api/dashboard/statistik", { credentials: "include" });
+                const stat = await resStat.json();
+
+                document.getElementById("statMenunggu").textContent = stat.menunggu;
+                document.getElementById("statDisetujui").textContent = stat.dipublikasikan; // Disetujui = Dipublikasikan
+                document.getElementById("statDikembalikan").textContent = stat.dikembalikan;
+                document.getElementById("statDipublikasikan").textContent = stat.dipublikasikan;
+                document.getElementById("badgeSidebar").textContent = stat.menunggu;
+
+                // Progress Bar Validasi
+                document.getElementById("valDisetujui").textContent = `${stat.dipublikasikan} / ${stat.total}`;
+                document.getElementById("valMenunggu").textContent = `${stat.menunggu} / ${stat.total}`;
+                document.getElementById("valDikembalikan").textContent = `${stat.dikembalikan} / ${stat.total}`;
+                
+                if(stat.total > 0) {
+                    document.getElementById("pbDisetujui").style.width = (stat.dipublikasikan / stat.total * 100) + "%";
+                    document.getElementById("pbMenunggu").style.width = (stat.menunggu / stat.total * 100) + "%";
+                    document.getElementById("pbDikembalikan").style.width = (stat.dikembalikan / stat.total * 100) + "%";
+                }
+
+                // Chart
+                if (statusChart) statusChart.destroy();
+                statusChart = new Chart(document.getElementById("statusChart"), {
+                    type: "bar",
+                    data: {
+                        labels: ["Menunggu Validasi", "Disetujui", "Dikembalikan"],
+                        datasets: [{
+                            data: [stat.menunggu, stat.dipublikasikan, stat.dikembalikan],
+                            backgroundColor: ["#fb923c","#22c55e","#ef4444"],
+                            borderRadius: 8,
+                            barThickness: 48
+                        }]
+                    },
+                    options: {
+                        indexAxis: "y",
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            datalabels: { color: "#374151", anchor: "end", align: "right", offset: 6, font: { weight: "600" } }
+                        },
+                        scales: {
+                            x: { beginAtZero: true, grid: { color: "#f3f4f6" } },
+                            y: { grid: { display: false } }
+                        }
+                    }
+                });
+
+                // 2. Ambil Pengajuan Terbaru
+                const resTerbaru = await fetch("http://localhost:3000/api/kasus/menunggu", { credentials: "include" });
+                const menunggu = await resTerbaru.json();
+                
+                const listContainer = document.getElementById("pengajuanTerbaruList");
+                if (menunggu.length === 0) {
+                    listContainer.innerHTML = `<div class="px-6 py-4 text-center text-sm text-gray-500">Tidak ada pengajuan baru.</div>`;
+                } else {
+                    listContainer.innerHTML = menunggu.slice(0, 5).map(item => `
+                        <div class="px-6 py-4 flex items-center justify-between gap-4">
+                            <div>
+                                <p class="text-sm font-semibold text-gray-800">${item.penyakit}</p>
+                                <p class="text-xs text-gray-500 mt-1">${item.wilayah} • ${item.periode}</p>
+                            </div>
+                            <span class="text-xs bg-orange-50 text-orange-600 px-3 py-1 rounded-lg">Menunggu</span>
+                        </div>
+                    `).join("");
+                }
+
+            } catch (error) {
+                console.error("Gagal memuat dashboard:", error);
+            }
+        }
+
+        // --- PROFIL & LOGOUT ---
+        async function loadUserProfile() {
+            const response = await fetch("http://localhost:3000/api/auth/me", { credentials: "include" });
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById("sidebarUserName").textContent = data.user.nama;
+                document.getElementById("welcomeText").textContent = `Selamat datang, ${data.user.nama}`;
+                document.getElementById("userInitial").textContent = data.user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            }
+        }
+
+        async function logout() {
+            if (confirm("Apakah Anda yakin ingin keluar?")) {
+                await fetch("http://localhost:3000/api/auth/logout", { method: "POST", credentials: "include" });
+                window.location.replace("../login/login.html");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadUserProfile();
+            loadDashboardData();
         });
     </script>
-
 </body>
 </html>

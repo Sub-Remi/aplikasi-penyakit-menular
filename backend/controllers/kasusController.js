@@ -1,22 +1,19 @@
 const db = require('../config/db');
 
-// 1. Ambil semua data kasus (dengan JOIN untuk mendapatkan nama penyakit & wilayah)
+// Fungsi bantuan untuk mencatat log
+const catatLog = async (userId, aktivitas, detail) => {
+    try {
+        await db.query("INSERT INTO log_aktivitas (user_id, aktivitas, detail) VALUES (?, ?, ?)", [userId, aktivitas, detail]);
+    } catch (error) {
+        console.error("Gagal mencatat log:", error);
+    }
+};
+
 exports.getKasus = async (req, res) => {
     try {
         const query = `
-            SELECT 
-                k.id, 
-                k.penyakit_id, 
-                k.wilayah_id, 
-                k.periode, 
-                k.jumlah, 
-                k.status, 
-                k.catatan,
-                k.catatan_validator, 
-                k.created_at,
-                p.nama AS penyakit, 
-                w.nama AS wilayah,
-                u.nama AS admin
+            SELECT k.id, k.penyakit_id, k.wilayah_id, k.periode, k.jumlah, k.status, k.catatan, k.catatan_validator, k.created_at,
+                   p.nama AS penyakit, w.nama AS wilayah, u.nama AS admin
             FROM kasus k
             JOIN penyakit p ON k.penyakit_id = p.id
             JOIN wilayah w ON k.wilayah_id = w.id
@@ -25,110 +22,71 @@ exports.getKasus = async (req, res) => {
         `;
         const [rows] = await db.query(query);
         res.json(rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Gagal mengambil data kasus." });
-    }
+    } catch (error) { res.status(500).json({ message: "Gagal mengambil data." }); }
 };
 
-// 2. Tambah data kasus (Draft / Ajukan Validasi)
 exports.createKasus = async (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).json({ message: "Anda belum login. Silakan login terlebih dahulu." });
-    }
-
+    if (!req.session.user) return res.status(401).json({ message: "Belum login." });
     const { penyakit_id, wilayah_id, periode, jumlah, status, catatan } = req.body;
-    const user_id = req.session.user.id; 
+    const user_id = req.session.user.id;
 
-    if (!penyakit_id || !wilayah_id || !periode || !jumlah) {
-        return res.status(400).json({ message: "Penyakit, wilayah, periode, dan jumlah wajib diisi." });
-    }
+    if (!penyakit_id || !wilayah_id || !periode || !jumlah) return res.status(400).json({ message: "Data tidak lengkap." });
 
     try {
-        const [existing] = await db.query(
-            "SELECT id FROM kasus WHERE penyakit_id = ? AND wilayah_id = ? AND periode = ?",
-            [penyakit_id, wilayah_id, periode]
-        );
+        const [existing] = await db.query("SELECT id FROM kasus WHERE penyakit_id = ? AND wilayah_id = ? AND periode = ?", [penyakit_id, wilayah_id, periode]);
+        if (existing.length > 0) return res.status(400).json({ message: "Data sudah ada." });
 
-        if (existing.length > 0) {
-            return res.status(400).json({ message: "Data kasus untuk penyakit, wilayah, dan periode ini sudah ada. Silakan edit data yang lama." });
-        }
+        await db.query("INSERT INTO kasus (penyakit_id, wilayah_id, periode, jumlah, status, catatan, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)", [penyakit_id, wilayah_id, periode, jumlah, status || 'Draft', catatan || null, user_id]);
 
-        await db.query(
-            "INSERT INTO kasus (penyakit_id, wilayah_id, periode, jumlah, status, catatan, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            [penyakit_id, wilayah_id, periode, jumlah, status || 'Draft', catatan || null, user_id]
-        );
+        // Catat Log
+        const [p] = await db.query("SELECT nama FROM penyakit WHERE id = ?", [penyakit_id]);
+        const [w] = await db.query("SELECT nama FROM wilayah WHERE id = ?", [wilayah_id]);
+        await catatLog(user_id, status === 'Draft' ? 'Simpan Draft' : 'Ajukan Validasi', `Data ${p[0].nama} di ${w[0].nama} periode ${periode}`);
 
         res.status(201).json({ message: "Data kasus berhasil disimpan." });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Gagal menyimpan data kasus." });
-    }
+    } catch (error) { res.status(500).json({ message: "Gagal menyimpan data." }); }
 };
 
-// 3. Edit data kasus (Hanya bisa jika statusnya Draft atau Dikembalikan)
 exports.updateKasus = async (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).json({ message: "Anda belum login." });
-    }
-
+    if (!req.session.user) return res.status(401).json({ message: "Belum login." });
     const { id } = req.params;
     const { penyakit_id, wilayah_id, periode, jumlah, status, catatan } = req.body;
 
     try {
         const [rows] = await db.query("SELECT status FROM kasus WHERE id = ?", [id]);
         if (rows.length === 0) return res.status(404).json({ message: "Data tidak ditemukan." });
-        
-        const currentStatus = rows[0].status;
-        if (currentStatus !== 'Draft' && currentStatus !== 'Dikembalikan') {
-            return res.status(403).json({ message: "Data yang sudah diajukan atau dipublikasikan tidak dapat diedit." });
-        }
+        if (rows[0].status !== 'Draft' && rows[0].status !== 'Dikembalikan') return res.status(403).json({ message: "Data terkunci." });
 
-        const [existing] = await db.query(
-            "SELECT id FROM kasus WHERE penyakit_id = ? AND wilayah_id = ? AND periode = ? AND id != ?",
-            [penyakit_id, wilayah_id, periode, id]
-        );
-        if (existing.length > 0) {
-            return res.status(400).json({ message: "Data kasus untuk kombinasi ini sudah ada." });
-        }
+        await db.query("UPDATE kasus SET penyakit_id = ?, wilayah_id = ?, periode = ?, jumlah = ?, status = ?, catatan = ? WHERE id = ?", [penyakit_id, wilayah_id, periode, jumlah, status, catatan, id]);
 
-        await db.query(
-            "UPDATE kasus SET penyakit_id = ?, wilayah_id = ?, periode = ?, jumlah = ?, status = ?, catatan = ? WHERE id = ?",
-            [penyakit_id, wilayah_id, periode, jumlah, status, catatan, id]
-        );
+        // Catat Log
+        const [p] = await db.query("SELECT nama FROM penyakit WHERE id = ?", [penyakit_id]);
+        const [w] = await db.query("SELECT nama FROM wilayah WHERE id = ?", [wilayah_id]);
+        await catatLog(req.session.user.id, status === 'Draft' ? 'Edit Draft' : 'Ajukan Ulang Validasi', `Data ${p[0].nama} di ${w[0].nama} periode ${periode}`);
 
         res.json({ message: "Data kasus berhasil diperbarui." });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Gagal memperbarui data kasus." });
-    }
+    } catch (error) { res.status(500).json({ message: "Gagal memperbarui data." }); }
 };
 
-// 4. Hapus data kasus (Hanya jika statusnya Draft)
 exports.deleteKasus = async (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).json({ message: "Anda belum login." });
-    }
-
+    if (!req.session.user) return res.status(401).json({ message: "Belum login." });
     const { id } = req.params;
 
     try {
-        const [rows] = await db.query("SELECT status FROM kasus WHERE id = ?", [id]);
+        // Ambil info untuk log sebelum dihapus
+        const [rows] = await db.query("SELECT k.*, p.nama AS penyakit, w.nama AS wilayah FROM kasus k JOIN penyakit p ON k.penyakit_id = p.id JOIN wilayah w ON k.wilayah_id = w.id WHERE k.id = ?", [id]);
         if (rows.length === 0) return res.status(404).json({ message: "Data tidak ditemukan." });
-
-        if (rows[0].status !== 'Draft') {
-            return res.status(403).json({ message: "Hanya data berstatus Draft yang dapat dihapus." });
-        }
+        if (rows[0].status !== 'Draft') return res.status(403).json({ message: "Hanya data Draft yang bisa dihapus." });
 
         await db.query("DELETE FROM kasus WHERE id = ?", [id]);
+
+        // Catat Log
+        await catatLog(req.session.user.id, 'Hapus Data', `Menghapus data ${rows[0].penyakit} di ${rows[0].wilayah}`);
+
         res.json({ message: "Data kasus berhasil dihapus." });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Gagal menghapus data kasus." });
-    }
+    } catch (error) { res.status(500).json({ message: "Gagal menghapus data." }); }
 };
 
-// 5. Ambil data yang menunggu validasi (Khusus Validator)
 exports.getKasusMenunggu = async (req, res) => {
     try {
         const query = `
@@ -143,33 +101,23 @@ exports.getKasusMenunggu = async (req, res) => {
         `;
         const [rows] = await db.query(query);
         res.json(rows);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Gagal mengambil data validasi." });
-    }
+    } catch (error) { res.status(500).json({ message: "Gagal mengambil data." }); }
 };
 
-// 6. Proses Validasi (Setujui / Kembalikan)
 exports.prosesValidasi = async (req, res) => {
-    if (!req.session.user || req.session.user.role !== 'validator') {
-        return res.status(403).json({ message: "Hanya Validator yang dapat memproses validasi." });
-    }
-
+    if (!req.session.user || req.session.user.role !== 'validator') return res.status(403).json({ message: "Akses ditolak." });
     const { id } = req.params;
-    const { status, catatan } = req.body;
-
-    if (!status || !['Dipublikasikan', 'Dikembalikan'].includes(status)) {
-        return res.status(400).json({ message: "Status validasi tidak valid." });
-    }
+    const { status, catatan } = req.body; // Dipublikasikan / Dikembalikan
 
     try {
-        await db.query(
-            "UPDATE kasus SET status = ?, catatan_validator = ? WHERE id = ?", 
-            [status, catatan || null, id]
-        );
+        const [rows] = await db.query("SELECT k.*, p.nama AS penyakit, w.nama AS wilayah FROM kasus k JOIN penyakit p ON k.penyakit_id = p.id JOIN wilayah w ON k.wilayah_id = w.id WHERE k.id = ?", [id]);
+        
+        await db.query("UPDATE kasus SET status = ?, catatan_validator = ? WHERE id = ?", [status, catatan || null, id]);
+
+        // Catat Log
+        const aksi = status === 'Dipublikasikan' ? 'Menyetujui Data' : 'Mengembalikan Data';
+        await catatLog(req.session.user.id, aksi, `Data ${rows[0].penyakit} di ${rows[0].wilayah} periode ${rows[0].periode}`);
+
         res.json({ message: `Data berhasil ${status === 'Dipublikasikan' ? 'disetujui' : 'dikembalikan'}.` });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Gagal memproses validasi." });
-    }
+    } catch (error) { res.status(500).json({ message: "Gagal memproses validasi." }); }
 };
