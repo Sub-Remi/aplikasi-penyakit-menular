@@ -33,8 +33,11 @@ exports.createKasus = async (req, res) => {
     if (!penyakit_id || !wilayah_id || !periode || !jumlah) return res.status(400).json({ message: "Data tidak lengkap." });
 
     try {
+        // PENGAMAN 1: Cek duplikat manual di aplikasi
         const [existing] = await db.query("SELECT id FROM kasus WHERE penyakit_id = ? AND wilayah_id = ? AND periode = ?", [penyakit_id, wilayah_id, periode]);
-        if (existing.length > 0) return res.status(400).json({ message: "Data sudah ada." });
+        if (existing.length > 0) {
+            return res.status(400).json({ message: "Data untuk penyakit, wilayah, dan periode ini sudah ada. Silakan edit data yang lama." });
+        }
 
         await db.query("INSERT INTO kasus (penyakit_id, wilayah_id, periode, jumlah, status, catatan, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)", [penyakit_id, wilayah_id, periode, jumlah, status || 'Draft', catatan || null, user_id]);
 
@@ -44,7 +47,14 @@ exports.createKasus = async (req, res) => {
         await catatLog(user_id, status === 'Draft' ? 'Simpan Draft' : 'Ajukan Validasi', `Data ${p[0].nama} di ${w[0].nama} periode ${periode}`);
 
         res.status(201).json({ message: "Data kasus berhasil disimpan." });
-    } catch (error) { res.status(500).json({ message: "Gagal menyimpan data." }); }
+    } catch (error) { 
+        console.error(error);
+        // PENGAMAN 2: Jika lolos dari cek manual, tangkap error dari Database UNIQUE Constraint
+        if (error.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ message: "Data sudah ada di database." });
+        }
+        res.status(500).json({ message: "Gagal menyimpan data." }); 
+    }
 };
 
 exports.updateKasus = async (req, res) => {
@@ -57,6 +67,12 @@ exports.updateKasus = async (req, res) => {
         if (rows.length === 0) return res.status(404).json({ message: "Data tidak ditemukan." });
         if (rows[0].status !== 'Draft' && rows[0].status !== 'Dikembalikan') return res.status(403).json({ message: "Data terkunci." });
 
+        // PENGAMAN 3: Cek duplikat manual saat Edit (kecuali dengan dirinya sendiri)
+        const [existing] = await db.query("SELECT id FROM kasus WHERE penyakit_id = ? AND wilayah_id = ? AND periode = ? AND id != ?", [penyakit_id, wilayah_id, periode, id]);
+        if (existing.length > 0) {
+            return res.status(400).json({ message: "Data dengan kombinasi penyakit, wilayah, dan periode ini sudah ada." });
+        }
+
         await db.query("UPDATE kasus SET penyakit_id = ?, wilayah_id = ?, periode = ?, jumlah = ?, status = ?, catatan = ? WHERE id = ?", [penyakit_id, wilayah_id, periode, jumlah, status, catatan, id]);
 
         // Catat Log
@@ -65,7 +81,14 @@ exports.updateKasus = async (req, res) => {
         await catatLog(req.session.user.id, status === 'Draft' ? 'Edit Draft' : 'Ajukan Ulang Validasi', `Data ${p[0].nama} di ${w[0].nama} periode ${periode}`);
 
         res.json({ message: "Data kasus berhasil diperbarui." });
-    } catch (error) { res.status(500).json({ message: "Gagal memperbarui data." }); }
+    } catch (error) { 
+        console.error(error);
+        // PENGAMAN 4: Tangkap error UNIQUE dari database saat update
+        if (error.code === 'ER_DUP_ENTRY') {
+            return res.status(400).json({ message: "Data dengan kombinasi ini sudah ada di database." });
+        }
+        res.status(500).json({ message: "Gagal memperbarui data." }); 
+    }
 };
 
 exports.deleteKasus = async (req, res) => {
