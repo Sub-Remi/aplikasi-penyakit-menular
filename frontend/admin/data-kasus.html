@@ -473,7 +473,7 @@
                 .then(data => {
                     if (data) {
                         document.getElementById("sidebarUserName").textContent = data.user.nama;
-                        document.getElementById("sidebarUserRole").textContent = data.user.role === 'admin' ? 'Administrator' : 'Petugas Validasi';
+                        document.getElementById("sidebarUserRole").textContent = data.user.role === 'admin' ? 'Admin' : 'Petugas Validasi';
                         document.getElementById("userInitial").textContent = data.user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
                     }
                 });

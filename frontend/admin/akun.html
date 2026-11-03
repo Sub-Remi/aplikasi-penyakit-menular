@@ -431,7 +431,7 @@
                     if (data) {
                         loggedInUserId = data.user.id;
                         document.getElementById("sidebarUserName").textContent = data.user.nama;
-                        const roleText = data.user.role === 'admin' ? 'Administrator' : 'Petugas Validasi';
+                        const roleText = data.user.role === 'admin' ? 'Admin' : 'Petugas Validasi';
                         document.getElementById("sidebarUserRole").textContent = roleText;
                         document.getElementById("userInitial").textContent = data.user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
                     }

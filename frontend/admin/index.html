@@ -402,7 +402,7 @@
             if (response.ok) {
                 const data = await response.json();
                 document.getElementById("sidebarUserName").textContent = data.user.nama;
-                document.getElementById("sidebarUserRole").textContent = "Administrator";
+                document.getElementById("sidebarUserRole").textContent = "Admin";
                 document.getElementById("welcomeText").textContent = `Selamat datang, ${data.user.nama}`;
                 document.getElementById("userInitial").textContent = data.user.nama.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
             }
